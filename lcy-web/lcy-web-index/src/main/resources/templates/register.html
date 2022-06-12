@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>注册</title>
+<!--    <link rel="stylesheet" href="style/style.css"/>-->
+    <link rel="stylesheet" href="lib/layui/css/layui.css"/>
+    <style>
+        #register-form{
+            margin-right: 65px;
+            margin-top: 30px;
+        }
+
+    </style>
+</head>
+<body>
+<form class="layui-form" id="register-form">
+    <div class="layui-form-item">
+        <label class="layui-form-label">账号</label>
+        <div class="layui-input-inline">
+            <input type="text" name="account" required  lay-verify="required" placeholder="请输入账号" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">密码</label>
+        <div class="layui-input-inline">
+            <input type="password" name="password" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">确认密码</label>
+        <div class="layui-input-inline">
+            <input type="password" name="confirmPassword" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">昵称</label>
+        <div class="layui-input-inline">
+            <input type="text" name="nickname" required  lay-verify="required" placeholder="请输入昵称" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">性别</label>
+        <div class="layui-input-block">
+            <input type="radio" name="sex" value="male" title="男">
+            <input type="radio" name="sex" value="female" title="女" checked>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn layui-btn-primary" lay-submit="" lay-filter="formDemo">立即注册</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+<script src="lib/jquery-3.4.1/jquery-3.4.1.min.js"></script>
+<script src="lib/layui/layui.js"></script>
+<script>
+
+    layui.use('form', function(){
+        var form = layui.form,
+            $ = layui.jquery;
+
+        //监听提交
+        form.on('submit(formDemo)', function(data){
+            // 遮罩
+            let loading = layer.load(2, {shade: [0.3, 'fff'], time: 10 * 1000});
+            $.ajax({
+                url : "地址",
+                data : JSON.stringify(data.field),
+                dataType : "json",
+                type : "post",
+                success : function(data){
+                    layer.closeAll('loading'); //关闭加载层
+                    layer.msg("注册成功！", {icon: 1});
+                },
+                error : function(data){
+
+                }
+
+            });
+            layer.msg(JSON.stringify(data.field));
+            return false;
+        });
+
+    });
+</script>
+</body>
+</html>
