@@ -11,7 +11,7 @@
   <groupId>com.lcy</groupId>
   <artifactId>ui-index</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <packaging>pom</packaging>
+  <packaging>jar</packaging>
 
   <name>ui-index</name>
   <!-- FIXME change it to the project's website -->

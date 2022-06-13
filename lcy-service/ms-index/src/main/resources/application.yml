@@ -6,7 +6,7 @@ server:
 
 spring:
   application:
-    name: webIndex
+    name: ms-index
   cloud:
     nacos:
       discovery:

@@ -6,7 +6,7 @@ server:
 
 spring:
   application:
-    name: webIndex
+    name: ui-index
   cloud:
     nacos:
       discovery:
