@@ -6,7 +6,11 @@ server:
 
 spring:
   application:
-    name:
+    name: webIndex
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
   devtools:
     restart:
       # 热部署开关

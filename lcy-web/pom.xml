@@ -12,11 +12,11 @@
     <artifactId>lcy-web</artifactId>
     <packaging>pom</packaging>
 
-    <name>lcy-web Maven Webapp</name>
+    <name>lcy-web</name>
     <!-- FIXME change it to the project's website -->
     <url>http://www.example.com</url>
     <modules>
-        <module>lcy-web-index</module>
+        <module>ui-index</module>
     </modules>
 
     <properties>
