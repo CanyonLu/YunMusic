@@ -64,10 +64,15 @@
         //监听提交
         form.on('submit(formDemo)', function(data){
             // 遮罩
+
+            let params = {
+                params : JSON.stringify(data.field)
+            }
+
             let loading = layer.load(2, {shade: [0.3, 'fff'], time: 10 * 1000});
             $.ajax({
-                url : "地址",
-                data : JSON.stringify(data.field),
+                url : "/ui-index/user/userRegister",
+                data : params,
                 dataType : "json",
                 type : "post",
                 success : function(data){
