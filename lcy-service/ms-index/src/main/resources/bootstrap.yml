@@ -1,0 +1,41 @@
+server:
+  port: 8089
+  servlet:
+    # 应用的访问路径
+    context-path: /${spring.application.name}
+
+spring:
+  application:
+    name: ms-index
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+      config:
+        server-addr: 127.0.0.1:8848 #Nacos作为配置中心地址
+        file-extension: yaml #指定yaml格式的配置
+        namespace: 451c3480-c39c-427a-ae8e-17fdd6e7c6a5
+        group: dev
+  devtools:
+    restart:
+      # 热部署开关
+      enabled: true
+      exclude: static/**, templates/**
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  resources:
+    static-locations: classpath:/static/, classpath:/templates/
+  #thymeleaf模板配置
+  thymeleaf:
+    cache: false  #开发的时候请关闭
+    enabled: true
+    prefix: classpath:/templates/
+    suffix: .html
+    #严格执行H5标准
+    mode: LEGACYHTML5
+    encoding: UTF-8
+    servlet:
+      content-type: text/html
+  mvc:
+    static-path-pattern: /**
