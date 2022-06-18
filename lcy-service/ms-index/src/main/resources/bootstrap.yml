@@ -12,10 +12,10 @@ spring:
       discovery:
         server-addr: 127.0.0.1:8848
       config:
-        server-addr: 127.0.0.1:8848 #Nacos作为配置中心地址
-        file-extension: yaml #指定yaml格式的配置
-        namespace: 451c3480-c39c-427a-ae8e-17fdd6e7c6a5
+        server-addr: ${spring.cloud.nacos.discovery.server-addr}
+        namespace: 17860aef-b340-4f80-96d6-f5272c57f0bf
         group: dev
+        file-extension: properties
   devtools:
     restart:
       # 热部署开关

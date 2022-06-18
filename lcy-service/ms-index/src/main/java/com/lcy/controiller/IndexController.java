@@ -1,10 +1,13 @@
 package com.lcy.controiller;
 
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController("/user")
+@RestController
+@RequestMapping(value = "/user")
+@RefreshScope
 public class IndexController {
 
     @RequestMapping("/userRegister")
