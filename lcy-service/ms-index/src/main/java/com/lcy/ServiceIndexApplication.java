@@ -13,7 +13,7 @@ public class ServiceIndexApplication {
     
     public static void main(String[] args) {
         SpringApplication.run(ServiceIndexApplication.class, args);
-        System.out.println("        ヾ(◍°∇°◍)ﾉﾞ    Application启动成功      ヾ(◍°∇°◍)ﾉﾞ\n" +
+        System.out.println("        ヾ(◍°∇°◍)ﾉﾞ    ServiceIndexApplication启动成功      ヾ(◍°∇°◍)ﾉﾞ\n" +
                 "                    _\n" +
                 "            "
                 + "      _(_)_                           wWWWw   _\n" +
