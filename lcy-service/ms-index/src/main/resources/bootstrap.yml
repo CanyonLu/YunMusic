@@ -1,9 +1,3 @@
-server:
-  port: 8089
-  servlet:
-    # 应用的访问路径
-    context-path: /${spring.application.name}
-
 spring:
   application:
     name: ms-index
@@ -11,11 +5,8 @@ spring:
     nacos:
       discovery:
         server-addr: 127.0.0.1:8848
-      config:
-        server-addr: ${spring.cloud.nacos.discovery.server-addr}
-        namespace: 17860aef-b340-4f80-96d6-f5272c57f0bf
-        group: dev
-        file-extension: properties
+        namespace: 8cb5eee5-c2fe-44a0-a5f9-bf793bee85a3
+        group: DEFAULT_GROUP
   devtools:
     restart:
       # 热部署开关

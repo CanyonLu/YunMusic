@@ -14,7 +14,7 @@ const pro = "pro";
  * 首页
  * @type {string}
  */
-const index = "/ms-index/";
+const index = "/index-ms/";
 
 /**
  * 开发环境地址

@@ -1,0 +1,5 @@
+server:
+  port: 8089
+  servlet:
+    # 应用的访问路径
+    context-path: /index-ms
