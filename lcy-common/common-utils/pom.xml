@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>com.lcy</groupId>
+    <artifactId>lcy-common</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+  </parent>
+
+  <groupId>com.lcy</groupId>
+  <artifactId>common-utils</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>jar</packaging>
+
+  <name>common-utils</name>
+
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <mybatis.spring.boot.starter.version>1.3.2</mybatis.spring.boot.starter.version>
+    <pagehelper.spring.boot.starter.version>1.2.5</pagehelper.spring.boot.starter.version>
+    <druid.version>1.1.14</druid.version>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.11</version>
+      <scope>test</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>1.18.12</version>
+    </dependency>
+
+    <!-- SpringBoot集成mybatis框架 -->
+    <dependency>
+      <groupId>org.mybatis.spring.boot</groupId>
+      <artifactId>mybatis-spring-boot-starter</artifactId>
+      <version>${mybatis.spring.boot.starter.version}</version>
+    </dependency>
+
+    <!-- pagehelper 分页插件 -->
+    <dependency>
+      <groupId>com.github.pagehelper</groupId>
+      <artifactId>pagehelper-spring-boot-starter</artifactId>
+      <version>${pagehelper.spring.boot.starter.version}</version>
+    </dependency>
+
+    <!-- Mysql驱动包 -->
+    <dependency>
+      <groupId>mysql</groupId>
+      <artifactId>mysql-connector-java</artifactId>
+      <version>5.1.40</version>
+    </dependency>
+
+    <!--阿里数据库连接池 -->
+    <dependency>
+      <groupId>com.alibaba</groupId>
+      <artifactId>druid-spring-boot-starter</artifactId>
+      <version>${druid.version}</version>
+    </dependency>
+  </dependencies>
+
+
+</project>

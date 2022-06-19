@@ -18,25 +18,26 @@
     <div class="layui-form-item">
         <label class="layui-form-label">账号</label>
         <div class="layui-input-inline">
-            <input type="text" name="account" required  lay-verify="required" placeholder="请输入账号" autocomplete="off" class="layui-input">
+            <input type="text" name="account" id="account" required  lay-verify="required" placeholder="请输入账号" autocomplete="off" class="layui-input" onblur="checkAccount(this.value)">
+            <span id="accountSpan"></span>
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">密码</label>
         <div class="layui-input-inline">
-            <input type="password" name="password" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+            <input type="password" name="password" id="password" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input" onblur="checkPassword(this.value)">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">确认密码</label>
         <div class="layui-input-inline">
-            <input type="password" name="confirmPassword" required lay-verify="required" placeholder="请输入密码" autocomplete="off" class="layui-input">
+            <input type="password" name="confirmPassword" id="confirmPassword" required lay-verify="required" placeholder="请再次输入密码" autocomplete="off" class="layui-input" onblur="checkConfirmPassword(this.value)">
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label">昵称</label>
         <div class="layui-input-inline">
-            <input type="text" name="nickname" required  lay-verify="required" placeholder="请输入昵称" autocomplete="off" class="layui-input">
+            <input type="text" name="nickname" id="nickname" required  lay-verify="required" placeholder="请输入昵称" autocomplete="off" class="layui-input" onblur="checkNickname(this.value)">
         </div>
     </div>
     <div class="layui-form-item">
@@ -58,18 +59,38 @@
 <script src="js/common.js"></script>
 <script>
 
+    var accountOK, passwordOK, confirmPasswordOK, nicknameOK;
+
     layui.use('form', function(){
         var form = layui.form,
             $ = layui.jquery;
 
         //监听提交
         form.on('submit(formDemo)', function(data){
-            // 遮罩
+            if(!accountOK){
+                layer.msg("请重新输入账号！", {icon: 2});
+                return false;
+            }
+
+            if(!passwordOK){
+                layer.msg("请重新输入密码！", {icon: 2});
+                return false;
+            }
+
+            if(!confirmPasswordOK){
+                layer.msg("请重新输入密码！", {icon: 2});
+                return false;
+            }
+
+            if(!nicknameOK){
+                layer.msg("请重新输入昵称！", {icon: 2});
+                return false;
+            }
 
             let params = {
                 params : JSON.stringify(data.field)
-            }
-
+            };
+            // 遮罩
             let loading = layer.load(2, {shade: [0.3, 'fff'], time: 10 * 1000});
             $.ajax({
                 url : realm_dev + index + "user/userRegister",
@@ -79,17 +100,92 @@
                 success : function(data){
                     layer.closeAll('loading'); //关闭加载层
                     layer.msg("注册成功！", {icon: 1});
+                    setTimeout(function(){
+                        let addSuccessindex = parent.layer.getFrameIndex(window.name);
+                        parent.layer.close(addSuccessindex);
+                    },1000);
                 },
                 error : function(data){
 
                 }
-
             });
-            layer.msg(JSON.stringify(data.field));
-            return false;
         });
-
     });
+
+    /**
+     * 验证账号
+     * @param data
+     */
+    function checkAccount(data) {
+        if(data){
+            //todo 正则验证
+            //后台查询账号是否重复
+            let params = {
+                params : JSON.stringify({account : data})
+            };
+            $.ajax({
+                url : realm_dev + index + "user/checkUserInfo",
+                data : params,
+                dataType : "json",
+                type : "post",
+                success : function(data){
+                    if(data.code == 500){
+                        accountOK = false;
+                        layer.msg("该账号已被注册！", {icon: 2});
+                    }else {
+                        accountOK = true;
+                        // document.getElementById("accountSpan").innerHTML = '<i class="layui-icon layui-icon-ok" style="font-size: 20px; color: green;"></i>';
+                    }
+                },
+                error : function(data){
+                    layer.msg("系统忙！", {icon: 3});
+                }
+            });
+        }
+    }
+
+    /**
+     *验证密码
+     * @param data
+     */
+    function checkPassword(data) {
+        if(data){
+            let confirmPassword = $("#confirmPassword").val();
+            if(confirmPassword && confirmPassword != data){
+                passwordOK = false;
+                layer.msg("两次输入的密码不一致！", {icon: 2});
+            }else {
+                passwordOK = true;
+            }
+        }
+    }
+
+    /**
+     * 验证密码
+     * @param data
+     */
+    function checkConfirmPassword(data) {
+        if(data){
+            let password = $("#password").val();
+            if(password && password != data){
+                confirmPasswordOK = false;
+                layer.msg("两次输入的密码不一致！", {icon: 2});
+            }else {
+                confirmPasswordOK = true;
+            }
+        }
+    }
+
+    /**
+     * 验证昵称
+     * @param data
+     */
+    function checkNickname(data) {
+        //todo
+        if(data){
+            nicknameOK = true;
+        }
+    }
 </script>
 </body>
 </html>
