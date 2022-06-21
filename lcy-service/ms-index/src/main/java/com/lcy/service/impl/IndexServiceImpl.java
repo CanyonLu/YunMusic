@@ -67,7 +67,7 @@ public class IndexServiceImpl implements IndexService {
         if(Objects.nonNull(userEntity)){
             return AjaxResult.success(userEntity);
         }else {
-            return AjaxResult.error("账号或密码错误吗，请重试！");
+            return AjaxResult.error("账号或密码错误，请重试！");
         }
     }
 }
