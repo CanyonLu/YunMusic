@@ -9,4 +9,6 @@ public interface IndexMapper {
     int userRegister(UserEntity userEntity);
 
     int checkAccountExist(String account);
+
+    UserEntity queryUserByAccountAndPassword(UserEntity userEntity);
 }

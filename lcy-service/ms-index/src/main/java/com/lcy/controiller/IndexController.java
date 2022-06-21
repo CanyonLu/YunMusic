@@ -1,6 +1,7 @@
 package com.lcy.controiller;
 
 import com.alibaba.druid.util.StringUtils;
+import com.lcy.entity.UserEntity;
 import com.lcy.service.IndexService;
 import com.lcy.util.domain.AjaxResult;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,5 +50,16 @@ public class IndexController {
         }else {
             return indexService.userRegister(params);
         }
+    }
+
+    /**
+     *
+     * @param userEntity
+     * @return
+     */
+    @RequestMapping("/userLogin")
+    @ResponseBody
+    public AjaxResult userLogin(UserEntity userEntity){
+        return indexService.userLogin(userEntity);
     }
 }

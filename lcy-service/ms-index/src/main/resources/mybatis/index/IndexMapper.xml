@@ -44,4 +44,8 @@
         select count(*) from demo_users where account = #{account}
     </select>
 
+    <select id="queryUserByAccountAndPassword" parameterType="com.lcy.entity.UserEntity" resultType="com.lcy.entity.UserEntity">
+        select id, account, password, nickname, sex from demo_users where account = #{account} and password = #{password}
+    </select>
+
 </mapper>

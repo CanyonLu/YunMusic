@@ -9,6 +9,7 @@ import com.lcy.util.domain.AjaxResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
 import java.util.UUID;
 
 @Service
@@ -53,5 +54,20 @@ public class IndexServiceImpl implements IndexService {
             return AjaxResult.success();
         }
         return AjaxResult.error();
+    }
+
+    /**
+     * 用户登录
+     * @param user
+     * @return
+     */
+    @Override
+    public AjaxResult userLogin(UserEntity user) {
+        UserEntity userEntity = indexMapper.queryUserByAccountAndPassword(user);
+        if(Objects.nonNull(userEntity)){
+            return AjaxResult.success(userEntity);
+        }else {
+            return AjaxResult.error("账号或密码错误吗，请重试！");
+        }
     }
 }

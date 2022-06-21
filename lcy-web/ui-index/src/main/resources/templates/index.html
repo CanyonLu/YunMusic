@@ -11,22 +11,23 @@
         <h2>Login</h2>
         <div class="input-box">
             <label>账号</label>
-            <input type="text"/>
+            <input type="text" id="account"/>
         </div>
         <div class="input-box">
             <label>密码</label>
-            <input type="password"/>
+            <input type="password" id="password"/>
         </div>
         <div class="btn-box">
             <a href="#">忘记密码?</a>
             <div>
-                <button>登录</button>
+                <button id="login">登录</button>
                 <button id="register">注册</button>
             </div>
         </div>
     </div>
 <script src="lib/jquery-3.4.1/jquery-3.4.1.min.js"></script>
 <script src="lib/layui/layui.js"></script>
+<script src="js/common.js"></script>
 <script>
 
 
@@ -36,7 +37,6 @@
 
 
         $("#register").click(function () {
-            // $(location).attr('href', 'register');
 
             layer.open({
 
@@ -46,11 +46,39 @@
 
                 maxmin : true,
 
-
                 area : [ '450px', '500px' ],
 
                 content : '/ui-index/register'
 
+            });
+        });
+
+        $("#login").click(function () {
+            let account = $("#account").val();
+            let password = $("#password").val();
+            if(!account){
+                layer.msg("请输入账号！", {icon: 2});
+                return false;
+            }
+            if(!password){
+                layer.msg("请输入密码！", {icon: 2});
+                return false;
+            }
+            $.ajax({
+                url : realm_dev + index + "user/userLogin",
+                data : {account: account, password: password},
+                dataType : "json",
+                type : "post",
+                success : function(data){
+                    if(data.code == 0){
+                        layer.msg(data.data.nickname + '您好，欢迎登录！', {icon: 1});
+                    }else {
+                        layer.msg(data.msg, {icon: 2});
+                    }
+                },
+                error : function(data){
+
+                }
             });
         })
     })
