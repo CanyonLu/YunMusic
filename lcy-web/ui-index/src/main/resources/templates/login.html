@@ -69,8 +69,10 @@
                 type : "post",
                 success : function(data){
                     if(data.code == 0){
-                        layer.msg(data.data.nickname + '您好，欢迎登录！', {icon: 1});
-                        location.href = "index";
+                        layer.msg(data.data.nickname + '您好，欢迎登录！');
+                        setTimeout(function(){
+                            location.href = "index";
+                        },1500);
                     }else {
                         layer.msg(data.msg, {time: 1500,shade : [0.5 , '#000' , true]});
                     }

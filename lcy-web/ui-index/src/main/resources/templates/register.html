@@ -60,7 +60,7 @@
     </div>
     <div class="layui-form-item">
         <div class="layui-input-block">
-            <button class="layui-btn layui-btn-primary" lay-submit="" lay-filter="formDemo">立即注册</button>
+            <button type="button" class="layui-btn layui-btn-primary" lay-submit="" lay-filter="registerBtn">立即注册</button>
             <button type="reset" class="layui-btn layui-btn-primary">重置</button>
         </div>
     </div>
@@ -75,7 +75,7 @@
             $ = layui.jquery;
 
         //监听提交
-        form.on('submit(formDemo)', function(data){
+        form.on('submit(registerBtn)', function(data){
             if(!accountOK){
                 layer.msg("请重新输入账号！", {icon: 2});
                 return false;
