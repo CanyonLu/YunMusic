@@ -1,0 +1,64 @@
+@charset "utf-8";
+body{
+    background: rgb(234,236,240);
+}
+.layui-nav{
+    background: rgb(254,254,254);
+}
+.layui-layout-admin .layui-header .layui-nav {
+    background: rgb(254,254,254);
+}
+.layui-nav .layui-nav-item a{
+    color: gray;
+    font-family: 黑体;
+    font-size: 22px;
+    font-weight: 500;
+}
+.userinfo{
+    font-size: 16px !important;
+}
+.user-input {
+    width: 400px;
+    height: 40px;
+    border: none;
+    background: rgb(234,236,240);
+    border-radius: 5px;
+    box-sizing: border-box;
+    outline: none;
+    text-indent: 10px;
+    font-size: 16px;
+    font-family: 黑体;
+}
+.user-btn {
+    width: 100px;
+    height: 40px;
+    border: none;
+    border-radius: 5px;
+    background: rgb(95,184,120);
+    vertical-align: sub;
+    outline: none;
+    color: white;
+    font-size: 20px;
+    cursor: pointer;
+}
+#logoLi{
+    margin-left: 50px;
+}
+#indexLi{
+    margin-left: 150px;
+}
+#searchLi{
+    margin-left: 100px;
+    margin-right: 100px;
+}
+.layui-nav .layui-nav-item a:hover, .layui-nav .layui-this a{
+    color: darkslategray;
+}
+.layui-body{
+    left: 0;
+    margin-top: 30px;
+}
+.layui-layout-admin .layui-footer{
+    left: 0;
+    height: 80px;
+}
