@@ -51,6 +51,13 @@
 
 <script src="js/common.js"></script>
 <script>
+    var OriginTitile = document.title,titleTime;
+    document.addEventListener("visibilitychange",function() {
+        if (document.hidden) { document.title = "死鬼，去哪了？"; clearTimeout(titleTime) }
+        else { document.title = "回来了，很听话嘛"; titleTime = setTimeout(function() { document.title = OriginTitile }, 2000) }
+    });
+</script>
+<script>
 
 </script>
 </body>
