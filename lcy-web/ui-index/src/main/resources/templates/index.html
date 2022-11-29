@@ -34,16 +34,91 @@
     </div>
 
     <div class="layui-body">
-        <!-- 内容主体区域 -->
-        <div style="padding: 15px;">内容主体区域。记得修改 layui.css 和 js 的路径</div>
+
+        <div class="layui-carousel" id="carousel">
+            <div carousel-item>
+                <div>条目1</div>
+                <div>条目2</div>
+                <div>条目3</div>
+                <div>条目4</div>
+                <div>条目5</div>
+            </div>
+        </div>
+        <br>
+        <div id="songListDiv">
+            <div class="layui-row layui-col-space15">
+                <div class="layui-col-md3">
+                    <div class="layui-panel">
+                        <div >一个面板</div>
+                    </div>
+                </div>
+                <div class="layui-col-md3">
+                    <div class="layui-panel">
+                        <div >一个面板</div>
+                    </div>
+                </div>
+                <div class="layui-col-md3">
+                    <div class="layui-panel">
+                        <div >一个面板</div>
+                    </div>
+                </div>
+                <div class="layui-col-md3">
+                    <div class="layui-panel">
+                        <div >一个面板</div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-row layui-col-space15">
+                <div class="layui-col-md3">
+                    <div class="layui-panel">
+                        <div >一个面板</div>
+                    </div>
+                </div>
+                <div class="layui-col-md3">
+                    <div class="layui-panel">
+                        <div >一个面板</div>
+                    </div>
+                </div>
+                <div class="layui-col-md3">
+                    <div class="layui-panel">
+                        <div >一个面板</div>
+                    </div>
+                </div>
+                <div class="layui-col-md3">
+                    <div class="layui-panel">
+                        <div >一个面板</div>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-row layui-col-space15">
+                <div class="layui-col-md3">
+                    <div class="layui-panel">
+                        <div >一个面板</div>
+                    </div>
+                </div>
+                <div class="layui-col-md3">
+                    <div class="layui-panel">
+                        <div >一个面板</div>
+                    </div>
+                </div>
+                <div class="layui-col-md3">
+                    <div class="layui-panel">
+                        <div >一个面板</div>
+                    </div>
+                </div>
+                <div class="layui-col-md3">
+                    <div class="layui-panel">
+                        <div >一个面板</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-footer">
+            <!-- 底部固定区域 -->
+            底部固定区域
+        </div>
     </div>
-
-    <div class="layui-footer">
-        <!-- 底部固定区域 -->
-        底部固定区域
-    </div>
-
-
 </div>
 
 
@@ -51,7 +126,18 @@
 
 <script src="js/common.js"></script>
 <script>
-
+        layui.use('carousel', function(){
+        var carousel = layui.carousel;
+        //建造实例
+        carousel.render({
+        elem: '#carousel'
+        ,width: '50%' //设置容器宽度
+        ,arrow: 'always' //始终显示箭头
+            ,height: '35%'
+            ,interval: '5000'
+        //,anim: 'updown' //切换动画方式
+    });
+    });
 </script>
 </body>
 </html>
