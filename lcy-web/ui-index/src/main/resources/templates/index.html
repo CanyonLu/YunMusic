@@ -51,10 +51,24 @@
 
 <script src="js/common.js"></script>
 <script>
+
     var OriginTitile = document.title,titleTime;
     document.addEventListener("visibilitychange",function() {
         if (document.hidden) { document.title = "死鬼，去哪了？"; clearTimeout(titleTime) }
         else { document.title = "回来了，很听话嘛"; titleTime = setTimeout(function() { document.title = OriginTitile }, 2000) }
+    });
+
+        layui.use('carousel', function(){
+        var carousel = layui.carousel;
+        //建造实例
+        carousel.render({
+        elem: '#carousel'
+        ,width: '50%' //设置容器宽度
+        ,arrow: 'always' //始终显示箭头
+            ,height: '35%'
+            ,interval: '5000'
+        //,anim: 'updown' //切换动画方式
+    });
     });
 </script>
 <script>
