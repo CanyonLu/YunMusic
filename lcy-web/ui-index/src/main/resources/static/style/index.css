@@ -82,9 +82,9 @@ body{
     width: 100%;
 }
 
-/*.layui-panel{*/
-/*    width: 80%;*/
-/*}*/
+.layui-panel{
+    width: 80%;
+}
 
 .subhead{
     font-size: larger;
@@ -93,20 +93,4 @@ body{
 .subheadDiv{
     text-align: center;
     padding-top: 15px;
-}
-
-.layui-card-header{
-    padding: 40px 0;
-}
-
-h1{
-    text-align: center;
-    font-weight: 500;
-    font-size: 40px;
-    font-family: 微软雅黑;
-    color: #555555;
-}
-
-#songListLastRow{
-    padding-bottom: 100px;
 }
