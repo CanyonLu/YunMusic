@@ -52,7 +52,7 @@
                 <div class="layui-col-md3">
                     <div class="layui-panel">
                         <div >
-                            <img class="cover" src="style/image/cover/1.jpg"/>
+                            <img class="cover" src="./image/songList/1.jpg"/>
                             <div class="subheadDiv"><strong class="subhead">你的青春里有没有属于你的一首歌</strong></div>
                         </div>
                     </div>
@@ -60,7 +60,7 @@
                 <div class="layui-col-md3">
                     <div class="layui-panel">
                         <div >
-                            <img class="cover" src="style/image/cover/2.jpg"/>
+                            <img class="cover" src="./image/songList/2.jpg"/>
                             <div class="subheadDiv"><strong class="subhead">你的青春里有没有属于你的一首歌</strong></div>
                         </div>
                     </div>
@@ -68,7 +68,7 @@
                 <div class="layui-col-md3">
                     <div class="layui-panel">
                         <div >
-                            <img class="cover" src="style/image/cover/3.jpg"/>
+                            <img class="cover" src="./image/songList/3.jpg"/>
                             <div class="subheadDiv"><strong class="subhead">你的青春里有没有属于你的一首歌</strong></div>
                         </div>
                     </div>
@@ -76,7 +76,7 @@
                 <div class="layui-col-md3">
                     <div class="layui-panel">
                         <div >
-                            <img class="cover" src="style/image/cover/4.jpg"/>
+                            <img class="cover" src="./image/songList/4.jpg"/>
                             <div class="subheadDiv"><strong class="subhead">你的青春里有没有属于你的一首歌</strong></div>
                         </div>
                     </div>
@@ -85,25 +85,25 @@
             <div class="layui-row layui-col-space15">
                 <div class="layui-col-md3">
                     <div class="layui-panel">
-                        <div ><img class="cover" src="style/image/cover/5.jpg"/></div>
+                        <div ><img class="cover" src="./image/songList/5.jpg"/></div>
                         <div class="subheadDiv"><strong class="subhead">你的青春里有没有属于你的一首歌</strong></div>
                     </div>
                 </div>
                 <div class="layui-col-md3">
                     <div class="layui-panel">
-                        <div ><img class="cover" src="style/image/cover/6.jpg"/></div>
+                        <div ><img class="cover" src="./image/songList/6.jpg"/></div>
                         <div class="subheadDiv"><strong class="subhead">你的青春里有没有属于你的一首歌</strong></div>
                     </div>
                 </div>
                 <div class="layui-col-md3">
                     <div class="layui-panel">
-                        <div ><img class="cover" src="style/image/cover/7.jpg"/></div>
+                        <div ><img class="cover" src="./image/songList/7.jpg"/></div>
                         <div class="subheadDiv"><strong class="subhead">你的青春里有没有属于你的一首歌</strong></div>
                     </div>
                 </div>
                 <div class="layui-col-md3">
                     <div class="layui-panel">
-                        <div ><img class="cover" src="style/image/cover/8.jpg"/></div>
+                        <div ><img class="cover" src="./image/songList/8.jpg"/></div>
                         <div class="subheadDiv"><strong class="subhead">你的青春里有没有属于你的一首歌</strong></div>
                     </div>
                 </div>
@@ -111,25 +111,25 @@
             <div class="layui-row layui-col-space15" id="songListLastRow">
                 <div class="layui-col-md3">
                     <div class="layui-panel">
-                        <div ><img class="cover" src="style/image/cover/9.jpg"/></div>
+                        <div ><img class="cover" src="./image/songList/9.jpg"/></div>
                         <div class="subheadDiv"><strong class="subhead">你的青春里有没有属于你的一首歌</strong></div>
                     </div>
                 </div>
                 <div class="layui-col-md3">
                     <div class="layui-panel">
-                        <div ><img class="cover" src="style/image/cover/10.jpg"/></div>
+                        <div ><img class="cover" src="./image/songList/10.jpg"/></div>
                         <div class="subheadDiv"><strong class="subhead">你的青春里有没有属于你的一首歌</strong></div>
                     </div>
                 </div>
                 <div class="layui-col-md3">
                     <div class="layui-panel">
-                        <div ><img class="cover" src="style/image/cover/11.jpg"/></div>
+                        <div ><img class="cover" src="./image/songList/11.jpg"/></div>
                         <div class="subheadDiv"><strong class="subhead">你的青春里有没有属于你的一首歌</strong></div>
                     </div>
                 </div>
                 <div class="layui-col-md3">
                     <div class="layui-panel">
-                        <div ><img class="cover" src="style/image/cover/12.jpg"/></div>
+                        <div ><img class="cover" src="./image/songList/12.jpg"/></div>
                         <div class="subheadDiv"><strong class="subhead">你的青春里有没有属于你的一首歌</strong></div>
                     </div>
                 </div>
@@ -138,8 +138,37 @@
     </div>
 
     <div class="layui-footer">
-        <!-- 底部固定区域 -->
-        底部固定区域
+        <audio src="audio/胡海泉 - 先走的人.mp3" preload=""></audio>
+        <div class="control-back">
+            <!-- 进度条 -->
+            <div class="progress-bar">
+                <div class="progress-all"></div>
+                <div class="progress-now"></div>
+            </div>
+            <span class="time">00:00/00:00</span>
+            <!-- 控制按钮 -->
+            <div class="control">
+<!--                <div class="albumPictures">-->
+<!--                    <img src="./image/album/default.jpg" style="width: 60px"></img>-->
+<!--                </div>-->
+                <!-- 上一首、下一首、暂停播放 -->
+                <div class="control-btn">
+                    <a href="javascript:;" class="up"><i class="layui-icon layui-icon-left" style="font-size: 25px;color: #5FB878"></i></a>
+                    <a href="javascript:;" class="play-pause" onclick="setPlay()"><i class="layui-icon layui-icon-play" style="font-size: 30px;color: #5FB878"></i></a>
+                    <a href="javascript:;" class="down"><i class="layui-icon layui-icon-right" style="font-size: 25px;color: #5FB878"></i></a>
+                </div>
+                <!-- 播放模式、声音 -->
+                <div class="control-right">
+                    <a href="javascript:;" class="mode"></a>
+                    <a href="javascript:;" class="volume" onclick="setMuted()"><i class="layui-icon layui-icon-speaker" style="font-size: 25px;color: #5FB878"></i></a>
+                    <div class="volume-back">
+                        <div class="volume-all"></div>
+                        <div class="volume-now"></div>
+                    </div>
+                    <span class="volume-text">100</span>
+                </div>
+            </div>
+        </div>
     </div>
 
 
@@ -151,8 +180,6 @@
 <script src="js/common.js"></script>
 <script>
 
-
-
     layui.use('carousel', function(){
         var carousel = layui.carousel;
         //建造实例
@@ -160,7 +187,7 @@
             elem: '#carousel'
             ,width: '60%' //设置容器宽度
             ,arrow: 'always' //始终显示箭头
-            ,height: '50%'
+            ,height: '45%'
             ,interval: '5000'
             //,anim: 'updown' //切换动画方式
         });

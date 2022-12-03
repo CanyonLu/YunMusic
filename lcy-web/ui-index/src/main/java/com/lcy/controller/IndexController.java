@@ -20,4 +20,9 @@ public class IndexController {
     public String index(){
         return "index";
     }
+
+    @GetMapping("/demo")
+    public String demo(){
+        return "demo";
+    }
 }
