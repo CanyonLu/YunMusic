@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Yun-Music 云音乐</title>
+    <title>Yun-Music</title>
     <link rel="stylesheet" href="lib/layui/css/layui.css"/>
     <link rel="stylesheet" href="style/index.css"/>
 </head>
@@ -45,8 +45,8 @@
         </div>
         <br>
         <div id="songListDiv" class="layui-card layui-panel">
-            <div class="layui-card-header">
-                <h1>歌单</h1>
+            <div class="layui-card-header" style="padding-bottom: 40px;padding-top: 40px">
+                <h1 style="text-align: center"><strong style="font-size: 40px">歌单</strong></h1>
             </div>
             <div class="layui-row layui-col-space15">
                 <div class="layui-col-md3">
@@ -108,7 +108,7 @@
                     </div>
                 </div>
             </div>
-            <div class="layui-row layui-col-space15" id="songListLastRow">
+            <div class="layui-row layui-col-space15">
                 <div class="layui-col-md3">
                     <div class="layui-panel">
                         <div ><img class="cover" src="style/image/cover/9.jpg"/></div>
@@ -160,9 +160,9 @@
         //建造实例
         carousel.render({
             elem: '#carousel'
-            ,width: '60%' //设置容器宽度
+            ,width: '50%' //设置容器宽度
             ,arrow: 'always' //始终显示箭头
-            ,height: '50%'
+            ,height: '35%'
             ,interval: '5000'
             //,anim: 'updown' //切换动画方式
         });
