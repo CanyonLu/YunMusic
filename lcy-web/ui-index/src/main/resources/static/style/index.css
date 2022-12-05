@@ -1,9 +1,11 @@
 @charset "utf-8";
 body{
-    background: rgb(234,236,240);
+    /*background: rgb(234,236,240);*/
 }
 .layui-nav{
     background: rgb(254,254,254);
+    border-bottom: solid;
+    border-color: rgb(95,184,120);
 }
 .layui-layout-admin .layui-header .layui-nav {
     background: rgb(254,254,254);
@@ -57,6 +59,7 @@ body{
 .layui-body{
     left: 0;
     margin-top: 30px;
+    padding-top: 50px;
     padding-bottom: 85px
 }
 .layui-layout-admin .layui-footer{
@@ -74,7 +77,7 @@ body{
 }
 
 #songListDiv{
-    width: 80%;
+    width: 70%;
     margin: 0 auto
 }
 
@@ -82,9 +85,11 @@ body{
     width: 100%;
 }
 
-/*.layui-panel{*/
-/*    width: 80%;*/
-/*}*/
+.layui-panel{
+    /*width: 80%;*/
+    border: none;
+    box-shadow: none;
+}
 
 .subhead{
     font-size: larger;
@@ -97,6 +102,7 @@ body{
 
 .layui-card-header{
     padding: 40px 0;
+    border-bottom: none;
 }
 
 h1{
@@ -132,16 +138,17 @@ h1{
 /* 总播放进度 */
 .progress-all {
     width: 100%;
-    height: 1px;
+    height: 2px;
     background-color: #dee2e6;
 }
 
 /* 当前播放进度 */
 .progress-now {
     width: 0;
-    height: 1px;
-    margin-top: -1px;
-    background-color: #5192fe;
+    height: 2px;
+    margin-top: -2px;
+    /*background-color: #5192fe;*/
+    background-color: rgb(95,184,120);
 }
 
 /* 播放进度 文本 */
@@ -159,6 +166,7 @@ h1{
 
 .layui-layout-admin .layui-footer{
     line-height: 21px;
+    box-shadow: none;
 }
 
 /* 控制按钮 */
@@ -178,7 +186,7 @@ h1{
 }
 
 .control-btn {
-    width: 130px;
+    width: 150px;
     height: 30px;
     margin: 0 auto;
 }
@@ -217,7 +225,8 @@ h1{
     height: 2px;
     margin-top: -2px;
     max-width: 100px;
-    background-color: #5192fe;
+    /*background-color: #5192fe;*/
+    background-color: rgb(95,184,120);
 }
 
 .volume-text {

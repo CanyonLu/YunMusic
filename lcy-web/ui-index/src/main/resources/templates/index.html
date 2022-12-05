@@ -36,11 +36,11 @@
     <div class="layui-body">
         <div class="layui-carousel" id="carousel">
             <div carousel-item>
-                <div>条目1</div>
-                <div>条目2</div>
-                <div>条目3</div>
-                <div>条目4</div>
-                <div>条目5</div>
+                <div><img src="image/recommend/1.png"></div>
+                <div><img src="image/recommend/2.png"></div>
+                <div><img src="image/recommend/3.png"></div>
+                <div><img src="image/recommend/4.png"></div>
+                <div><img src="image/recommend/5.png"></div>
             </div>
         </div>
         <br>
@@ -153,14 +153,14 @@
 <!--                </div>-->
                 <!-- 上一首、下一首、暂停播放 -->
                 <div class="control-btn">
-                    <a href="javascript:;" class="up"><i class="layui-icon layui-icon-left" style="font-size: 25px;color: #5FB878"></i></a>
+                    <a href="javascript:;" class="up"><i class="layui-icon layui-icon-left" style="font-size: 25px;color: #5FB878; padding-right: 15px"></i></a>
                     <a href="javascript:;" class="play-pause" onclick="setPlay()"><i class="layui-icon layui-icon-play" style="font-size: 30px;color: #5FB878"></i></a>
-                    <a href="javascript:;" class="down"><i class="layui-icon layui-icon-right" style="font-size: 25px;color: #5FB878"></i></a>
+                    <a href="javascript:;" class="down"><i class="layui-icon layui-icon-right" style="font-size: 25px;color: #5FB878; padding-left: 15px"></i></a>
                 </div>
                 <!-- 播放模式、声音 -->
                 <div class="control-right">
                     <a href="javascript:;" class="mode"></a>
-                    <a href="javascript:;" class="volume" onclick="setMuted()"><i class="layui-icon layui-icon-speaker" style="font-size: 25px;color: #5FB878"></i></a>
+                    <a href="javascript:;" class="volume" onclick="setMuted()"><i class="layui-icon layui-icon-speaker" style="font-size: 25px;color: #5FB878; line-height: 42px"></i></a>
                     <div class="volume-back">
                         <div class="volume-all"></div>
                         <div class="volume-now"></div>
@@ -185,9 +185,9 @@
         //建造实例
         carousel.render({
             elem: '#carousel'
-            ,width: '60%' //设置容器宽度
+            ,width: '70%' //设置容器宽度
             ,arrow: 'always' //始终显示箭头
-            ,height: '45%'
+            ,height: '55%'
             ,interval: '5000'
             //,anim: 'updown' //切换动画方式
         });
