@@ -25,4 +25,9 @@ public class IndexController {
     public String demo(){
         return "demo";
     }
+
+    @GetMapping("/home")
+    public String home(){
+        return "home";
+    }
 }
