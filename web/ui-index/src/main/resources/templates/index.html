@@ -195,6 +195,11 @@
 
         element.on('nav(menu)', function(data){
             layer.msg(data.text());
+            let text = document.getElementsByClassName('layui-nav-item layui-this')[0].children[0].textContent;
+            console.log(text);
+            if(text == data.text()){
+                return false;
+            }
             if(data.text() == '首页'){
                 $("#indexIframe").html('<iframe width="100%" height="100%" frameborder="no" border="0" marginwidth="0" narginheight="0" src="home"></iframe>');
             }
