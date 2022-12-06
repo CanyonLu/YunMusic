@@ -1,6 +1,6 @@
 spring:
   application:
-    name: ui-index
+    name: ui
   cloud:
     nacos:
       discovery:

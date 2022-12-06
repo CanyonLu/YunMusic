@@ -8,12 +8,12 @@ public class IndexController {
 
     @GetMapping("/login")
     public String login(){
-        return "login";
+        return "index/login";
     }
 
     @GetMapping("/register")
     public String register(){
-        return "register";
+        return "index/register";
     }
 
     @GetMapping("/index")
@@ -23,11 +23,11 @@ public class IndexController {
 
     @GetMapping("/demo")
     public String demo(){
-        return "demo";
+        return "index/demo";
     }
 
     @GetMapping("/home")
     public String home(){
-        return "home";
+        return "index/home";
     }
 }
