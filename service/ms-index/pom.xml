@@ -5,53 +5,27 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>com.lcy</groupId>
-    <artifactId>lcy-web</artifactId>
+    <artifactId>service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
   <groupId>com.lcy</groupId>
-  <artifactId>ui-index</artifactId>
+  <artifactId>ms-index</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
 
-  <name>ui-index</name>
-  <!-- FIXME change it to the project's website -->
-  <url>http://www.example.com</url>
+  <name>ms-index</name>
+
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
 
   <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>4.11</version>
-      <scope>test</scope>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter</artifactId>
-    </dependency>
-    <!-- spring-boot-devtools -->
+
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-devtools</artifactId>
       <optional>true</optional> <!-- 表示依赖不会传递 -->
-    </dependency>
-
-    <!-- 模板引擎 类似jstl 更适合html5 -->
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-thymeleaf</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-web</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.springframework</groupId>
-      <artifactId>spring-web</artifactId>
     </dependency>
 
     <dependency>
@@ -59,11 +33,7 @@
       <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
       <version>2.2.0.RELEASE</version>
     </dependency>
-<!--    <dependency>-->
-<!--      <groupId>org.springframework.cloud</groupId>-->
-<!--      <artifactId>spring-cloud-context</artifactId>-->
-<!--      <version>2.2.3.RELEASE</version>-->
-<!--    </dependency>-->
+
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-actuator</artifactId>
@@ -74,12 +44,23 @@
       <artifactId>spring-boot-starter</artifactId>
     </dependency>
 
-
     <dependency>
       <groupId>com.alibaba.cloud</groupId>
       <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
       <version>2.2.0.RELEASE</version>
     </dependency>
+
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-starter-openfeign</artifactId>
+    </dependency>
+
+    <dependency>
+      <groupId>com.lcy</groupId>
+      <artifactId>common-utils</artifactId>
+      <version>${project.parent.version}</version>
+    </dependency>
+
   </dependencies>
 
   <build>
