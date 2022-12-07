@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 @RestController
 @RequestMapping(value = "/user")
 @RefreshScope
@@ -43,12 +46,12 @@ public class IndexController {
      */
     @RequestMapping("/userRegister")
     @ResponseBody
-    public AjaxResult userRegister(String params){
+    public AjaxResult userRegister(String params, HttpServletRequest request, HttpServletResponse response){
         System.out.println(params);
         if(StringUtils.isEmpty(params)){
             return AjaxResult.error();
         }else {
-            return indexService.userRegister(params);
+            return indexService.userRegister(params, request, response);
         }
     }
 

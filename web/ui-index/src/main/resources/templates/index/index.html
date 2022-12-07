@@ -22,15 +22,21 @@
                     <i class="layui-icon layui-icon-search" style="font-size: 26px"></i>
                 </button>
             </li>
-            <li class="layui-nav-item layui-hide layui-show-md-inline-block">
-                <a href="javascript:;"><img src="//t.cn/RCzsdCq" class="layui-nav-img"></a>
-                <dl class="layui-nav-child">
-                    <dd><a href="javascript:;" class="userinfo">个人中心</a></dd>
-                    <dd><a href="javascript:;" class="userinfo">修改密码</a></dd>
-                    <hr>
-                    <dd style="text-align: center;"><a href="javascript:;" class="userinfo">退出</a></dd>
-                </dl>
-            </li>
+            <span id="notLogin" style="display: none">
+                <li class="layui-nav-item" lay-unselect=""><a href="javascript:;" style="font-size: 18px; padding: 0 10px; color: #000000">登录</a></li>
+                <li class="layui-nav-item" lay-unselect=""><a href="javascript:;" style="font-size: 18px; padding: 0 10px; color: #000000">注册</a></li>
+            </span>
+            <span id="logined"  style="display: none">
+                <li class="layui-nav-item layui-hide layui-show-md-inline-block">
+                    <a href="javascript:;"><img src="//t.cn/RCzsdCq" class="layui-nav-img"></a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;" class="userinfo">个人中心</a></dd>
+                        <dd><a href="javascript:;" class="userinfo">修改密码</a></dd>
+                        <hr>
+                        <dd style="text-align: center;"><a href="javascript:;" class="userinfo">退出</a></dd>
+                    </dl>
+                </li>
+            </span>
         </ul>
     </div>
 
@@ -87,6 +93,12 @@
     var nowPage = '首页';
 
     $(function () {
+        if(false){
+            $("#logined").css('display','inline');
+        }else {
+            $("#notLogin").css('display','inline');
+        }
+
         $("#indexIframe").html('<iframe width="100%" height="100%" frameborder="no" border="0" marginwidth="0" narginheight="0" src="home"></iframe>');
     });
 
@@ -106,6 +118,17 @@
                 $("#indexIframe").html('<iframe width="100%" height="100%" frameborder="no" border="0" marginwidth="0" narginheight="0" src="home"></iframe>');
             }else if(newPage == '歌单'){
                 $("#indexIframe").html('<iframe width="100%" height="100%" frameborder="no" border="0" marginwidth="0" narginheight="0" src="playlist"></iframe>');
+            }else if(newPage == '登录'){
+                window.location = 'login'
+            }else if(newPage == '注册'){
+                layer.open({
+                    type : 2,
+                    title : "注册",
+                    maxmin : true,
+                    area : [ '450px', '500px' ],
+                    content : 'register'
+                });
+                return false;
             }
 
             nowPage = document.getElementsByClassName('layui-nav-item layui-this')[0].children[0].textContent;

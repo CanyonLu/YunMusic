@@ -9,6 +9,9 @@ import com.lcy.util.domain.AjaxResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -45,12 +48,14 @@ public class IndexServiceImpl implements IndexService {
      * @return
      */
     @Override
-    public AjaxResult userRegister(String params) {
+    public AjaxResult userRegister(String params, HttpServletRequest request, HttpServletResponse response) {
         UserEntity userEntity = JSONObject.parseObject(params, UserEntity.class);
         String id = UUID.randomUUID().toString();
         userEntity.setId(id);
         int userRegisterResult = indexMapper.userRegister(userEntity);
         if(userRegisterResult == 1){
+            HttpSession session = request.getSession();
+            session.setAttribute("@user", userEntity);
             return AjaxResult.success();
         }
         return AjaxResult.error();
