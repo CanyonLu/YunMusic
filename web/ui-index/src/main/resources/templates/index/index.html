@@ -106,6 +106,22 @@
         var $ = layui.jquery,
             element = layui.element;
 
+        $.ajax({
+            url : realm_dev + index + "user/checkUserLogin",
+            dataType : "json",
+            type : "get",
+            success : function(data){
+                if(data.code == 500){
+
+                }else {
+
+                }
+            },
+            error : function(data){
+                layer.msg("系统忙！", {icon: 3});
+            }
+        });
+
         element.on('nav(menu)', function(data){
             let newPage = data.text();
             layer.msg(newPage);

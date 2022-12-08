@@ -67,9 +67,12 @@ public class IndexServiceImpl implements IndexService {
      * @return
      */
     @Override
-    public AjaxResult userLogin(UserEntity user) {
+    public AjaxResult userLogin(UserEntity user, HttpServletRequest request) {
         UserEntity userEntity = indexMapper.queryUserByAccountAndPassword(user);
         if(Objects.nonNull(userEntity)){
+            HttpSession session = request.getSession();
+            session.setMaxInactiveInterval(1800);
+            session.setAttribute("@user", userEntity);
             return AjaxResult.success(userEntity);
         }else {
             return AjaxResult.error("账号或密码错误，请重试！");

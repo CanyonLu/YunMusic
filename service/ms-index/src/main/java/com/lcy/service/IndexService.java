@@ -14,6 +14,6 @@ public interface IndexService {
     AjaxResult checkUserInfo(String params);
 
     //用户登录
-    AjaxResult userLogin(UserEntity userEntity);
+    AjaxResult userLogin(UserEntity userEntity, HttpServletRequest request);
 
 }

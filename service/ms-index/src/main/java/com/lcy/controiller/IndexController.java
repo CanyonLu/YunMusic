@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @RestController
 @RequestMapping(value = "/user")
@@ -40,6 +41,23 @@ public class IndexController {
     }
 
     /**
+     *
+     * @param request
+     * @return
+     */
+    @RequestMapping("/checkUserLogin")
+    @ResponseBody
+    public AjaxResult checkUserLogin(HttpServletRequest request){
+        HttpSession session = request.getSession();
+        UserEntity user = (UserEntity)session.getAttribute("@user");
+        if(user == null){
+            return AjaxResult.error();
+        }else {
+            return AjaxResult.success(user);
+        }
+    }
+
+    /**
      * 用户注册
      * @param params
      * @return
@@ -62,7 +80,7 @@ public class IndexController {
      */
     @RequestMapping("/userLogin")
     @ResponseBody
-    public AjaxResult userLogin(UserEntity userEntity){
-        return indexService.userLogin(userEntity);
+    public AjaxResult userLogin(UserEntity userEntity, HttpServletRequest request){
+        return indexService.userLogin(userEntity, request);
     }
 }
