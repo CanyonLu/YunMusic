@@ -61,6 +61,9 @@
                 data : {account: account, password: password},
                 dataType : "json",
                 type : "post",
+                xhrFields: {
+                    withCredentials: true
+                },
                 success : function(data){
                     if(data.code == 0){
                         layer.msg(data.data.nickname + '您好，欢迎登录！');

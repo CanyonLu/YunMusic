@@ -106,6 +106,9 @@
                 data : params,
                 dataType : "json",
                 type : "post",
+                xhrFields: {
+                    withCredentials: true
+                },
                 success : function(data){
                     layer.closeAll('loading'); //关闭加载层
                     layer.msg("注册成功！", {icon: 1});

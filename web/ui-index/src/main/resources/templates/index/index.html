@@ -107,14 +107,19 @@
             element = layui.element;
 
         $.ajax({
-            url : realm_dev + index + "user/checkUserLogin",
+            url : realm_dev + index + "user/checkUserLoginState",
             dataType : "json",
             type : "get",
-            success : function(data){
-                if(data.code == 500){
-
+            xhrFields: {
+                withCredentials: true
+            },
+            success : function(res){
+                if(res.code == 500){
+                    layer.msg("未登录！", {icon: 3});
                 }else {
-
+                    layer.msg(res.data.nickname + "已登录！", {icon: 3});
+                    $("#notLogin").css('display','none');
+                    $("#logined").css('display','inline');
                 }
             },
             error : function(data){

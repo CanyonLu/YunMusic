@@ -41,13 +41,13 @@ public class IndexController {
     }
 
     /**
-     *
+     * 校验用户登录状态
      * @param request
      * @return
      */
-    @RequestMapping("/checkUserLogin")
+    @RequestMapping("/checkUserLoginState")
     @ResponseBody
-    public AjaxResult checkUserLogin(HttpServletRequest request){
+    public AjaxResult checkUserLoginState(HttpServletRequest request){
         HttpSession session = request.getSession();
         UserEntity user = (UserEntity)session.getAttribute("@user");
         if(user == null){
