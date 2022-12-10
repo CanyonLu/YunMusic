@@ -1,24 +1,27 @@
 package com.lcy.controiller;
 
 import com.alibaba.druid.util.StringUtils;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import com.lcy.entity.UserEntity;
 import com.lcy.service.IndexService;
+import com.lcy.util.JWTUtils;
 import com.lcy.util.domain.AjaxResult;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
 @RequestMapping(value = "/user")
 @RefreshScope
-@CrossOrigin
+//@CrossOrigin
+@Slf4j
 public class IndexController {
 
     @Autowired
@@ -30,7 +33,6 @@ public class IndexController {
      * @return
      */
     @RequestMapping("/checkUserInfo")
-    @ResponseBody
     public AjaxResult checkUserInfo(String params){
         System.out.println(params);
         if(StringUtils.isEmpty(params)){
@@ -46,15 +48,19 @@ public class IndexController {
      * @return
      */
     @RequestMapping("/checkUserLoginState")
-    @ResponseBody
-    public AjaxResult checkUserLoginState(HttpServletRequest request){
-        HttpSession session = request.getSession();
-        UserEntity user = (UserEntity)session.getAttribute("@user");
-        if(user == null){
-            return AjaxResult.error();
-        }else {
-            return AjaxResult.success(user);
-        }
+    public Map checkUserLoginState(HttpServletRequest request){
+        String token = request.getHeader("token");
+        log.info("验证状态：token：" + token);
+        DecodedJWT verify = JWTUtils.verify(token);
+        String id = verify.getClaim("id").asString();
+        String nickname = verify.getClaim("nickname").asString();
+        log.info("用户id：{}", id);
+        log.info("用户名: {}", nickname);
+        Map map = new HashMap<>();
+        map.put("msg","请求成功");
+        map.put("nickname", nickname);
+        map.put("state", true);
+        return map;
     }
 
     /**
@@ -63,7 +69,6 @@ public class IndexController {
      * @return
      */
     @RequestMapping("/userRegister")
-    @ResponseBody
     public AjaxResult userRegister(String params, HttpServletRequest request, HttpServletResponse response){
         System.out.println(params);
         if(StringUtils.isEmpty(params)){
@@ -74,12 +79,11 @@ public class IndexController {
     }
 
     /**
-     *
+     * 用户登录
      * @param userEntity
      * @return
      */
     @RequestMapping("/userLogin")
-    @ResponseBody
     public AjaxResult userLogin(UserEntity userEntity, HttpServletRequest request){
         return indexService.userLogin(userEntity, request);
     }

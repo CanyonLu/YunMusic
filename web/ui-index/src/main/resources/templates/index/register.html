@@ -106,16 +106,20 @@
                 data : params,
                 dataType : "json",
                 type : "post",
-                xhrFields: {
-                    withCredentials: true
-                },
-                success : function(data){
+                success : function(res){
                     layer.closeAll('loading'); //关闭加载层
-                    layer.msg("注册成功！", {icon: 1});
-                    setTimeout(function(){
-                        let addSuccessindex = parent.layer.getFrameIndex(window.name);
-                        parent.layer.close(addSuccessindex);
-                    },1000);
+                    if(res.code == 0){
+                        localStorage.setItem("token", res.data.token);
+                        layer.msg("注册成功！", {icon: 1});
+                        setTimeout(function(){
+                            let addSuccessindex = parent.layer.getFrameIndex(window.name);
+                            parent.layer.close(addSuccessindex);
+                            parent.location.href = "index";
+                            return false;
+                        },1000);
+                    }else {
+                        layer.msg("注册失败，请重试！", {icon: 2});
+                    }
                 },
                 error : function(data){
 

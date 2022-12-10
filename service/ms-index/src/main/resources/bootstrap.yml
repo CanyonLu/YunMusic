@@ -30,3 +30,11 @@ spring:
       content-type: text/html
   mvc:
     static-path-pattern: /**
+
+
+# 日志配置
+logging:
+  config: classpath:log4j.xml
+  level:
+    com.lcy: debug
+    org.springframework: warn

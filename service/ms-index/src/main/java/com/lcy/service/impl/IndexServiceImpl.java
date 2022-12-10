@@ -5,13 +5,15 @@ import com.alibaba.fastjson.JSONObject;
 import com.lcy.entity.UserEntity;
 import com.lcy.mapper.IndexMapper;
 import com.lcy.service.IndexService;
+import com.lcy.util.JWTUtils;
 import com.lcy.util.domain.AjaxResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -53,10 +55,13 @@ public class IndexServiceImpl implements IndexService {
         String id = UUID.randomUUID().toString();
         userEntity.setId(id);
         int userRegisterResult = indexMapper.userRegister(userEntity);
+        Map<String,Object> map = new HashMap<>();
         if(userRegisterResult == 1){
-            HttpSession session = request.getSession();
-            session.setAttribute("@user", userEntity);
-            return AjaxResult.success();
+            Map<String,String> payload = new HashMap<>();
+            payload.put("id", userEntity.getId());
+            payload.put("nickname", userEntity.getNickname());
+            map.put("token", JWTUtils.getToken(payload));
+            return AjaxResult.success(map);
         }
         return AjaxResult.error();
     }
@@ -69,11 +74,14 @@ public class IndexServiceImpl implements IndexService {
     @Override
     public AjaxResult userLogin(UserEntity user, HttpServletRequest request) {
         UserEntity userEntity = indexMapper.queryUserByAccountAndPassword(user);
+        Map<String,Object> map = new HashMap<>();
         if(Objects.nonNull(userEntity)){
-            HttpSession session = request.getSession();
-            session.setMaxInactiveInterval(1800);
-            session.setAttribute("@user", userEntity);
-            return AjaxResult.success(userEntity);
+            Map<String,String> payload = new HashMap<>();
+            payload.put("id", userEntity.getId());
+            payload.put("nickname", userEntity.getNickname());
+            map.put("token", JWTUtils.getToken(payload));
+            map.put("nickname", userEntity.getNickname());
+            return AjaxResult.success(map);
         }else {
             return AjaxResult.error("账号或密码错误，请重试！");
         }

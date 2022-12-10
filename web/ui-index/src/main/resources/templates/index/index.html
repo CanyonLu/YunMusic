@@ -91,7 +91,6 @@
 <script>
 
     var nowPage = '首页';
-
     $(function () {
         if(false){
             $("#logined").css('display','inline');
@@ -102,30 +101,16 @@
         $("#indexIframe").html('<iframe width="100%" height="100%" frameborder="no" border="0" marginwidth="0" narginheight="0" src="home"></iframe>');
     });
 
+    var changeLoginState = function (){
+        $("#notLogin").css('display','none');
+        $("#logined").css('display','inline');
+    };
+
     layui.use(['element'], function(){
         var $ = layui.jquery,
             element = layui.element;
 
-        $.ajax({
-            url : realm_dev + index + "user/checkUserLoginState",
-            dataType : "json",
-            type : "get",
-            xhrFields: {
-                withCredentials: true
-            },
-            success : function(res){
-                if(res.code == 500){
-                    layer.msg("未登录！", {icon: 3});
-                }else {
-                    layer.msg(res.data.nickname + "已登录！", {icon: 3});
-                    $("#notLogin").css('display','none');
-                    $("#logined").css('display','inline');
-                }
-            },
-            error : function(data){
-                layer.msg("系统忙！", {icon: 3});
-            }
-        });
+        checkstate(changeLoginState);
 
         element.on('nav(menu)', function(data){
             let newPage = data.text();
