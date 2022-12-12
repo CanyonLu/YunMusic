@@ -10,4 +10,9 @@ public class SongListController {
     public String songList(){
         return "playlist/playlist";
     }
+
+    @GetMapping("/playlistDetail")
+    public String playlistDetailView(){
+        return "playlist/playlistDetail";
+    }
 }

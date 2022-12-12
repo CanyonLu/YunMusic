@@ -17,7 +17,7 @@
             <li class="layui-nav-item"><a href="javascript:;">歌手</a></li>
             <li class="layui-nav-item"><a href="javascript:;">我的音乐</a></li>
             <li class="layui-nav-item" id="searchLi">
-                <input class="user-input" type="text" name="search" placeholder="搜索音乐">
+                <input class="user-input" type="text" name="search" placeholder="搜索音乐、歌手、专辑">
                 <button class="user-btn" type="button">
                     <i class="layui-icon layui-icon-search" style="font-size: 26px"></i>
                 </button>
@@ -101,7 +101,7 @@
         $("#indexIframe").html('<iframe width="100%" height="100%" frameborder="no" border="0" marginwidth="0" narginheight="0" src="home"></iframe>');
     });
 
-    var changeLoginState = function (){
+    var loggedinfun = function (){
         $("#notLogin").css('display','none');
         $("#logined").css('display','inline');
     };
@@ -110,35 +110,45 @@
         var $ = layui.jquery,
             element = layui.element;
 
-        checkstate(changeLoginState);
+        checkstate(loggedinfun);
 
         element.on('nav(menu)', function(data){
             let newPage = data.text();
-            layer.msg(newPage);
             //判断是否重复点击同一个模块
             if(nowPage == newPage){
                 return false;
             }
-
-            if(newPage == '首页'){
-                $("#indexIframe").html('<iframe width="100%" height="100%" frameborder="no" border="0" marginwidth="0" narginheight="0" src="home"></iframe>');
-            }else if(newPage == '歌单'){
-                $("#indexIframe").html('<iframe width="100%" height="100%" frameborder="no" border="0" marginwidth="0" narginheight="0" src="playlist"></iframe>');
-            }else if(newPage == '登录'){
-                window.location = 'login'
-            }else if(newPage == '注册'){
-                layer.open({
-                    type : 2,
-                    title : "注册",
-                    maxmin : true,
-                    area : [ '450px', '500px' ],
-                    content : 'register'
-                });
-                return false;
+            //判断点击模块
+            switch (newPage) {
+                case '首页':
+                    $("#indexIframe").html('<iframe width="100%" height="100%" frameborder="no" border="0" marginwidth="0" narginheight="0" src="home"></iframe>');
+                    break;
+                case '歌单':
+                    $("#indexIframe").html('<iframe width="100%" height="100%" frameborder="no" border="0" marginwidth="0" narginheight="0" src="playlist"></iframe>');
+                    break;
+                case '登录':
+                    window.location = 'login';
+                    break;
+                case '退出':
+                    localStorage.removeItem("token");
+                    layer.msg('退出成功');
+                    setTimeout(function(){
+                        location.reload();
+                    },1000);
+                    break;
+                case '注册':
+                    layer.open({
+                        type : 2,
+                        title : "注册",
+                        maxmin : true,
+                        area : [ '450px', '500px' ],
+                        content : 'register'
+                    });
+                    break;
+                default:
+                    break;
             }
-
             nowPage = document.getElementsByClassName('layui-nav-item layui-this')[0].children[0].textContent;
-            console.log(nowPage);
         });
     });
 

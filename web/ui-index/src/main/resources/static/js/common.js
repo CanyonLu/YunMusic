@@ -5,7 +5,12 @@ document.write('<script src="lib/layui/layui.js" type="text/javascript"></script
 var token;
 var loginState;
 
-function checkstate(successCallback) {
+/**
+ * 判断用户是否已登录
+ * @param loggedinfun 已登录回调
+ * @param notloggedinfun 未登录回调
+ */
+function checkstate(loggedinfun, notloggedinfun) {
     token = localStorage.getItem("token");
     $.ajax({
         url : realm_dev + index + "user/checkUserLoginState",
@@ -14,18 +19,25 @@ function checkstate(successCallback) {
         success : function(res){
             if(res.state){
                 loginState = true;
-                typeof successCallback === "function" && successCallback();
+                typeof loggedinfun === "function" && loggedinfun();
             }else {
+                loginState = false;
+                typeof notloggedinfun === "function" && notloggedinfun();
                 layer.msg(res.msg, {icon: 3});
             }
         },
         error : function(data){
             layer.msg("系统忙！", {icon: 3});
             localStorage.removeItem("token");
-            location.href = "login";
+            loginState = false;
+            setTimeout(function(){
+                location.href = "login";
+            },1000);
         },
         beforeSend: function (XMLHttpRequest) {
-            XMLHttpRequest.setRequestHeader("token", token);
+            if(token){
+                XMLHttpRequest.setRequestHeader("token", token);
+            }
         },
     });
 }
