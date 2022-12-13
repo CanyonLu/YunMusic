@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>歌单详情</title>
+    <link rel="stylesheet" href="lib/layui/css/layui.css"/>
+    <style>
+        #main{
+            width: 80%;
+            margin: 0 auto;
+            padding-right: 8%;
+            /*padding-bottom: 2%;*/
+        }
+
+        .my_skin{
+            text-align: center;
+        }
+
+        .my_skin .layui-layer-btn{
+            text-align: center;
+        }
+        .my_skin .layui-layer-btn a{
+            width: 50px;
+            /*height: 35px;*/
+            margin-left: 10px;
+            color: rgb(255,255,255);
+            border: 1px solid rgb(192, 119, 91);
+            background: rgb(192, 119, 91);
+        }
+    </style>
+</head>
+<body>
+<input hidden id="playlistNumber" name="playlistNumber" th:value="${playlistNumber}">
+<div id="main" class="layui-row layui-col-space15">
+    <div class="layui-col-md5">
+        <div id="left" style="padding-left: 20%">
+            <img id="cover" style="width: 80%; border-radius: 20px"/>
+            <p style="font-weight: 700; font-size: 18px;margin-top: 20px; width: 80%; text-align: center">你的青春里有没有属于你的一首歌</p>
+        </div>
+    </div>
+    <div class="layui-col-md7">
+        <div id="right">
+            <p style="font-weight: 700;font-size: 22px">简介</p>
+            <br>
+            <p style="font-size: 16px; color: #888888">
+                情不知所起，一往而情深。伤不知所因，痛彻心扉 从前你是我心上的一束光，倾世温暖。 现在你是我心里的一根刺，刻骨铭心。 以后你是我心底的一粒尘，无关痛痒。 我喜欢你，喜欢没用，没用也喜欢
+            </p>
+            <br>
+            <div style="width: 45%;display:flex;justify-content:space-between; padding-top: 30px">
+                <div>
+                    <div style="font-weight: 600;font-size: 20px">歌单评分</div>
+                    <div id="rated">
+                    </div>
+                </div>
+                <div>
+                    <div id="userRate" style="font-weight: 600;font-size: 20px">请评分</div>
+                    <div id="unrated">
+                    </div>
+                </div>
+            </div>
+            <table id="songsTable" lay-filter="songsTable"></table>
+        </div>
+    </div>
+</div>
+
+<script src="js/common.js"></script>
+<script>
+    var playlistNumber;
+    var newRate;
+    var checkCallBack = function (){
+        if(loginState){
+            $("#userRate").text("已评分");
+            layui.rate.render({
+                elem: '#unrated'
+                ,value: newRate
+                ,text: true
+                ,readonly:true
+                ,setText: function(value){
+                    this.span.html('<span style="font-size: 50px">'+ value + '</span>');
+                }
+            });
+        }else {
+            layer.confirm('请先登录！', {
+                btn: ['确定', '取消'],
+                closeBtn: 0,
+                title: "",
+                skin: "my_skin"
+            }, function () {
+                parent.location.href = 'login';
+            },function () {
+                layui.rate.render({
+                    elem: '#unrated'
+                    ,value: 5
+                    ,text: true
+                    ,setText: function(value){
+                        this.span.html('<span style="font-size: 50px">'+ value + '</span>');
+                    }
+                    ,choose: function (data) {
+                        newRate = data;
+                        checkstate(checkCallBack);
+                    }
+                });
+            })
+        }
+    };
+
+    $(function () {
+        playlistNumber = $("#playlistNumber").val();
+        if(playlistNumber){
+            document.getElementById("cover").src = "image/songList/" + playlistNumber + ".jpg";
+        }
+    });
+
+    layui.use(['table', 'rate'], function () {
+        const $ = layui.jquery,
+            rate = layui.rate,
+            table = layui.table;
+
+        rate.render({
+            elem: '#rated'
+            ,value: 4
+            ,text: true
+            ,readonly:true
+            ,setText: function(value){
+                this.span.html('<span style="font-size: 50px">'+ value + '</span>');
+            }
+        });
+
+        rate.render({
+            elem: '#unrated'
+            ,value: 5
+            ,text: true
+            ,setText: function(value){
+                this.span.html('<span style="font-size: 50px">'+ value + '</span>');
+            }
+            ,choose: function (data) {
+                newRate = data;
+                checkstate(checkCallBack);
+            }
+        });
+
+        const songsTable = table.render({
+            elem: '#songsTable'
+            , title: "歌单详情"
+            , url: realm_dev + client + "playlist/getPlaylist?playlistNumber=" + playlistNumber
+            , toolbar: ''
+            , height: 'full-300'
+            , skin: 'nob'
+            , cols: [
+                [
+                      {type: 'number', width: 40}
+                    , {field: 'title', align: 'center', width: 300, title: '歌曲名'}
+                    , {field: 'singer', align: 'center', width: 300, title: '歌手'}
+                    , {field: 'album', align: 'center', width: 300, title: '专辑'}
+                ]
+            ]
+            // , page: true
+            // , even: true
+            // , sort: true
+            , text: {
+                none: ' ' //默认：无数据。
+            }
+            , done: function (res, curr, count) {
+
+            }
+        });
+
+    });
+
+
+</script>
+</body>
+</html>

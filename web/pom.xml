@@ -13,10 +13,8 @@
     <packaging>pom</packaging>
 
     <name>web</name>
-    <!-- FIXME change it to the project's website -->
-    <url>http://www.example.com</url>
     <modules>
-        <module>ui-index</module>
+        <module>ui-client</module>
     </modules>
 
     <properties>

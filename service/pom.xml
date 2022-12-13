@@ -15,7 +15,7 @@
   <name>service</name>
 
     <modules>
-        <module>ms-index</module>
+        <module>ms-client</module>
     </modules>
 
   <properties>

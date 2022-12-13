@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+    <link rel="stylesheet" href="lib/layui/css/layui.css"/>
+    <link rel="stylesheet" href="style/index.css"/>
+</head>
+<body>
+    <div class="layui-carousel" id="carousel">
+        <div carousel-item>
+            <div><img class="carouselImg" src="image/recommend/1.png"></div>
+            <div><img class="carouselImg" src="image/recommend/2.png"></div>
+            <div><img class="carouselImg" src="image/recommend/3.png"></div>
+            <div><img class="carouselImg" src="image/recommend/4.png"></div>
+            <div><img class="carouselImg" src="image/recommend/5.png"></div>
+        </div>
+    </div>
+    <br>
+    <div class="layui-card-header">
+        <h1>推荐歌单</h1>
+    </div>
+    <div id="songListDiv" class="layui-card layui-panel"></div>
+</body>
+<script src="js/common.js"></script>
+<script>
+
+    function showPlaylistDetail(index){
+        location.href = 'playlistDetail?playlistNumber=' + index;
+    }
+
+    let songlistdiv = document.querySelector("#songListDiv");
+    let picnum = 1;
+    for(let i = 0; i < 2; i++){
+        let rowdiv = document.createElement("div");
+        rowdiv.className = "layui-row layui-col-space15";
+        if(i === 1){
+            rowdiv.id = "songListLastRow";
+        }
+        for(let j = 0; j < 4; j++){
+            let everydiv = document.createElement("div");
+            everydiv.className = "layui-col-md3";
+            let paneldiv = document.createElement("div");
+            paneldiv.className = "layui-panel";
+            let pica = document.createElement("a");
+            pica.setAttribute("href","javascript:;");
+            pica.setAttribute("title", "你的青春里有没有属于你的一首歌");
+            pica.setAttribute("onclick", "showPlaylistDetail(" + picnum + ")");
+            let picimg = document.createElement("img");
+            picimg.className = "cover";
+            picimg.src = "image/songList/" + picnum + ".jpg";
+            pica.appendChild(picimg);
+            let titlediv = document.createElement("div");
+            titlediv.className = "subheadDiv";
+            let titlea = document.createElement("a");
+            titlea.setAttribute("href","javascript:;");
+            titlea.setAttribute("title", "你的青春里有没有属于你的一首歌");
+            let strong = document.createElement("strong");
+            strong.className = "subhead";
+            strong.innerText = "你的青春里有没有属于你的一首歌";
+            titlea.appendChild(strong);
+            titlediv.appendChild(titlea);
+            paneldiv.appendChild(pica);
+            paneldiv.appendChild(titlediv);
+            everydiv.appendChild(paneldiv);
+            rowdiv.appendChild(everydiv);
+            picnum ++;
+        }
+        songlistdiv.appendChild(rowdiv);
+    }
+
+    layui.use(['carousel'], function(){
+        var $ = layui.jquery,
+            carousel = layui.carousel;
+
+        carousel.render({
+            elem: '#carousel'
+            ,width: '70%' //设置容器宽度
+            ,arrow: 'always' //始终显示箭头
+            ,height: '500px'
+            ,interval: '5000'
+        });
+
+
+        layer.ready(function () {
+
+        })
+    });
+</script>
+</html>

@@ -7,10 +7,10 @@ spring:
   cloud:
     gateway:
       routes:
-        - id: ms-index
-          uri: lb://ms-index
+        - id: ms-client
+          uri: lb://ms-client
           predicates:
-            - Path=/index-ms/**
+            - Path=/client/**
       discovery:
         locator:
           enabled: true

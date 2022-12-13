@@ -1,0 +1,40 @@
+spring:
+  application:
+    name: ms-client
+  cloud:
+    nacos:
+      discovery:
+        server-addr: 127.0.0.1:8848
+        namespace: 8cb5eee5-c2fe-44a0-a5f9-bf793bee85a3
+        group: DEFAULT_GROUP
+  devtools:
+    restart:
+      # 热部署开关
+      enabled: true
+      exclude: static/**, templates/**
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  resources:
+    static-locations: classpath:/static/, classpath:/templates/
+  #thymeleaf模板配置
+  thymeleaf:
+    cache: false  #开发的时候请关闭
+    enabled: true
+    prefix: classpath:/templates/
+    suffix: .html
+    #严格执行H5标准
+    mode: LEGACYHTML5
+    encoding: UTF-8
+    servlet:
+      content-type: text/html
+  mvc:
+    static-path-pattern: /**
+
+
+# 日志配置
+logging:
+  config: classpath:log4j.xml
+  level:
+    com.lcy: debug
+    org.springframework: warn
