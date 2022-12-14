@@ -9,6 +9,8 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * @author lucy
  * @date Created in 2022/12/13
@@ -23,16 +25,26 @@ public class PlaylistController {
     private PlaylistService playlistService;
 
     /**
+     * 获取推荐歌单
+     * @param request
+     * @return
+     */
+    @RequestMapping("/getRecommendedPlaylist")
+    public AjaxResult getRecommendedPlaylist(HttpServletRequest request){
+        return playlistService.getRecommendedPlaylist();
+    }
+
+    /**
      * 获取歌单中歌曲列表
      * @param playlistNumber
      * @return
      */
-    @RequestMapping("/getPlaylist")
-    public AjaxResult getPlaylist(String playlistNumber){
+    @RequestMapping("/getPlaylistDetail")
+    public AjaxResult getPlaylistDetail(String playlistNumber){
         if(StringUtils.isEmpty(playlistNumber)){
             return AjaxResult.error();
         }else {
-            return playlistService.getPlaylist(playlistNumber);
+            return playlistService.getPlaylistDetail(playlistNumber);
         }
     }
 }

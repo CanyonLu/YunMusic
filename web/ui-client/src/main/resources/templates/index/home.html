@@ -69,6 +69,23 @@
         songlistdiv.appendChild(rowdiv);
     }
 
+    $(function () {
+        $.ajax({
+            url: realm_dev + client + "playlist/getRecommendedPlaylist",
+            dataType : "json",
+            type : "get",
+            success : function(res){
+                debugger
+                if(res.msg == '操作成功'){
+
+                }
+            },
+            error: function(res) {
+                debugger
+            }
+        })
+    });
+
     layui.use(['carousel'], function(){
         var $ = layui.jquery,
             carousel = layui.carousel;

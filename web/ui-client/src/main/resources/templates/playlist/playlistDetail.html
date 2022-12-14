@@ -131,7 +131,7 @@
 
         layer.ready(function () {
             $.ajax({
-                url: realm_dev + client + "playlist/getPlaylist?playlistNumber=" + playlistNumber,
+                url: realm_dev + client + "playlist/getPlaylistDetail?playlistNumber=" + playlistNumber,
                 dataType : "json",
                 type : "get",
                 success : function(res){

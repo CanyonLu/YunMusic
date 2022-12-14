@@ -6,6 +6,13 @@
         select id, number, name, intro, songsNumber, rate from playlist where number = #{number,jdbcType=VARCHAR}
     </select>
 
+    <select id="getPlaylistByNumberList" resultType="com.lcy.entity.PlaylistEntity">
+        select id, number, name, intro, songsNumber, rate from playlist where number in
+        <foreach collection="list" item="item" open="(" close=")" separator=",">
+            #{item,jdbcType=VARCHAR}
+        </foreach>
+    </select>
+
     <select id="getMusicByNumbers" resultType="com.lcy.entity.SongEntity">
         select id, number, name, singer, album, url from song where number in
         <foreach collection="list" item="item" open="(" close=")" separator=",">
