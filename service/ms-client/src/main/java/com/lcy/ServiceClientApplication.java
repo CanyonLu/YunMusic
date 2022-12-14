@@ -11,10 +11,10 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @EnableFeignClients
 @EnableDiscoveryClient
 @SpringBootApplication(exclude = {DataSourceAutoConfiguration.class})
-public class ServiceIndexApplication {
+public class ServiceClientApplication {
     
     public static void main(String[] args) {
-        SpringApplication.run(ServiceIndexApplication.class, args);
+        SpringApplication.run(ServiceClientApplication.class, args);
         System.out.println("        ヾ(◍°∇°◍)ﾉﾞ    ServiceIndexApplication启动成功      ヾ(◍°∇°◍)ﾉﾞ\n" +
                 "                    _\n" +
                 "            "

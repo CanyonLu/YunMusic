@@ -1,0 +1,28 @@
+package com.lcy.entity;
+
+import lombok.Data;
+
+import java.util.List;
+
+/**
+ * @author lucy
+ * @date Created in 2022/12/14 20:08
+ */
+@Data
+public class PlaylistEntity {
+
+    private String id;
+
+    private String number;
+
+    private String name;
+
+    private String intro;
+
+    private String songsNumber;
+
+    private String rate;
+
+    private List<SongEntity> songlist;
+
+}

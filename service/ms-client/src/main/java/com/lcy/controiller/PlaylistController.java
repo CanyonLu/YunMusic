@@ -2,7 +2,7 @@ package com.lcy.controiller;
 
 import com.alibaba.druid.util.StringUtils;
 import com.lcy.service.PlaylistService;
-import com.lcy.util.domain.TableDataInfo;
+import com.lcy.util.domain.AjaxResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
@@ -23,14 +23,14 @@ public class PlaylistController {
     private PlaylistService playlistService;
 
     /**
-     * 获取歌单列表
+     * 获取歌单中歌曲列表
      * @param playlistNumber
      * @return
      */
     @RequestMapping("/getPlaylist")
-    public TableDataInfo getPlaylist(String playlistNumber){
+    public AjaxResult getPlaylist(String playlistNumber){
         if(StringUtils.isEmpty(playlistNumber)){
-            return new TableDataInfo();
+            return AjaxResult.error();
         }else {
             return playlistService.getPlaylist(playlistNumber);
         }

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lcy.mapper.PlaylistMapper">
+
+    <select id="getPlaylistByNumber" resultType="com.lcy.entity.PlaylistEntity">
+        select id, number, name, intro, songsNumber, rate from playlist where number = #{number,jdbcType=VARCHAR}
+    </select>
+
+    <select id="getMusicByNumbers" resultType="com.lcy.entity.SongEntity">
+        select id, number, name, singer, album, url from song where number in
+        <foreach collection="list" item="item" open="(" close=")" separator=",">
+            #{item,jdbcType=VARCHAR}
+        </foreach>
+    </select>
+
+</mapper>

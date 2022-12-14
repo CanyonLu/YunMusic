@@ -1,0 +1,61 @@
+#main{
+    width: 80%;
+    margin: 0 auto;
+    padding-right: 8%;
+    /*padding-bottom: 2%;*/
+}
+
+.my_skin{
+    text-align: center;
+}
+
+.my_skin .layui-layer-btn{
+    text-align: center;
+}
+.my_skin .layui-layer-btn a{
+    width: 50px;
+    /*height: 35px;*/
+    margin-left: 10px;
+    color: rgb(255,255,255);
+    border: 1px solid rgb(192, 119, 91);
+    background: rgb(192, 119, 91);
+}
+
+#left{
+    padding-left: 20%;
+}
+
+#cover{
+    width: 80%;
+    border-radius: 20px;
+}
+
+#left p{
+    font-weight: 700;
+    font-size: 18px;
+    margin-top: 20px;
+    width: 80%;
+    text-align: center;
+}
+
+#describe{
+    font-size: 22px;
+    font-weight: 700;
+}
+
+#describeDetail{
+    font-size: 16px;
+    color: #888888;
+}
+
+#rateDiv{
+    width: 45%;
+    display:flex;
+    justify-content:space-between;
+    padding-top: 30px;
+}
+
+.rateClass{
+    font-weight: 600;
+    font-size: 20px;
+}

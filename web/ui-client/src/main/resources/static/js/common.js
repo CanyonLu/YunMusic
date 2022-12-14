@@ -21,6 +21,7 @@ function checkstate(callbackFunction) {
                 loginState = true;
             }else {
                 loginState = false;
+                localStorage.removeItem("token");
                 layer.msg(res.msg, {icon: 3});
             }
             typeof callbackFunction === "function" && callbackFunction();
