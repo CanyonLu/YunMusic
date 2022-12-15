@@ -29,45 +29,7 @@
         location.href = 'playlistDetail?playlistNumber=' + index;
     }
 
-    let songlistdiv = document.querySelector("#songListDiv");
-    let picnum = 1;
-    for(let i = 0; i < 2; i++){
-        let rowdiv = document.createElement("div");
-        rowdiv.className = "layui-row layui-col-space15";
-        if(i === 1){
-            rowdiv.id = "songListLastRow";
-        }
-        for(let j = 0; j < 4; j++){
-            let everydiv = document.createElement("div");
-            everydiv.className = "layui-col-md3";
-            let paneldiv = document.createElement("div");
-            paneldiv.className = "layui-panel";
-            let pica = document.createElement("a");
-            pica.setAttribute("href","javascript:;");
-            pica.setAttribute("title", "你的青春里有没有属于你的一首歌");
-            pica.setAttribute("onclick", "showPlaylistDetail(" + picnum + ")");
-            let picimg = document.createElement("img");
-            picimg.className = "cover";
-            picimg.src = "image/songList/" + picnum + ".jpg";
-            pica.appendChild(picimg);
-            let titlediv = document.createElement("div");
-            titlediv.className = "subheadDiv";
-            let titlea = document.createElement("a");
-            titlea.setAttribute("href","javascript:;");
-            titlea.setAttribute("title", "你的青春里有没有属于你的一首歌");
-            let strong = document.createElement("strong");
-            strong.className = "subhead";
-            strong.innerText = "你的青春里有没有属于你的一首歌";
-            titlea.appendChild(strong);
-            titlediv.appendChild(titlea);
-            paneldiv.appendChild(pica);
-            paneldiv.appendChild(titlediv);
-            everydiv.appendChild(paneldiv);
-            rowdiv.appendChild(everydiv);
-            picnum ++;
-        }
-        songlistdiv.appendChild(rowdiv);
-    }
+
 
     $(function () {
         $.ajax({
@@ -75,13 +37,54 @@
             dataType : "json",
             type : "get",
             success : function(res){
-                debugger
                 if(res.msg == '操作成功'){
+                    let songlist = res.data;
+                    let rownum = Math.ceil(songlist.length/4);
+                    let songlistdiv = document.querySelector("#songListDiv");
+                    let num = 1;
+                    for(let i = 0; i < rownum; i++){
+                        let rowdiv = document.createElement("div");
+                        rowdiv.className = "layui-row layui-col-space15";
+                        if(i === (rownum - 1)){
+                            rowdiv.id = "songListLastRow";
+                        }
+                        for(let j = 0; j < 4; j++){
+                            let everydiv = document.createElement("div");
+                            everydiv.className = "layui-col-md3";
+                            let paneldiv = document.createElement("div");
+                            paneldiv.className = "layui-panel";
+                            let pica = document.createElement("a");
+                            pica.setAttribute("href","javascript:;");
+                            pica.setAttribute("title", songlist[num-1].name);
+                            pica.setAttribute("onclick", "showPlaylistDetail(" + num + ")");
+                            let picimg = document.createElement("img");
+                            picimg.className = "cover";
+                            picimg.src = "image/songList/" + num + ".jpg";
+                            pica.appendChild(picimg);
+                            let titlediv = document.createElement("div");
+                            titlediv.className = "subheadDiv";
+                            let titlea = document.createElement("a");
+                            titlea.setAttribute("href","javascript:;");
+                            titlea.setAttribute("title", songlist[num-1].name);
+                            let strong = document.createElement("strong");
+                            strong.className = "subhead";
+                            strong.innerText = songlist[num-1].name;
+                            titlea.appendChild(strong);
+                            titlediv.appendChild(titlea);
+                            paneldiv.appendChild(pica);
+                            paneldiv.appendChild(titlediv);
+                            everydiv.appendChild(paneldiv);
+                            rowdiv.appendChild(everydiv);
+                            num ++;
+                        }
+                        songlistdiv.appendChild(rowdiv);
+                    }
+
 
                 }
             },
             error: function(res) {
-                debugger
+
             }
         })
     });

@@ -7,7 +7,13 @@ import com.lcy.service.PlaylistService;
 import com.lcy.util.domain.AjaxResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.FileCopyUtils;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.OutputStream;
 import java.util.*;
 
 /**
@@ -54,5 +60,35 @@ public class PlaylistServiceImpl implements PlaylistService {
         List<SongEntity> musics = playlistMapper.getMusicByNumbers(songList);
         playlist.setSonglist(musics);
         return AjaxResult.success(playlist);
+    }
+
+    /**
+     * 获取歌曲文件返回前台播放
+     * @param number
+     * @param request
+     * @param response
+     * @throws Exception
+     */
+    @Override
+    public void getSongData(String number, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        SongEntity music = playlistMapper.getMusicByNumber(number);
+        String u = music.getUrl();
+        File file = new File(u);
+        String range = request.getHeader("range");
+        String rs[] = range.split("\\=");
+        range = rs[1].split("\\-")[0];
+        int start = Integer.parseInt(range);
+        long length = file.length();
+        if(start > 0){
+            response.setStatus(206);
+        }
+        response.addHeader("Accept-Ranges","bytes");
+        response.addHeader("Content-Length", length + "");
+        response.addHeader("Content-Range","bytes " + start + "-" + (length - 1) + "/" + length);
+        response.addHeader("Content-Type","audio/mpeg;charset=utf-8");
+        OutputStream os = response.getOutputStream();
+        FileInputStream fis = new FileInputStream(file);
+        fis.skip(start);
+        FileCopyUtils.copy(fis, os);
     }
 }

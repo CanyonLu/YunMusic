@@ -40,9 +40,9 @@
 <script>
     var playlistNumber;
     var newRate;
+    var playingNumber;
     var checkCallBack = function (){
         if(loginState){
-
             $("#userRate").text("已评分");
             layui.rate.render({
                 elem: '#unrated'
@@ -83,6 +83,11 @@
         if(playlistNumber){
             document.getElementById("cover").src = "image/songList/" + playlistNumber + ".jpg";
         }
+        let player = parent.document.getElementsByTagName('audio')[0];
+        if(!player.paused){
+            let src = player.getAttribute("src");
+            playingNumber = src.substring(src.indexOf('=') + 1);
+        }
     });
 
     layui.use(['table', 'rate'], function () {
@@ -108,13 +113,16 @@
             , title: "歌单详情"
             , toolbar: ''
             , height: 'full-300'
-            , skin: 'nob'
+            // , skin: 'nob'
             , cols: [
                 [
-                      {type: 'number', width: 40}
-                    , {field: 'name', align: 'center', width: 400, title: '歌曲名'}
+                      {type: 'numbers', width: 40}
+                    , {field: 'number', width: 60, align: 'center',title:"111", templet: function (res) {
+                        return '<a href="javascript:;" onclick="parent.playmusic('+res.number+', this)"><i class="layui-icon layui-icon-play"></i></a>'
+                    }}
+                    , {field: 'name', align: 'center', width: 350, title: '歌曲名'}
                     , {field: 'singer', align: 'center', width: 350, title: '歌手'}
-                    , {field: 'album', align: 'center', width: 380, title: '专辑'}
+                    , {field: 'album', align: 'center', title: '专辑'}
                 ]
             ]
             // , page: true
@@ -125,7 +133,16 @@
             }
             , data: []
             , done: function (res, curr, count) {
-
+                if(playingNumber && res.data.length > 0){
+                    let a = document.getElementsByTagName('a');
+                    let playdom = [];
+                    for(var i=0;i<a.length; i++){
+                        if(a[i].getAttribute('onclick') == 'parent.playmusic(' + playingNumber +', this)'){
+                            playdom.push(a[i]);
+                        }
+                    };
+                    playdom[0].firstChild.classList.value = "layui-icon layui-icon-pause";
+                }
             }
         });
 

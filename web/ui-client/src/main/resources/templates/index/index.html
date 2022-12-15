@@ -47,7 +47,7 @@
     </div>
 
     <div class="layui-footer">
-        <audio src="audio/胡海泉 - 先走的人.mp3" preload=""></audio>
+        <audio src="audio/胡海泉 - 先走的人.mp3" preload="auto"></audio>
         <div class="control-back">
             <!-- 进度条 -->
             <div class="progress-bar">
@@ -91,6 +91,8 @@
 <script>
 
     var nowPage = '首页';
+    var playingNubmer;
+    var playingDom;
     $(function () {
         if(false){
             $("#logined").css('display','inline');
@@ -106,6 +108,31 @@
             $("#logined").css('display','inline');
         }
     };
+
+    function playmusic(number, dom){
+        if(playingNubmer == undefined && playingDom == undefined){
+            dom.firstChild.classList.value = 'layui-icon layui-icon-pause';
+            myAduio.src = realm_dev + client + "playlist/getSongData?number=" + number;
+            setPlay();
+            playingNubmer = number;
+            playingDom = dom;
+        }else if(playingNubmer == number){
+            if(!myAduio.paused){
+                dom.firstChild.classList.value = 'layui-icon layui-icon-play';
+                setPlay(false)
+            }else {
+                dom.firstChild.classList.value = 'layui-icon layui-icon-pause';
+                setPlay();
+            }
+        }else if(playingNubmer != number){
+            playingDom.firstChild.classList.value = 'layui-icon layui-icon-play';
+            dom.firstChild.classList.value = 'layui-icon layui-icon-pause';
+            myAduio.src = realm_dev + client + "playlist/getSongData?number=" + number;
+            setPlay();
+            playingNubmer = number;
+            playingDom = dom;
+        }
+    }
 
     layui.use(['element'], function(){
         var $ = layui.jquery,

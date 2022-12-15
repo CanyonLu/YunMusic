@@ -20,4 +20,8 @@
         </foreach>
     </select>
 
+    <select id="getMusicByNumber" resultType="com.lcy.entity.SongEntity">
+         select id, number, name, singer, album, url from song where number = #{number,jdbcType=VARCHAR}
+    </select>
+
 </mapper>

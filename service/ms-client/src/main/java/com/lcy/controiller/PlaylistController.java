@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * @author lucy
@@ -46,5 +47,14 @@ public class PlaylistController {
         }else {
             return playlistService.getPlaylistDetail(playlistNumber);
         }
+    }
+
+    /**
+     *根据歌曲编号获取歌曲
+     * @param number
+     */
+    @RequestMapping("/getSongData")
+    public void getSongData(String number, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        playlistService.getSongData(number, request, response);
     }
 }
