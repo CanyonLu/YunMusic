@@ -201,7 +201,6 @@ h1{
 
 /* 右侧控制按钮 */
 .control-right {
-    /* width: 180px; */
     height: 30px;
     margin-left: calc(50vw + 150px);
     margin-top: -32px;
@@ -209,12 +208,40 @@ h1{
     align-items: center;
 }
 
-.albumPictures{
-    height: 60px;
-    margin-left: calc(50vw + 150px);
-    margin-top: -32px;
+.playlist{
+    height: 30px;
+    margin-left: calc(50vw + 500px);
+    margin-top: -28px;
     display: flex;
     align-items: center;
+}
+
+.playlist i{
+    color: green;
+    font-size: 28px;
+}
+
+.albumPictures{
+    margin-left: calc(50vw - 600px);
+    position: fixed;
+    margin-top: -15px;
+    display: flex;
+    align-items: center;
+}
+
+.albumPictures img{
+    width: 50px;
+}
+
+.albumPictures div{
+    width: 300px;
+    padding-left: 30px;
+}
+
+.albumPictures p{
+    font-size: 16px;
+    color: #888888;
+    -webkit-user-select: none;
 }
 
 .volume-back {

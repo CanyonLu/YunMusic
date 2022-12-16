@@ -57,9 +57,14 @@
             <span class="time">00:00/00:00</span>
             <!-- 控制按钮 -->
             <div class="control">
-<!--                <div class="albumPictures">-->
-<!--                    <img src="./image/album/default.jpg" style="width: 60px"></img>-->
-<!--                </div>-->
+                <div class="albumPictures">
+                    <img src="./image/album/default.jpg"/>
+                    <div>
+                        <p>
+                            <marquee behavior="scroll" direction="left" scrollamount="3">当前播放： 胡海泉 - 先走的人</marquee>
+                        </p>
+                    </div>
+                </div>
                 <!-- 上一首、下一首、暂停播放 -->
                 <div class="control-btn">
                     <a href="javascript:;" class="up"><i class="layui-icon layui-icon-left"></i></a>
@@ -75,6 +80,9 @@
                         <div class="volume-now"></div>
                     </div>
                     <span class="volume-text">100</span>
+                </div>
+                <div class="playlist">
+                    <a href="javascript:;" onclick="showList()"><i class="layui-icon layui-icon-list"></i></a>
                 </div>
             </div>
         </div>
@@ -108,6 +116,22 @@
             $("#logined").css('display','inline');
         }
     };
+    
+    function showList() {
+        layui.layer.open({
+            type: 2,
+            title: false,
+            area: ['450px', '70%'],
+            offset: 'rb',
+            closeBtn: 0,
+            anim: 2,
+            shadeClose: true,
+            content: 'playlistArea',
+            success: res => {
+                // 成功回调处理
+            }
+        });
+    }
 
     function playmusic(number, dom){
         if(playingNubmer == undefined && playingDom == undefined){
