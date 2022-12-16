@@ -112,17 +112,17 @@
             elem: '#songsTable'
             , title: "歌单详情"
             , toolbar: ''
-            , height: 'full-300'
-            // , skin: 'nob'
+            // , height: 'full-300'
+            , skin: 'nob'
             , cols: [
                 [
-                      {type: 'numbers', width: 40}
-                    , {field: 'number', width: 60, align: 'center',title:"111", templet: function (res) {
+                      {type: 'numbers', width: 50, unresize: true}
+                    , {field: 'number', width: 60, align: 'center', unresize: true, templet: function (res) {
                         return '<a href="javascript:;" onclick="parent.playmusic('+res.number+', this)"><i class="layui-icon layui-icon-play"></i></a>'
                     }}
-                    , {field: 'name', align: 'center', width: 350, title: '歌曲名'}
-                    , {field: 'singer', align: 'center', width: 350, title: '歌手'}
-                    , {field: 'album', align: 'center', title: '专辑'}
+                    , {field: 'name', align: 'center', width: 200, unresize: true, title: '歌曲名'}
+                    , {field: 'singer', align: 'center', width: 300, unresize: true, title: '歌手'}
+                    , {field: 'album', align: 'center', unresize: true, title: '专辑'}
                 ]
             ]
             // , page: true
@@ -140,7 +140,7 @@
                         if(a[i].getAttribute('onclick') == 'parent.playmusic(' + playingNumber +', this)'){
                             playdom.push(a[i]);
                         }
-                    };
+                    }
                     playdom[0].firstChild.classList.value = "layui-icon layui-icon-pause";
                 }
             }
