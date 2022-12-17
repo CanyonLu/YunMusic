@@ -37,6 +37,9 @@
 </div>
 
 <script src="js/common.js"></script>
+<script type="text/html" id="play">
+    <a href="javascript:;" onclick=parent.playmusic('{{d.number}}','{{d.name}}','{{d.singer}}',this)><i class="layui-icon layui-icon-play"></i></a>
+</script>
 <script>
     var playlistNumber;
     var newRate;
@@ -93,6 +96,7 @@
     layui.use(['table', 'rate'], function () {
         const $ = layui.jquery,
             rate = layui.rate,
+            layer = layui.layer,
             table = layui.table;
 
         rate.render({
@@ -117,32 +121,28 @@
             , cols: [
                 [
                       {type: 'numbers', width: 50, unresize: true}
-                    , {field: 'number', width: 60, align: 'center', unresize: true, templet: function (res) {
-                        return '<a href="javascript:;" onclick="parent.playmusic('+res.number+', this)"><i class="layui-icon layui-icon-play"></i></a>'
-                    }}
+                    , {field: 'number', width: 60, align: 'center', unresize: true, templet: '#play'}
                     , {field: 'name', align: 'center', width: 200, unresize: true, title: '歌曲名'}
                     , {field: 'singer', align: 'center', width: 300, unresize: true, title: '歌手'}
                     , {field: 'album', align: 'center', unresize: true, title: '专辑'}
                 ]
             ]
-            // , page: true
-            // , even: true
-            // , sort: true
             , text: {
                 none: ' ' //默认：无数据。
             }
             , data: []
             , done: function (res, curr, count) {
-                if(playingNumber && res.data.length > 0){
-                    let a = document.getElementsByTagName('a');
-                    let playdom = [];
-                    for(var i=0;i<a.length; i++){
-                        if(a[i].getAttribute('onclick') == 'parent.playmusic(' + playingNumber +', this)'){
-                            playdom.push(a[i]);
-                        }
-                    }
-                    playdom[0].firstChild.classList.value = "layui-icon layui-icon-pause";
-                }
+                //TODO 正在播放的歌曲播放图标改为暂停图标
+                // if(playingNumber && res.data.length > 0){
+                //     let a = document.getElementsByTagName('a');
+                //     let playdom = [];
+                //     for(var i=0;i<a.length; i++){
+                //         if(a[i].getAttribute('onclick') == 'parent.playmusic(' + playingNumber +', this)'){
+                //             playdom.push(a[i]);
+                //         }
+                //     }
+                //     playdom[0].firstChild.classList.value = "layui-icon layui-icon-pause";
+                // }
             }
         });
 

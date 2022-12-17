@@ -94,10 +94,13 @@ function setPlay(state) {
     if (state == true) {
         myAduio.play();
         play_pause.firstChild.classList.value = "layui-icon layui-icon-pause";
-        $("#titleText").html("当前播放： 胡海泉 - 先走的人");
+        let item = localStorage.getItem("playingMusicData");
+        let data = JSON.parse(item);
+        $("#titleText").html("当前播放： " + data.singer + " - " + data.name);
         playState = true;
         setTimeText();
         setProgress();
+        checkEnd();
         // 开始播放后要重新将时间间距改回来，不然下次播放计时器会出错
         timeInterval[nowLine] = timeArray1[nowLine + 1] - timeArray1[nowLine];
     } else {
@@ -132,6 +135,15 @@ function setMuted() {
         // volume_a.style.backgroundImage = 'url(../img/mute.png)';
         volume_now.style.width = '0';
         volume_text.innerText = '0';
+    }
+}
+
+function checkEnd() {
+    if(myAduio.ended){
+        document.getElementsByClassName('play-pause')[0].firstChild.classList.value = "layui-icon layui-icon-play";
+        $("#titleText").html("");
+    }else {
+        setTimeout(checkEnd, 100);
     }
 }
 

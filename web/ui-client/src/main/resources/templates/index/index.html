@@ -140,7 +140,32 @@
         });
     }
 
-    function playmusic(number, dom){
+    function playmusic(number, name, singer, dom){
+        //将正在播放歌曲加到localStorage，并更新播放列表
+        let data = {
+            number: number,
+            name: name,
+            singer: singer
+        };
+        localStorage.setItem("playingMusicData", JSON.stringify(data));
+        let playlist = localStorage.getItem("playlist");
+        let newPlaylist = [];
+        if(playlist){
+            newPlaylist = JSON.parse(playlist);
+            let flag = true;
+            newPlaylist.forEach(item =>{
+                if(item.number == data.number){
+                    flag = false
+                }
+            });
+            if(flag){
+                newPlaylist.push(data);
+            }
+        }else {
+            newPlaylist.push(data);
+        }
+        localStorage.setItem("playlist", JSON.stringify(newPlaylist));
+        //歌单页面加播放样式
         if(playingNubmer == undefined && playingDom == undefined){
             dom.firstChild.classList.value = 'layui-icon layui-icon-pause';
             myAduio.src = realm_dev + client + "playlist/getSongData?number=" + number;
