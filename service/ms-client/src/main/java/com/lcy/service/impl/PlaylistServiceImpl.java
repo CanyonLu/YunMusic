@@ -70,25 +70,29 @@ public class PlaylistServiceImpl implements PlaylistService {
      * @throws Exception
      */
     @Override
-    public void getSongData(String number, HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public void getSongData(String number, HttpServletRequest request, HttpServletResponse response) {
         SongEntity music = playlistMapper.getMusicByNumber(number);
         String u = music.getUrl();
-        File file = new File(u);
-        String range = request.getHeader("range");
-        String rs[] = range.split("\\=");
-        range = rs[1].split("\\-")[0];
-        int start = Integer.parseInt(range);
-        long length = file.length();
-        if(start > 0){
-            response.setStatus(206);
+        try {
+            File file = new File(u);
+            String range = request.getHeader("range");
+            String rs[] = range.split("\\=");
+            range = rs[1].split("\\-")[0];
+            int start = Integer.parseInt(range);
+            long length = file.length();
+            if(start > 0){
+                response.setStatus(206);
+            }
+            response.addHeader("Accept-Ranges","bytes");
+            response.addHeader("Content-Length", length + "");
+            response.addHeader("Content-Range","bytes " + start + "-" + (length - 1) + "/" + length);
+            response.addHeader("Content-Type","audio/mpeg;charset=utf-8");
+            OutputStream os = response.getOutputStream();
+            FileInputStream fis = new FileInputStream(file);
+            fis.skip(start);
+            FileCopyUtils.copy(fis, os);
+        }catch (Exception e){
+            e.printStackTrace();
         }
-        response.addHeader("Accept-Ranges","bytes");
-        response.addHeader("Content-Length", length + "");
-        response.addHeader("Content-Range","bytes " + start + "-" + (length - 1) + "/" + length);
-        response.addHeader("Content-Type","audio/mpeg;charset=utf-8");
-        OutputStream os = response.getOutputStream();
-        FileInputStream fis = new FileInputStream(file);
-        fis.skip(start);
-        FileCopyUtils.copy(fis, os);
     }
 }

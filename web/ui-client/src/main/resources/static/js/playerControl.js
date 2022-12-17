@@ -94,6 +94,7 @@ function setPlay(state) {
     if (state == true) {
         myAduio.play();
         play_pause.firstChild.classList.value = "layui-icon layui-icon-pause";
+        $("#titleText").html("当前播放： 胡海泉 - 先走的人");
         playState = true;
         setTimeText();
         setProgress();
@@ -102,6 +103,7 @@ function setPlay(state) {
     } else {
         myAduio.pause();
         play_pause.firstChild.classList.value = "layui-icon layui-icon-play";
+        $("#titleText").html("");
         // play_pause.style.backgroundImage = 'url(../img/play.png)';
         playState = false;
         timeInterval[nowLine] = timeArray1[nowLine + 1] - myAduio.currentTime;

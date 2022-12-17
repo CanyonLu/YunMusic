@@ -44,6 +44,9 @@
         <div class="layui-tab-content">
             <div id="indexIframe" style="height: 100%" class="layui-tab-item layui-show"></div>
         </div>
+<!--        <div id="playlistWindow" style="width: 450px;height: 500px;background-color: #92B8B1;bottom: 80px; position: absolute;right: 1%; display: none">-->
+
+<!--        </div>-->
     </div>
 
     <div class="layui-footer">
@@ -57,11 +60,11 @@
             <span class="time">00:00/00:00</span>
             <!-- 控制按钮 -->
             <div class="control">
-                <div class="albumPictures">
+                <div class="control-title">
                     <img src="./image/album/default.jpg"/>
                     <div>
                         <p>
-                            <marquee behavior="scroll" direction="left" scrollamount="3">当前播放： 胡海泉 - 先走的人</marquee>
+                            <marquee id="titleText" behavior="scroll" direction="left" scrollamount="3"></marquee>
                         </p>
                     </div>
                 </div>
@@ -116,17 +119,21 @@
             $("#logined").css('display','inline');
         }
     };
-    
+
     function showList() {
+        // $("#playlistWindow").toggle();
+        let width = innerWidth - 450;
+        let height = innerHeight - 500 - 80;
         layui.layer.open({
             type: 2,
             title: false,
-            area: ['450px', '70%'],
-            offset: 'rb',
+            area: ['450px', '500px'],
+            offset: [height, width],
             closeBtn: 0,
-            anim: 2,
+            anim: 0,
+            shade: 0.1,
             shadeClose: true,
-            content: 'playlistArea',
+            content: 'playlistWindow',
             success: res => {
                 // 成功回调处理
             }
@@ -162,7 +169,7 @@
         var $ = layui.jquery,
             element = layui.element;
 
-        checkstate(loggedinfun);
+        checkUserState(loggedinfun);
 
         element.on('nav(menu)', function(data){
             let newPage = data.text();

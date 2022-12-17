@@ -10,7 +10,7 @@ var loginState;
  * @param loggedinfun 已登录回调
  * @param notloggedinfun 未登录回调
  */
-function checkstate(callbackFunction) {
+function checkUserState(callbackFunction) {
     token = localStorage.getItem("token");
     $.ajax({
         url : realm_dev + client + "user/checkUserLoginState",

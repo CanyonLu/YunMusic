@@ -17,4 +17,9 @@ public class SongListController {
         mmap.addAttribute("playlistNumber", playlistNumber);
         return "playlist/playlistDetail";
     }
+
+    @GetMapping("/playlistWindow")
+    public String playlistWindow(){
+        return "playlist/playlistWindow";
+    }
 }

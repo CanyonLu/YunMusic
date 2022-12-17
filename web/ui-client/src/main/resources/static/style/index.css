@@ -221,7 +221,7 @@ h1{
     font-size: 28px;
 }
 
-.albumPictures{
+.control-title{
     margin-left: calc(50vw - 600px);
     position: fixed;
     margin-top: -15px;
@@ -229,16 +229,16 @@ h1{
     align-items: center;
 }
 
-.albumPictures img{
+.control-title img{
     width: 50px;
 }
 
-.albumPictures div{
+.control-title div{
     width: 300px;
     padding-left: 30px;
 }
 
-.albumPictures p{
+.control-title p{
     font-size: 16px;
     color: #888888;
     -webkit-user-select: none;
