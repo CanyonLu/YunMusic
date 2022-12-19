@@ -26,13 +26,13 @@ public class PlaylistController {
     private PlaylistService playlistService;
 
     /**
-     * 获取推荐歌单
-     * @param request
+     * 获取歌单
+     * @param style 歌单风格,null取所有歌单
      * @return
      */
-    @RequestMapping("/getRecommendedPlaylist")
-    public AjaxResult getRecommendedPlaylist(HttpServletRequest request){
-        return playlistService.getRecommendedPlaylist();
+    @RequestMapping("/getPlaylist")
+    public AjaxResult getPlaylist(String style){
+        return playlistService.getPlaylist(style);
     }
 
     /**

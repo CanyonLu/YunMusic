@@ -3,14 +3,16 @@
 <mapper namespace="com.lcy.mapper.PlaylistMapper">
 
     <select id="getPlaylistByNumber" resultType="com.lcy.entity.PlaylistEntity">
-        select id, number, name, intro, songsNumber, rate from playlist where number = #{number,jdbcType=VARCHAR}
+        select id, number, name, intro, songsNumber, rate, style from playlist where number = #{number,jdbcType=VARCHAR}
     </select>
 
-    <select id="getPlaylistByNumberList" resultType="com.lcy.entity.PlaylistEntity">
-        select id, number, name, intro, songsNumber, rate from playlist where number in
-        <foreach collection="list" item="item" open="(" close=")" separator=",">
-            #{item,jdbcType=VARCHAR}
-        </foreach>
+    <select id="getPlaylist" resultType="com.lcy.entity.PlaylistEntity">
+        select id, number, name, intro, songsNumber, rate, style from playlist
+        <where>
+            <if test="style != null and style != ''">
+                style = #{style,jdbcType=VARCHAR}
+            </if>
+        </where>
     </select>
 
     <select id="getMusicByNumbers" resultType="com.lcy.entity.SongEntity">

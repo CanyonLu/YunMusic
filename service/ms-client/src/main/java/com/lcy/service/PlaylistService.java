@@ -7,8 +7,8 @@ import javax.servlet.http.HttpServletResponse;
 
 public interface PlaylistService {
 
-    //获取推荐歌单
-    AjaxResult getRecommendedPlaylist();
+    //获取歌单
+    AjaxResult getPlaylist(String style);
 
     //歌单详情
     AjaxResult getPlaylistDetail(String playlistNumber);

@@ -31,15 +31,8 @@ public class PlaylistServiceImpl implements PlaylistService {
      * @return
      */
     @Override
-    public AjaxResult getRecommendedPlaylist() {
-        Random random = new Random();
-        HashSet<String> playlistNumberSet = new HashSet<>();
-        while(playlistNumberSet.size() < 8){
-            playlistNumberSet.add(String.valueOf(random.nextInt(8) + 1));
-        }
-        List<String> list = new ArrayList<>();
-        list.addAll(playlistNumberSet);
-        List<PlaylistEntity> playlist = playlistMapper.getPlaylistByNumberList(list);
+    public AjaxResult getPlaylist(String style) {
+        List<PlaylistEntity> playlist = playlistMapper.getPlaylist(style);
         if(playlist != null){
             return AjaxResult.success(playlist);
         }

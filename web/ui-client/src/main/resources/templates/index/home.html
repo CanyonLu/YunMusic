@@ -33,7 +33,7 @@
 
     $(function () {
         $.ajax({
-            url: realm_dev + client + "playlist/getRecommendedPlaylist",
+            url: realm_dev + client + "playlist/getPlaylist",
             dataType : "json",
             type : "get",
             success : function(res){
@@ -79,8 +79,6 @@
                         }
                         songlistdiv.appendChild(rowdiv);
                     }
-
-
                 }
             },
             error: function(res) {

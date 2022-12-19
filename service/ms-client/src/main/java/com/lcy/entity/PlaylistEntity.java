@@ -23,6 +23,8 @@ public class PlaylistEntity {
 
     private String rate;
 
+    private String style;
+
     private List<SongEntity> songlist;
 
 }

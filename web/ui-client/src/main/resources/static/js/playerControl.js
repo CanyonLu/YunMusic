@@ -86,6 +86,22 @@ function setMouseEvent() {
 
 // 设置播放状态
 function setPlay(state) {
+    //TODO 如果直接点播放按钮，先判断localstorage里有无歌曲，有就播放，没有不播放
+    let playing = localStorage.getItem("playingMusicData");
+    let playlist = localStorage.getItem("playlist");
+    let songTitle = "";
+    if(playing){
+        let song = JSON.parse(playing);
+        myAduio.src = realm_dev + client + "playlist/getSongData?number=" + song.number;
+        songTitle = "当前播放： " + song.singer + " - " + song.name
+    }else if(playlist){
+        let list = JSON.parse(playlist);
+        myAduio.src = realm_dev + client + "playlist/getSongData?number=" + list[0].number;
+        songTitle = "当前播放： " + list[0].singer + " - " + list[0].name
+    }else {
+        return false;
+    }
+    //
     var play_pause = document.getElementsByClassName('play-pause')[0];
     if (state == null) {
         state = myAduio.paused;
