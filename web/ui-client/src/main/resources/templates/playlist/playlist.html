@@ -19,96 +19,7 @@
             <li>纯音乐</li>
         </ul>
         <div class="layui-tab-content" style="height: 100px;">
-            <div class="layui-tab-item layui-show">
-                <div id="style_0">
-                    <div class="layui-row layui-col-space15">
-                        <div class="layui-col-md3">
-                            <div class="layui-panel">
-                                <div >
-                                    <img class="cover" src="image/songList/1.jpg"/>
-                                    <div class="subheadDiv"><strong class="subhead">你的青春里有没有属于你的一首歌</strong></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="layui-col-md3">
-                            <div class="layui-panel">
-                                <div >
-                                    <img class="cover" src="image/songList/2.jpg"/>
-                                    <div class="subheadDiv"><strong class="subhead">你的青春里有没有属于你的一首歌</strong></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="layui-col-md3">
-                            <div class="layui-panel">
-                                <div >
-                                    <img class="cover" src="image/songList/3.jpg"/>
-                                    <div class="subheadDiv"><strong class="subhead">你的青春里有没有属于你的一首歌</strong></div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="layui-col-md3">
-                            <div class="layui-panel">
-                                <div >
-                                    <img class="cover" src="image/songList/4.jpg"/>
-                                    <div class="subheadDiv"><strong class="subhead">你的青春里有没有属于你的一首歌</strong></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="layui-row layui-col-space15">
-                        <div class="layui-col-md3">
-                            <div class="layui-panel">
-                                <div ><img class="cover" src="image/songList/5.jpg"/></div>
-                                <div class="subheadDiv"><strong class="subhead">你的青春里有没有属于你的一首歌</strong></div>
-                            </div>
-                        </div>
-                        <div class="layui-col-md3">
-                            <div class="layui-panel">
-                                <div ><img class="cover" src="image/songList/6.jpg"/></div>
-                                <div class="subheadDiv"><strong class="subhead">你的青春里有没有属于你的一首歌</strong></div>
-                            </div>
-                        </div>
-                        <div class="layui-col-md3">
-                            <div class="layui-panel">
-                                <div ><img class="cover" src="image/songList/7.jpg"/></div>
-                                <div class="subheadDiv"><strong class="subhead">你的青春里有没有属于你的一首歌</strong></div>
-                            </div>
-                        </div>
-                        <div class="layui-col-md3">
-                            <div class="layui-panel">
-                                <div ><img class="cover" src="image/songList/8.jpg"/></div>
-                                <div class="subheadDiv"><strong class="subhead">你的青春里有没有属于你的一首歌</strong></div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="layui-row layui-col-space15" id="songListLastRow">
-                        <div class="layui-col-md3">
-                            <div class="layui-panel">
-                                <div ><img class="cover" src="image/songList/9.jpg"/></div>
-                                <div class="subheadDiv"><strong class="subhead">你的青春里有没有属于你的一首歌</strong></div>
-                            </div>
-                        </div>
-                        <div class="layui-col-md3">
-                            <div class="layui-panel">
-                                <div ><img class="cover" src="image/songList/10.jpg"/></div>
-                                <div class="subheadDiv"><strong class="subhead">你的青春里有没有属于你的一首歌</strong></div>
-                            </div>
-                        </div>
-                        <div class="layui-col-md3">
-                            <div class="layui-panel">
-                                <div ><img class="cover" src="image/songList/11.jpg"/></div>
-                                <div class="subheadDiv"><strong class="subhead">你的青春里有没有属于你的一首歌</strong></div>
-                            </div>
-                        </div>
-                        <div class="layui-col-md3">
-                            <div class="layui-panel">
-                                <div ><img class="cover" src="image/songList/12.jpg"/></div>
-                                <div class="subheadDiv"><strong class="subhead">你的青春里有没有属于你的一首歌</strong></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <div class="layui-tab-item layui-show"><div id="style_0"></div></div>
             <div class="layui-tab-item"><div id="style_1"></div></div>
             <div class="layui-tab-item"><div id="style_2"></div></div>
             <div class="layui-tab-item"><div id="style_3"></div></div>
@@ -121,9 +32,70 @@
 <script src="js/common.js"></script>
 <script>
 
+    let domid = 'style_0';
+
+    $(function () {
+        $.ajax({
+            url: realm_dev + client + "playlist/getPlaylist",
+            dataType : "json",
+            type : "get",
+            success : CreatePlaylistElementForAjaxSuccess,
+            error: function(res) {
+
+            }
+        })
+    });
+
     function showPlaylistDetail(index){
         location.href = 'playlistDetail?playlistNumber=' + index;
     }
+
+    var CreatePlaylistElementForAjaxSuccess = function(res){
+        if(res.msg == '操作成功'){
+            let songlist = res.data;
+            let rownum = Math.ceil(songlist.length/4);
+            let songlistdiv = document.querySelector("#" + domid);
+            let num = 1;
+            let everyRowHasNum = songlist.length < 4? songlist.length : 4;
+            for(let i = 0; i < rownum; i++){
+                let rowdiv = document.createElement("div");
+                rowdiv.className = "layui-row layui-col-space15";
+                if(i === (rownum - 1)){
+                    rowdiv.id = "songListLastRow";
+                }
+                for(let j = 0; j < everyRowHasNum; j++){
+                    let everydiv = document.createElement("div");
+                    everydiv.className = "layui-col-md3";
+                    let paneldiv = document.createElement("div");
+                    paneldiv.className = "layui-panel";
+                    let pica = document.createElement("a");
+                    pica.setAttribute("href","javascript:;");
+                    pica.setAttribute("title", songlist[num-1].name);
+                    pica.setAttribute("onclick", "showPlaylistDetail(" + num + ")");
+                    let picimg = document.createElement("img");
+                    picimg.className = "cover";
+                    picimg.src = "image/songList/" + num + ".jpg";
+                    pica.appendChild(picimg);
+                    let titlediv = document.createElement("div");
+                    titlediv.className = "subheadDiv";
+                    let titlea = document.createElement("a");
+                    titlea.setAttribute("href","javascript:;");
+                    titlea.setAttribute("title", songlist[num-1].name);
+                    let strong = document.createElement("strong");
+                    strong.className = "subhead";
+                    strong.innerText = songlist[num-1].name;
+                    titlea.appendChild(strong);
+                    titlediv.appendChild(titlea);
+                    paneldiv.appendChild(pica);
+                    paneldiv.appendChild(titlediv);
+                    everydiv.appendChild(paneldiv);
+                    rowdiv.appendChild(everydiv);
+                    num ++;
+                }
+                songlistdiv.appendChild(rowdiv);
+            }
+        }
+    };
 
     layui.use('element',function () {
         var $ = layui.jquery,
@@ -131,62 +103,17 @@
 
         element.on('tab(playlistStyleFilter)',function (data) {
             const index = data.index;
-            let domid = 'style_' + index;
+            domid = 'style_' + index;
             $("#"+domid).html("");
             let url = realm_dev + client + "playlist/getPlaylist";
             if(index != 0){
                 url = url + "?style=" + index;
             }
-            //TODO 单独写个方法
             $.ajax({
                 url: url,
                 dataType : "json",
                 type : "get",
-                success : function(res){
-                    if(res.msg == '操作成功'){
-                        let songlist = res.data;
-                        let rownum = Math.ceil(songlist.length/4);
-                        let songlistdiv = document.querySelector("#" + domid);
-                        let num = 1;
-                        for(let i = 0; i < rownum; i++){
-                            let rowdiv = document.createElement("div");
-                            rowdiv.className = "layui-row layui-col-space15";
-                            if(i === (rownum - 1)){
-                                rowdiv.id = "songListLastRow";
-                            }
-                            for(let j = 0; j < 4; j++){
-                                let everydiv = document.createElement("div");
-                                everydiv.className = "layui-col-md3";
-                                let paneldiv = document.createElement("div");
-                                paneldiv.className = "layui-panel";
-                                let pica = document.createElement("a");
-                                pica.setAttribute("href","javascript:;");
-                                pica.setAttribute("title", songlist[num-1].name);
-                                pica.setAttribute("onclick", "showPlaylistDetail(" + num + ")");
-                                let picimg = document.createElement("img");
-                                picimg.className = "cover";
-                                picimg.src = "image/songList/" + num + ".jpg";
-                                pica.appendChild(picimg);
-                                let titlediv = document.createElement("div");
-                                titlediv.className = "subheadDiv";
-                                let titlea = document.createElement("a");
-                                titlea.setAttribute("href","javascript:;");
-                                titlea.setAttribute("title", songlist[num-1].name);
-                                let strong = document.createElement("strong");
-                                strong.className = "subhead";
-                                strong.innerText = songlist[num-1].name;
-                                titlea.appendChild(strong);
-                                titlediv.appendChild(titlea);
-                                paneldiv.appendChild(pica);
-                                paneldiv.appendChild(titlediv);
-                                everydiv.appendChild(paneldiv);
-                                rowdiv.appendChild(everydiv);
-                                num ++;
-                            }
-                            songlistdiv.appendChild(rowdiv);
-                        }
-                    }
-                },
+                success : CreatePlaylistElementForAjaxSuccess,
                 error: function(res) {
 
                 }

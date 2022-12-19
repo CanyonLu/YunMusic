@@ -2,13 +2,14 @@ var myAduio = document.getElementsByTagName('audio')[0];
 var progressTime = document.getElementsByClassName('time')[0];
 var nowLine = 0;
 var rollT;
+var nextPlaySong;
 var playState = false;
 var timeArray1 = new Array();
 var timeInterval = new Array();
 
 window.onload = function () {
     setMouseEvent();
-    setTimeText();
+    // setTimeText();
 };
 
 // 设置事件
@@ -86,20 +87,17 @@ function setMouseEvent() {
 
 // 设置播放状态
 function setPlay(state) {
-    //TODO 如果直接点播放按钮，先判断localstorage里有无歌曲，有就播放，没有不播放
-    let playing = localStorage.getItem("playingMusicData");
-    let playlist = localStorage.getItem("playlist");
-    let songTitle = "";
-    if(playing){
-        let song = JSON.parse(playing);
-        myAduio.src = realm_dev + client + "playlist/getSongData?number=" + song.number;
-        songTitle = "当前播放： " + song.singer + " - " + song.name
-    }else if(playlist){
+    //歌曲src为空说明进入主页后直接点击播放键，此时先判断localstorage的歌单里有无歌曲，有就播放，没有不播放
+    if(!myAduio.src){
+        let playlist = localStorage.getItem("playlist");
         let list = JSON.parse(playlist);
         myAduio.src = realm_dev + client + "playlist/getSongData?number=" + list[0].number;
-        songTitle = "当前播放： " + list[0].singer + " - " + list[0].name
-    }else {
-        return false;
+        let data = {
+            number: list[0].number,
+            name: list[0].name,
+            singer: list[0].singer
+        };
+        localStorage.setItem("playingMusicData", JSON.stringify(data));
     }
     //
     var play_pause = document.getElementsByClassName('play-pause')[0];
@@ -114,9 +112,10 @@ function setPlay(state) {
         let data = JSON.parse(item);
         $("#titleText").html("当前播放： " + data.singer + " - " + data.name);
         playState = true;
+        getPlayingSerialNumber(data.number);
         setTimeText();
         setProgress();
-        checkEnd();
+        // checkEnd();
         // 开始播放后要重新将时间间距改回来，不然下次播放计时器会出错
         timeInterval[nowLine] = timeArray1[nowLine + 1] - timeArray1[nowLine];
     } else {
@@ -154,14 +153,63 @@ function setMuted() {
     }
 }
 
-function checkEnd() {
-    if(myAduio.ended){
-        document.getElementsByClassName('play-pause')[0].firstChild.classList.value = "layui-icon layui-icon-play";
-        $("#titleText").html("");
-    }else {
-        setTimeout(checkEnd, 100);
+// 获取播放列表的下一首歌曲
+function getPlayingSerialNumber(number) {
+    let playlist = localStorage.getItem("playlist");
+    let list = JSON.parse(playlist);
+    if(list.length > 1){
+        let playingSerialNumber = 0;
+        list.forEach(item =>{
+            if(item.number == number){
+                playingSerialNumber = item.serialNumber;
+            }
+        });
+        let nextPlaySerialNumber = list.length < playingSerialNumber + 1 ? 1 : playingSerialNumber + 1;
+        list.forEach(item =>{
+            if(item.serialNumber == nextPlaySerialNumber){
+                nextPlaySong = item;
+            }
+        });
     }
 }
+
+//判断是否结束，并自动播放下一首
+// function checkEndAndPlayNext() {
+//     if(myAduio.ended){
+//         if(nextPlaySong){
+//             let data = {
+//                 number: nextPlaySong.number,
+//                 name: nextPlaySong.name,
+//                 singer: nextPlaySong.singer
+//             };
+//             localStorage.setItem("playingMusicData", JSON.stringify(data));
+//             myAduio.src = realm_dev + client + "playlist/getSongData?number=" + nextPlaySong.number;
+//             setPlay();
+//         }else {
+//             document.getElementsByClassName('play-pause')[0].firstChild.classList.value = "layui-icon layui-icon-play";
+//             $("#titleText").html("");
+//         }
+//     }else {
+//         setTimeout(checkEndAndPlayNext, 100);
+//     }
+// }
+
+//判断是否结束，并自动播放下一首
+myAduio.addEventListener('ended', function () {
+    if(nextPlaySong){
+        let data = {
+            number: nextPlaySong.number,
+            name: nextPlaySong.name,
+            singer: nextPlaySong.singer
+        };
+        localStorage.setItem("playingMusicData", JSON.stringify(data));
+        myAduio.src = realm_dev + client + "playlist/getSongData?number=" + nextPlaySong.number;
+        setPlay();
+    }else {
+        document.getElementsByClassName('play-pause')[0].firstChild.classList.value = "layui-icon layui-icon-play";
+        $("#titleText").html("");
+    }
+}, false);
 
 // 设置进度文本
 function setTimeText() {

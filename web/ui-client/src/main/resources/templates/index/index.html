@@ -50,14 +50,14 @@
     </div>
 
     <div class="layui-footer">
-        <audio src="audio/胡海泉 - 先走的人.mp3" preload="auto"></audio>
+        <audio preload="auto"></audio>
         <div class="control-back">
             <!-- 进度条 -->
             <div class="progress-bar">
                 <div class="progress-all"></div>
                 <div class="progress-now"></div>
             </div>
-            <span class="time">00:00/00:00</span>
+            <span class="time">0:00/0:00</span>
             <!-- 控制按钮 -->
             <div class="control">
                 <div class="control-title">
@@ -159,9 +159,11 @@
                 }
             });
             if(flag){
+                data.serialNumber = newPlaylist.length + 1;
                 newPlaylist.push(data);
             }
         }else {
+            data.serialNumber = 1;
             newPlaylist.push(data);
         }
         localStorage.setItem("playlist", JSON.stringify(newPlaylist));
