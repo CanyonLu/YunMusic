@@ -11,8 +11,6 @@ public class SongEntity {
 
     private String id;
 
-    private String number;
-
     private String name;
 
     private String singer;

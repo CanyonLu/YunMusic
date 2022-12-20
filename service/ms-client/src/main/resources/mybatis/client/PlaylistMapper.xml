@@ -2,12 +2,12 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lcy.mapper.PlaylistMapper">
 
-    <select id="getPlaylistByNumber" resultType="com.lcy.entity.PlaylistEntity">
-        select id, number, name, intro, songsNumber, rate, style from playlist where number = #{number,jdbcType=VARCHAR}
+    <select id="getPlaylistById" resultType="com.lcy.entity.PlaylistEntity">
+        select id, name, intro, songIds, rate, style from playlist where id = #{id,jdbcType=VARCHAR}
     </select>
 
     <select id="getPlaylist" resultType="com.lcy.entity.PlaylistEntity">
-        select id, number, name, intro, songsNumber, rate, style from playlist
+        select id, name, intro, songIds, rate, style from playlist
         <where>
             <if test="style != null and style != ''">
                 style = #{style,jdbcType=VARCHAR}
@@ -15,15 +15,15 @@
         </where>
     </select>
 
-    <select id="getMusicByNumbers" resultType="com.lcy.entity.SongEntity">
-        select id, number, name, singer, album, url from song where number in
+    <select id="getMusicByIds" resultType="com.lcy.entity.SongEntity">
+        select id, name, singer, album, url from song where id in
         <foreach collection="list" item="item" open="(" close=")" separator=",">
             #{item,jdbcType=VARCHAR}
         </foreach>
     </select>
 
-    <select id="getMusicByNumber" resultType="com.lcy.entity.SongEntity">
-         select id, number, name, singer, album, url from song where number = #{number,jdbcType=VARCHAR}
+    <select id="getMusicById" resultType="com.lcy.entity.SongEntity">
+         select id, name, singer, album, url from song where id = #{id,jdbcType=VARCHAR}
     </select>
 
 </mapper>

@@ -13,8 +13,8 @@ public class SongListController {
     }
 
     @GetMapping("/playlistDetail")
-    public String playlistDetailView(Model mmap, String playlistNumber){
-        mmap.addAttribute("playlistNumber", playlistNumber);
+    public String playlistDetailView(Model mmap, String playlistId){
+        mmap.addAttribute("playlistId", playlistId);
         return "playlist/playlistDetail";
     }
 

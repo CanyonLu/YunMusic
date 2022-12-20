@@ -91,9 +91,9 @@ function setPlay(state) {
     if(!myAduio.src){
         let playlist = localStorage.getItem("playlist");
         let list = JSON.parse(playlist);
-        myAduio.src = realm_dev + client + "playlist/getSongData?number=" + list[0].number;
+        myAduio.src = realm_dev + client + "playlist/getSongData?id=" + list[0].id;
         let data = {
-            number: list[0].number,
+            id: list[0].id,
             name: list[0].name,
             singer: list[0].singer
         };
@@ -112,7 +112,7 @@ function setPlay(state) {
         let data = JSON.parse(item);
         $("#titleText").html("当前播放： " + data.singer + " - " + data.name);
         playState = true;
-        getPlayingSerialNumber(data.number);
+        getPlayingSerialNumber(data.id);
         setTimeText();
         setProgress();
         // checkEnd();
@@ -154,13 +154,13 @@ function setMuted() {
 }
 
 // 获取播放列表的下一首歌曲
-function getPlayingSerialNumber(number) {
+function getPlayingSerialNumber(id) {
     let playlist = localStorage.getItem("playlist");
     let list = JSON.parse(playlist);
     if(list.length > 1){
         let playingSerialNumber = 0;
         list.forEach(item =>{
-            if(item.number == number){
+            if(item.id == id){
                 playingSerialNumber = item.serialNumber;
             }
         });
@@ -174,36 +174,15 @@ function getPlayingSerialNumber(number) {
 }
 
 //判断是否结束，并自动播放下一首
-// function checkEndAndPlayNext() {
-//     if(myAduio.ended){
-//         if(nextPlaySong){
-//             let data = {
-//                 number: nextPlaySong.number,
-//                 name: nextPlaySong.name,
-//                 singer: nextPlaySong.singer
-//             };
-//             localStorage.setItem("playingMusicData", JSON.stringify(data));
-//             myAduio.src = realm_dev + client + "playlist/getSongData?number=" + nextPlaySong.number;
-//             setPlay();
-//         }else {
-//             document.getElementsByClassName('play-pause')[0].firstChild.classList.value = "layui-icon layui-icon-play";
-//             $("#titleText").html("");
-//         }
-//     }else {
-//         setTimeout(checkEndAndPlayNext, 100);
-//     }
-// }
-
-//判断是否结束，并自动播放下一首
 myAduio.addEventListener('ended', function () {
     if(nextPlaySong){
         let data = {
-            number: nextPlaySong.number,
+            id: nextPlaySong.id,
             name: nextPlaySong.name,
             singer: nextPlaySong.singer
         };
         localStorage.setItem("playingMusicData", JSON.stringify(data));
-        myAduio.src = realm_dev + client + "playlist/getSongData?number=" + nextPlaySong.number;
+        myAduio.src = realm_dev + client + "playlist/getSongData?id=" + nextPlaySong.id;
         setPlay();
     }else {
         document.getElementsByClassName('play-pause')[0].firstChild.classList.value = "layui-icon layui-icon-play";

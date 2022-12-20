@@ -140,10 +140,10 @@
         });
     }
 
-    function playmusic(number, name, singer, dom){
+    function playmusic(id, name, singer, dom){
         //将正在播放歌曲加到localStorage，并更新播放列表
         let data = {
-            number: number,
+            id: id,
             name: name,
             singer: singer
         };
@@ -154,7 +154,7 @@
             newPlaylist = JSON.parse(playlist);
             let flag = true;
             newPlaylist.forEach(item =>{
-                if(item.number == data.number){
+                if(item.id == data.id){
                     flag = false
                 }
             });
@@ -170,11 +170,11 @@
         //歌单页面加播放样式
         if(playingNubmer == undefined && playingDom == undefined){
             dom.firstChild.classList.value = 'layui-icon layui-icon-pause';
-            myAduio.src = realm_dev + client + "playlist/getSongData?number=" + number;
+            myAduio.src = realm_dev + client + "playlist/getSongData?id=" + id;
             setPlay();
-            playingNubmer = number;
+            playingNubmer = id;
             playingDom = dom;
-        }else if(playingNubmer == number){
+        }else if(playingNubmer == id){
             if(!myAduio.paused){
                 dom.firstChild.classList.value = 'layui-icon layui-icon-play';
                 setPlay(false)
@@ -182,12 +182,12 @@
                 dom.firstChild.classList.value = 'layui-icon layui-icon-pause';
                 setPlay();
             }
-        }else if(playingNubmer != number){
+        }else if(playingNubmer != id){
             playingDom.firstChild.classList.value = 'layui-icon layui-icon-play';
             dom.firstChild.classList.value = 'layui-icon layui-icon-pause';
-            myAduio.src = realm_dev + client + "playlist/getSongData?number=" + number;
+            myAduio.src = realm_dev + client + "playlist/getSongData?id=" + id;
             setPlay();
-            playingNubmer = number;
+            playingNubmer = id;
             playingDom = dom;
         }
     }
@@ -211,6 +211,9 @@
                     break;
                 case '歌单':
                     $("#indexIframe").html('<iframe width="100%" height="100%" frameborder="no" border="0" marginwidth="0" narginheight="0" src="playlist"></iframe>');
+                    break;
+                case '歌手':
+                    $("#indexIframe").html('<iframe width="100%" height="100%" frameborder="no" border="0" marginwidth="0" narginheight="0" src="singer"></iframe>');
                     break;
                 case '登录':
                     window.location = 'login';

@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="style/playlist.css"/>
 </head>
 <body>
-<input hidden id="playlistNumber" name="playlistNumber" th:value="${playlistNumber}">
+<input hidden id="playlistId" name="playlistId" th:value="${playlistId}">
 <div id="main" class="layui-row layui-col-space15">
     <div class="layui-col-md5">
         <div id="left">
@@ -38,12 +38,11 @@
 
 <script src="js/common.js"></script>
 <script type="text/html" id="play">
-    <a href="javascript:;" onclick=parent.playmusic('{{d.number}}','{{d.name}}','{{d.singer}}',this)><i class="layui-icon layui-icon-play"></i></a>
+    <a href="javascript:;" onclick=parent.playmusic('{{d.id}}','{{d.name}}','{{d.singer}}',this)><i class="layui-icon layui-icon-play"></i></a>
 </script>
 <script>
-    var playlistNumber;
+    var playlistId;
     var newRate;
-    var playingNumber;
     var checkCallBack = function (){
         if(loginState){
             $("#userRate").text("已评分");
@@ -82,14 +81,9 @@
     };
 
     $(function () {
-        playlistNumber = $("#playlistNumber").val();
-        if(playlistNumber){
-            document.getElementById("cover").src = "image/songList/" + playlistNumber + ".jpg";
-        }
-        let player = parent.document.getElementsByTagName('audio')[0];
-        if(!player.paused){
-            let src = player.getAttribute("src");
-            playingNumber = src.substring(src.indexOf('=') + 1);
+        playlistId = $("#playlistId").val();
+        if(playlistId){
+            document.getElementById("cover").src = "image/songList/" + playlistId + ".jpg";
         }
     });
 
@@ -121,7 +115,7 @@
             , cols: [
                 [
                       {type: 'numbers', width: 50, unresize: true}
-                    , {field: 'number', width: 60, align: 'center', unresize: true, templet: '#play'}
+                    , {field: 'id', width: 60, align: 'center', unresize: true, templet: '#play'}
                     , {field: 'name', align: 'center', width: 200, unresize: true, title: '歌曲名'}
                     , {field: 'singer', align: 'center', width: 300, unresize: true, title: '歌手'}
                     , {field: 'album', align: 'center', unresize: true, title: '专辑'}
@@ -148,7 +142,7 @@
 
         layer.ready(function () {
             $.ajax({
-                url: realm_dev + client + "playlist/getPlaylistDetail?playlistNumber=" + playlistNumber,
+                url: realm_dev + client + "playlist/getPlaylistDetail?playlistId=" + playlistId,
                 dataType : "json",
                 type : "get",
                 success : function(res){

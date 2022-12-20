@@ -41,30 +41,30 @@ public class PlaylistServiceImpl implements PlaylistService {
 
     /**
      * 获取歌单详情
-     * @param playlistNumber
+     * @param playlistId
      * @return
      */
     @Override
-    public AjaxResult getPlaylistDetail(String playlistNumber) {
-        PlaylistEntity playlist = playlistMapper.getPlaylistByNumber(playlistNumber);
-        String songsNumber = playlist.getSongsNumber();
-        String[] songs = songsNumber.split(",");
+    public AjaxResult getPlaylistDetail(String playlistId) {
+        PlaylistEntity playlist = playlistMapper.getPlaylistById(playlistId);
+        String songIds = playlist.getSongIds();
+        String[] songs = songIds.split(",");
         List<String> songList = Arrays.asList(songs);
-        List<SongEntity> musics = playlistMapper.getMusicByNumbers(songList);
+        List<SongEntity> musics = playlistMapper.getMusicByIds(songList);
         playlist.setSonglist(musics);
         return AjaxResult.success(playlist);
     }
 
     /**
      * 获取歌曲文件返回前台播放
-     * @param number
+     * @param id
      * @param request
      * @param response
      * @throws Exception
      */
     @Override
-    public void getSongData(String number, HttpServletRequest request, HttpServletResponse response) {
-        SongEntity music = playlistMapper.getMusicByNumber(number);
+    public void getSongData(String id, HttpServletRequest request, HttpServletResponse response) {
+        SongEntity music = playlistMapper.getMusicById(id);
         String u = music.getUrl();
         try {
             File file = new File(u);

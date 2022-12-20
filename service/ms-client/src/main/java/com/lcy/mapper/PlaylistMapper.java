@@ -10,15 +10,15 @@ import java.util.List;
 @Repository
 public interface PlaylistMapper {
     //获取歌单信息
-    PlaylistEntity getPlaylistByNumber(String number);
+    PlaylistEntity getPlaylistById(String id);
 
     //获取歌单集合
     List<PlaylistEntity> getPlaylist(@Param("style") String style);
 
     //根据编号获取歌曲列表
-    List<SongEntity> getMusicByNumbers(List<String> list);
+    List<SongEntity> getMusicByIds(List<String> list);
 
     //根据编号获取歌曲
-    SongEntity getMusicByNumber(String number);
+    SongEntity getMusicById(String id);
 
 }

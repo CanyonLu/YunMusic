@@ -37,24 +37,24 @@ public class PlaylistController {
 
     /**
      * 获取歌单中歌曲列表
-     * @param playlistNumber
+     * @param playlistId
      * @return
      */
     @RequestMapping("/getPlaylistDetail")
-    public AjaxResult getPlaylistDetail(String playlistNumber){
-        if(StringUtils.isEmpty(playlistNumber)){
+    public AjaxResult getPlaylistDetail(String playlistId){
+        if(StringUtils.isEmpty(playlistId)){
             return AjaxResult.error();
         }else {
-            return playlistService.getPlaylistDetail(playlistNumber);
+            return playlistService.getPlaylistDetail(playlistId);
         }
     }
 
     /**
      *根据歌曲编号获取歌曲
-     * @param number
+     * @param id
      */
     @RequestMapping("/getSongData")
-    public void getSongData(String number, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        playlistService.getSongData(number, request, response);
+    public void getSongData(String id, HttpServletRequest request, HttpServletResponse response) throws Exception {
+        playlistService.getSongData(id, request, response);
     }
 }

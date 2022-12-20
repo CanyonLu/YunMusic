@@ -24,7 +24,7 @@
 
 <script src="js/common.js"></script>
 <script type="text/html" id="play">
-    <a href="javascript:;" onclick=parent.playmusic('{{d.number}}','{{d.name}}','{{d.singer}}',this)><i class="layui-icon layui-icon-play"></i></a>
+    <a href="javascript:;" onclick=parent.playmusic('{{d.id}}','{{d.name}}','{{d.singer}}',this)><i class="layui-icon layui-icon-play"></i></a>
 </script>
 <script>
 
@@ -51,7 +51,7 @@
             , cols: [
                 [
                     {type: 'numbers', width: 50, unresize: true}
-                    , {field: 'number', width: 50, align: 'center', unresize: true, templet: '#play'}
+                    , {field: 'id', width: 50, align: 'center', unresize: true, templet: '#play'}
                     , {field: 'name', align: 'center', width: 200, unresize: true}
                     , {field: 'singer', align: 'center', unresize: true}
                     // TODO 歌手跳转

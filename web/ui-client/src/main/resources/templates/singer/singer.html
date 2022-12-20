@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>歌单</title>
+    <link rel="stylesheet" href="lib/layui/css/layui.css"/>
+    <link rel="stylesheet" href="style/index.css"/>
+    <style>
+        .layui-tab-title li{
+            font-weight: 700;
+            padding: 0 5px;
+            font-size: 15px;
+        }
+    </style>
+</head>
+<body>
+
+<div id="songListDiv" class="layui-card layui-panel">
+    <div class="layui-tab layui-tab-brief" lay-filter="playlistStyleFilter">
+        <ul class="layui-tab-title">
+            <li class="layui-this">全部歌手</li>
+            <li>男歌手</li>
+            <li>女歌手</li>
+            <li>歌手组合</li>
+        </ul>
+        <div class="layui-tab-content" style="height: 100px;">
+            <div class="layui-tab-item layui-show"><div id="singer_0"></div></div>
+            <div class="layui-tab-item"><div id="singer_1"></div></div>
+            <div class="layui-tab-item"><div id="singer_2"></div></div>
+            <div class="layui-tab-item"><div id="singer_3"></div></div>
+        </div>
+    </div>
+</div>
+
+<script src="js/common.js"></script>
+<script>
+
+    let domid = 'singer_0';
+
+    $(function () {
+        $.ajax({
+            url: realm_dev + client + "playlist/getPlaylist",
+            dataType : "json",
+            type : "get",
+            success : CreatePlaylistElementForAjaxSuccess,
+            error: function(res) {
+
+            }
+        })
+    });
+
+    function showPlaylistDetail(index){
+        location.href = 'playlistDetail?playlistNumber=' + index;
+    }
+
+    var CreatePlaylistElementForAjaxSuccess = function(res){
+        if(res.msg == '操作成功'){
+            let songlist = res.data;
+            let rownum = Math.ceil(songlist.length/4);
+            let songlistdiv = document.querySelector("#" + domid);
+            let num = 1;
+            let everyRowHasNum = songlist.length < 4? songlist.length : 4;
+            for(let i = 0; i < rownum; i++){
+                let rowdiv = document.createElement("div");
+                rowdiv.className = "layui-row layui-col-space15";
+                if(i === (rownum - 1)){
+                    rowdiv.id = "songListLastRow";
+                }
+                for(let j = 0; j < everyRowHasNum; j++){
+                    let everydiv = document.createElement("div");
+                    everydiv.className = "layui-col-md3";
+                    let paneldiv = document.createElement("div");
+                    paneldiv.className = "layui-panel";
+                    let pica = document.createElement("a");
+                    pica.setAttribute("href","javascript:;");
+                    pica.setAttribute("title", songlist[num-1].name);
+                    pica.setAttribute("onclick", "showPlaylistDetail(" + num + ")");
+                    let picimg = document.createElement("img");
+                    picimg.className = "cover";
+                    picimg.src = "image/songList/" + num + ".jpg";
+                    pica.appendChild(picimg);
+                    let titlediv = document.createElement("div");
+                    titlediv.className = "subheadDiv";
+                    let titlea = document.createElement("a");
+                    titlea.setAttribute("href","javascript:;");
+                    titlea.setAttribute("title", songlist[num-1].name);
+                    let strong = document.createElement("strong");
+                    strong.className = "subhead";
+                    strong.innerText = songlist[num-1].name;
+                    titlea.appendChild(strong);
+                    titlediv.appendChild(titlea);
+                    paneldiv.appendChild(pica);
+                    paneldiv.appendChild(titlediv);
+                    everydiv.appendChild(paneldiv);
+                    rowdiv.appendChild(everydiv);
+                    num ++;
+                }
+                songlistdiv.appendChild(rowdiv);
+            }
+        }
+    };
+
+    layui.use('element',function () {
+        var $ = layui.jquery,
+            element = layui.element;
+
+        element.on('tab(playlistStyleFilter)',function (data) {
+            const index = data.index;
+            domid = 'style_' + index;
+            $("#"+domid).html("");
+            let url = realm_dev + client + "playlist/getPlaylist";
+            if(index != 0){
+                url = url + "?style=" + index;
+            }
+            $.ajax({
+                url: url,
+                dataType : "json",
+                type : "get",
+                success : CreatePlaylistElementForAjaxSuccess,
+                error: function(res) {
+
+                }
+            })
+
+
+
+        })
+    })
+
+
+</script>
+
+</body>
+</html>

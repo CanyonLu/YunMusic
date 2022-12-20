@@ -13,13 +13,11 @@ public class PlaylistEntity {
 
     private String id;
 
-    private String number;
-
     private String name;
 
     private String intro;
 
-    private String songsNumber;
+    private String songIds;
 
     private String rate;
 

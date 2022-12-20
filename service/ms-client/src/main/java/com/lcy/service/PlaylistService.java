@@ -11,8 +11,8 @@ public interface PlaylistService {
     AjaxResult getPlaylist(String style);
 
     //歌单详情
-    AjaxResult getPlaylistDetail(String playlistNumber);
+    AjaxResult getPlaylistDetail(String playlistId);
 
     //获取歌曲
-    void getSongData(String number, HttpServletRequest request, HttpServletResponse response) throws Exception;
+    void getSongData(String id, HttpServletRequest request, HttpServletResponse response) throws Exception;
 }
