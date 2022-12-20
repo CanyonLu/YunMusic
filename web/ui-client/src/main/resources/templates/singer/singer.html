@@ -11,12 +11,16 @@
             padding: 0 5px;
             font-size: 15px;
         }
+        #singerListDiv{
+            width: 70%;
+            margin: 0 auto
+        }
     </style>
 </head>
 <body>
 
-<div id="songListDiv" class="layui-card layui-panel">
-    <div class="layui-tab layui-tab-brief" lay-filter="playlistStyleFilter">
+<div id="singerListDiv" class="layui-card layui-panel">
+    <div class="layui-tab layui-tab-brief" lay-filter="singerGenderFilter">
         <ul class="layui-tab-title">
             <li class="layui-this">全部歌手</li>
             <li>男歌手</li>
@@ -39,32 +43,33 @@
 
     $(function () {
         $.ajax({
-            url: realm_dev + client + "playlist/getPlaylist",
+            url: realm_dev + client + "singer/getSingerList",
             dataType : "json",
             type : "get",
-            success : CreatePlaylistElementForAjaxSuccess,
+            success : CreateSingerListElementForAjaxSuccess,
             error: function(res) {
 
             }
         })
     });
 
-    function showPlaylistDetail(index){
-        location.href = 'playlistDetail?playlistNumber=' + index;
+    function singerDetail(id){
+        location.href = 'singerDetail?singerId=' + id;
     }
 
-    var CreatePlaylistElementForAjaxSuccess = function(res){
+    var CreateSingerListElementForAjaxSuccess = function(res){
         if(res.msg == '操作成功'){
-            let songlist = res.data;
-            let rownum = Math.ceil(songlist.length/4);
-            let songlistdiv = document.querySelector("#" + domid);
-            let num = 1;
-            let everyRowHasNum = songlist.length < 4? songlist.length : 4;
+            let singerlist = res.data;
+            let rownum = Math.ceil(singerlist.length/4);
+            let singerlistdiv = document.querySelector("#" + domid);
+            let num = 0;
+            let everyRowHasNum = singerlist.length < 4? singerlist.length : 4;
             for(let i = 0; i < rownum; i++){
                 let rowdiv = document.createElement("div");
                 rowdiv.className = "layui-row layui-col-space15";
                 if(i === (rownum - 1)){
                     rowdiv.id = "songListLastRow";
+                    everyRowHasNum = singerlist.length < 4? singerlist.length : singerlist.length % 4;
                 }
                 for(let j = 0; j < everyRowHasNum; j++){
                     let everydiv = document.createElement("div");
@@ -73,20 +78,20 @@
                     paneldiv.className = "layui-panel";
                     let pica = document.createElement("a");
                     pica.setAttribute("href","javascript:;");
-                    pica.setAttribute("title", songlist[num-1].name);
-                    pica.setAttribute("onclick", "showPlaylistDetail(" + num + ")");
+                    pica.setAttribute("title", singerlist[num].name);
+                    pica.setAttribute("onclick", "singerDetail(" + singerlist[num].id + ")");
                     let picimg = document.createElement("img");
                     picimg.className = "cover";
-                    picimg.src = "image/songList/" + num + ".jpg";
+                    picimg.src = "image/songList/" + (num+1) + ".jpg";
                     pica.appendChild(picimg);
                     let titlediv = document.createElement("div");
                     titlediv.className = "subheadDiv";
                     let titlea = document.createElement("a");
                     titlea.setAttribute("href","javascript:;");
-                    titlea.setAttribute("title", songlist[num-1].name);
+                    titlea.setAttribute("title", singerlist[num].name);
                     let strong = document.createElement("strong");
                     strong.className = "subhead";
-                    strong.innerText = songlist[num-1].name;
+                    strong.innerText = singerlist[num].name;
                     titlea.appendChild(strong);
                     titlediv.appendChild(titlea);
                     paneldiv.appendChild(pica);
@@ -95,7 +100,7 @@
                     rowdiv.appendChild(everydiv);
                     num ++;
                 }
-                songlistdiv.appendChild(rowdiv);
+                singerlistdiv.appendChild(rowdiv);
             }
         }
     };
@@ -104,19 +109,19 @@
         var $ = layui.jquery,
             element = layui.element;
 
-        element.on('tab(playlistStyleFilter)',function (data) {
+        element.on('tab(singerGenderFilter)',function (data) {
             const index = data.index;
-            domid = 'style_' + index;
+            domid = 'singer_' + index;
             $("#"+domid).html("");
-            let url = realm_dev + client + "playlist/getPlaylist";
+            let url = realm_dev + client + "singer/getSingerList";
             if(index != 0){
-                url = url + "?style=" + index;
+                url = url + "?gender=" + index;
             }
             $.ajax({
                 url: url,
                 dataType : "json",
                 type : "get",
-                success : CreatePlaylistElementForAjaxSuccess,
+                success : CreateSingerListElementForAjaxSuccess,
                 error: function(res) {
 
                 }

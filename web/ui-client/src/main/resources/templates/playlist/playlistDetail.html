@@ -82,9 +82,9 @@
 
     $(function () {
         playlistId = $("#playlistId").val();
-        if(playlistId){
-            document.getElementById("cover").src = "image/songList/" + playlistId + ".jpg";
-        }
+        // if(playlistId){
+        //     document.getElementById("cover").src = "image/songList/" + playlistId + ".jpg";
+        // }
     });
 
     layui.use(['table', 'rate'], function () {
@@ -147,6 +147,7 @@
                 type : "get",
                 success : function(res){
                     if(res.msg == '操作成功'){
+                        document.getElementById("cover").src = "image/songList/" + res.data.coverFileName;
                         $("#describeDetail").text(res.data.intro);
                         $("#title").text(res.data.name);
                         rate.render({

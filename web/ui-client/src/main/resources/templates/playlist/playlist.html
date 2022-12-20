@@ -53,8 +53,8 @@
         })
     });
 
-    function showPlaylistDetail(index){
-        location.href = 'playlistDetail?playlistId=' + index;
+    function showPlaylistDetail(id){
+        location.href = 'playlistDetail?playlistId=' + id;
     }
 
     var CreatePlaylistElementForAjaxSuccess = function(res){
@@ -62,13 +62,14 @@
             let songlist = res.data;
             let rownum = Math.ceil(songlist.length/4);
             let songlistdiv = document.querySelector("#" + domid);
-            let num = 1;
+            let num = 0;
             let everyRowHasNum = songlist.length < 4? songlist.length : 4;
             for(let i = 0; i < rownum; i++){
                 let rowdiv = document.createElement("div");
                 rowdiv.className = "layui-row layui-col-space15";
                 if(i === (rownum - 1)){
                     rowdiv.id = "songListLastRow";
+                    everyRowHasNum = songlist.length < 4? songlist.length : songlist.length % 4;
                 }
                 for(let j = 0; j < everyRowHasNum; j++){
                     let everydiv = document.createElement("div");
@@ -77,20 +78,20 @@
                     paneldiv.className = "layui-panel";
                     let pica = document.createElement("a");
                     pica.setAttribute("href","javascript:;");
-                    pica.setAttribute("title", songlist[num-1].name);
-                    pica.setAttribute("onclick", "showPlaylistDetail(" + num + ")");
+                    pica.setAttribute("title", songlist[num].name);
+                    pica.setAttribute("onclick", "showPlaylistDetail(" + songlist[num].id + ")");
                     let picimg = document.createElement("img");
                     picimg.className = "cover";
-                    picimg.src = "image/songList/" + num + ".jpg";
+                    picimg.src = "image/songList/" + songlist[num].coverFileName;
                     pica.appendChild(picimg);
                     let titlediv = document.createElement("div");
                     titlediv.className = "subheadDiv";
                     let titlea = document.createElement("a");
                     titlea.setAttribute("href","javascript:;");
-                    titlea.setAttribute("title", songlist[num-1].name);
+                    titlea.setAttribute("title", songlist[num].name);
                     let strong = document.createElement("strong");
                     strong.className = "subhead";
-                    strong.innerText = songlist[num-1].name;
+                    strong.innerText = songlist[num].name;
                     titlea.appendChild(strong);
                     titlediv.appendChild(titlea);
                     paneldiv.appendChild(pica);

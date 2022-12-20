@@ -6,6 +6,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class IndexController {
 
+    @GetMapping("/yun-music")
+    public String yunMusic(){
+        return "index/index";
+    }
+
     @GetMapping("/login")
     public String login(){
         return "index/login";

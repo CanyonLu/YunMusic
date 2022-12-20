@@ -3,7 +3,7 @@
 <mapper namespace="com.lcy.mapper.IndexMapper">
 
     <insert id="userRegister" parameterType="com.lcy.entity.UserEntity">
-        insert into demo_users
+        insert into user
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="id != null">
                 id,
@@ -41,11 +41,11 @@
     </insert>
 
     <select id="checkAccountExist" parameterType="String" resultType="int">
-        select count(*) from demo_users where account = #{account}
+        select count(*) from user where account = #{account}
     </select>
 
     <select id="queryUserByAccountAndPassword" parameterType="com.lcy.entity.UserEntity" resultType="com.lcy.entity.UserEntity">
-        select id, account, password, nickname, sex from demo_users where account = #{account} and password = #{password}
+        select id, account, password, nickname, sex from user where account = #{account} and password = #{password}
     </select>
 
 </mapper>

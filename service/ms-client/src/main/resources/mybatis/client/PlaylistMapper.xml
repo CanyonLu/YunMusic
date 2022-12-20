@@ -3,11 +3,11 @@
 <mapper namespace="com.lcy.mapper.PlaylistMapper">
 
     <select id="getPlaylistById" resultType="com.lcy.entity.PlaylistEntity">
-        select id, name, intro, songIds, rate, style from playlist where id = #{id,jdbcType=VARCHAR}
+        select id, name, intro, songIds, rate, style, coverFileName from playlist where id = #{id,jdbcType=VARCHAR}
     </select>
 
     <select id="getPlaylist" resultType="com.lcy.entity.PlaylistEntity">
-        select id, name, intro, songIds, rate, style from playlist
+        select id, name, intro, songIds, rate, style, coverFileName from playlist
         <where>
             <if test="style != null and style != ''">
                 style = #{style,jdbcType=VARCHAR}
