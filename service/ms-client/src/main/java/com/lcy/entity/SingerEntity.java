@@ -16,6 +16,8 @@ public class SingerEntity {
     private String songIds;
     //歌手的性别 1,男；2,女；3,组合
     private String gender;
+    //地区
+    private String area;
     //歌手介绍
     private String intro;
     //代表作

@@ -7,12 +7,16 @@
     </select>
 
     <select id="getPlaylist" resultType="com.lcy.entity.PlaylistEntity">
-        select id, name, intro, songIds, rate, style, coverFileName from playlist
+        select id, name, coverFileName from playlist
         <where>
             <if test="style != null and style != ''">
                 style = #{style,jdbcType=VARCHAR}
             </if>
         </where>
+    </select>
+
+    <select id="getRecommendedSongList" resultType="com.lcy.entity.PlaylistEntity">
+        SELECT id, name, coverFileName FROM playlist ORDER BY RAND() LIMIT 10
     </select>
 
     <select id="getMusicByIds" resultType="com.lcy.entity.SongEntity">

@@ -40,6 +40,19 @@ public class PlaylistServiceImpl implements PlaylistService {
     }
 
     /**
+     * 获取推荐歌单列表
+     * @return
+     */
+    @Override
+    public AjaxResult getRecommendedSongList() {
+        List<PlaylistEntity> playlist = playlistMapper.getRecommendedSongList();
+        if(playlist != null){
+            return AjaxResult.success(playlist);
+        }
+        return AjaxResult.error();
+    }
+
+    /**
      * 获取歌单详情
      * @param playlistId
      * @return

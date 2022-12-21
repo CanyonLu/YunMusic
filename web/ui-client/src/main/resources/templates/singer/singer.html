@@ -60,16 +60,16 @@
     var CreateSingerListElementForAjaxSuccess = function(res){
         if(res.msg == '操作成功'){
             let singerlist = res.data;
-            let rownum = Math.ceil(singerlist.length/4);
+            let rownum = Math.ceil(singerlist.length/5);
             let singerlistdiv = document.querySelector("#" + domid);
             let num = 0;
-            let everyRowHasNum = singerlist.length < 4? singerlist.length : 4;
+            let everyRowHasNum = 5;
             for(let i = 0; i < rownum; i++){
                 let rowdiv = document.createElement("div");
                 rowdiv.className = "layui-row layui-col-space15";
                 if(i === (rownum - 1)){
                     rowdiv.id = "songListLastRow";
-                    everyRowHasNum = singerlist.length < 4? singerlist.length : singerlist.length % 4;
+                    everyRowHasNum = singerlist.length < 4? singerlist.length : singerlist.length % 5 === 0? 5 : singerlist.length % 5
                 }
                 for(let j = 0; j < everyRowHasNum; j++){
                     let everydiv = document.createElement("div");

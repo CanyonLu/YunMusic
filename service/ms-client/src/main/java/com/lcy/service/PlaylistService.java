@@ -10,6 +10,9 @@ public interface PlaylistService {
     //获取歌单
     AjaxResult getPlaylist(String style);
 
+    //获取推荐歌单
+    AjaxResult getRecommendedSongList();
+
     //歌单详情
     AjaxResult getPlaylistDetail(String playlistId);
 

@@ -10,4 +10,8 @@
             </if>
         </where>
     </select>
+
+    <select id="getMusicBySinger" resultType="com.lcy.entity.SongEntity">
+        SELECT m.id, FROM singer s LEFT JOIN song m ON s.name = m.singer WHERE m.id = #{singerId,jdbcType=VARCHAR}
+    </select>
 </mapper>

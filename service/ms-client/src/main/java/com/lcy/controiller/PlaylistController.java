@@ -36,6 +36,15 @@ public class PlaylistController {
     }
 
     /**
+     * 获取推荐歌单
+     * @return
+     */
+    @RequestMapping("/getRecommendedSongList")
+    public AjaxResult getRecommendedSongList(){
+        return playlistService.getRecommendedSongList();
+    }
+
+    /**
      * 获取歌单中歌曲列表
      * @param playlistId
      * @return

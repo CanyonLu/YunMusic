@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>歌单详情</title>
+    <link rel="stylesheet" href="lib/layui/css/layui.css"/>
+    <link rel="stylesheet" href="style/playlist.css"/>
+</head>
+<body>
+<input hidden id="singerId" name="singerId" th:value="${singerId}">
+<div id="main" class="layui-row layui-col-space15">
+    <div class="layui-col-md5">
+        <div id="left">
+            <img id="cover"/>
+            <p id="title"></p>
+        </div>
+    </div>
+    <div class="layui-col-md7">
+        <div id="right">
+            <p id="describe">简介</p>
+            <br>
+            <p id="describeDetail"></p>
+            <br>
+            <div id="rateDiv">
+                <div>
+                    <div class="rateClass">歌单评分</div>
+                    <div id="rated"></div>
+                </div>
+                <div>
+                    <div class="rateClass" id="userRate">请评分</div>
+                    <div id="unrated"></div>
+                </div>
+            </div>
+            <table id="songsTable" lay-filter="songsTable"></table>
+        </div>
+    </div>
+</div>
+
+<script src="js/common.js"></script>
+<script type="text/html" id="play">
+    <a href="javascript:;" onclick=parent.playmusic('{{d.id}}','{{d.name}}','{{d.singer}}',this)><i class="layui-icon layui-icon-play"></i></a>
+</script>
+<script>
+    var singerId;
+    var newRate;
+    var checkCallBack = function (){
+        if(loginState){
+            $("#userRate").text("已评分");
+            layui.rate.render({
+                elem: '#unrated'
+                ,value: newRate
+                ,text: true
+                ,readonly:true
+                ,setText: function(value){
+                    this.span.html('<span style="font-size: 50px">'+ value + '</span>');
+                }
+            });
+        }else {
+            layer.confirm('请先登录！', {
+                btn: ['确定', '取消'],
+                closeBtn: 0,
+                title: "",
+                skin: "my_skin"
+            }, function () {
+                parent.location.href = 'login';
+            },function () {
+                layui.rate.render({
+                    elem: '#unrated'
+                    ,value: 5
+                    ,text: true
+                    ,setText: function(value){
+                        this.span.html('<span style="font-size: 50px">'+ value + '</span>');
+                    }
+                    ,choose: function (data) {
+                        newRate = data;
+                        checkUserState(checkCallBack);
+                    }
+                });
+            })
+        }
+    };
+
+    $(function () {
+        singerId = $("#singerId").val();
+    });
+
+    layui.use(['table', 'rate'], function () {
+        const $ = layui.jquery,
+            rate = layui.rate,
+            layer = layui.layer,
+            table = layui.table;
+
+        rate.render({
+            elem: '#unrated'
+            ,value: 5
+            ,text: true
+            ,setText: function(value){
+                this.span.html('<span style="font-size: 50px">'+ value + '</span>');
+            }
+            ,choose: function (data) {
+                newRate = data;
+                checkUserState(checkCallBack);
+            }
+        });
+
+        const songsTable = table.render({
+            elem: '#songsTable'
+            , title: "歌曲作品"
+            , toolbar: ''
+            // , height: 'full-300'
+            , skin: 'nob'
+            , cols: [
+                [
+                    {type: 'numbers', width: 50, unresize: true}
+                    , {field: 'id', width: 60, align: 'center', unresize: true, templet: '#play'}
+                    , {field: 'name', align: 'center', width: 200, unresize: true, title: '歌曲名'}
+                    , {field: 'singer', align: 'center', width: 300, unresize: true, title: '歌手'}
+                    , {field: 'album', align: 'center', unresize: true, title: '专辑'}
+                ]
+            ]
+            , text: {
+                none: ' ' //默认：无数据。
+            }
+            , data: []
+            , done: function (res, curr, count) {
+                //TODO 正在播放的歌曲播放图标改为暂停图标
+                // if(playingNumber && res.data.length > 0){
+                //     let a = document.getElementsByTagName('a');
+                //     let playdom = [];
+                //     for(var i=0;i<a.length; i++){
+                //         if(a[i].getAttribute('onclick') == 'parent.playmusic(' + playingNumber +', this)'){
+                //             playdom.push(a[i]);
+                //         }
+                //     }
+                //     playdom[0].firstChild.classList.value = "layui-icon layui-icon-pause";
+                // }
+            }
+        });
+
+        layer.ready(function () {
+            $.ajax({
+                url: realm_dev + client + "singer/getMusicBySinger?singerId=" + singerId,
+                dataType : "json",
+                type : "get",
+                success : function(res){
+                    if(res.msg == '操作成功'){
+                        document.getElementById("cover").src = "image/songList/" + res.data.coverFileName;
+                        $("#describeDetail").text(res.data.intro);
+                        $("#title").text(res.data.name);
+                        rate.render({
+                            elem: '#rated'
+                            ,value: res.data.rate
+                            ,text: true
+                            ,readonly:true
+                            ,setText: function(value){
+                                this.span.html('<span style="font-size: 50px">'+ value + '</span>');
+                            }
+                        });
+                        let data = res.data.songlist;
+                        table.reload('songsTable', {
+                            data: data
+                        });
+                    }
+                },
+                error: function() {
+
+                }
+            })
+        })
+    });
+
+
+</script>
+</body>
+</html>

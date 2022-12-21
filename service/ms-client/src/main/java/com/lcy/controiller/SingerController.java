@@ -30,4 +30,14 @@ public class SingerController {
     public AjaxResult getSingerList(String gender){
         return singerService.getSingerList(gender);
     }
+
+    /**
+     * 根据歌手id获取歌曲
+     * @param singerId
+     * @return
+     */
+    @RequestMapping("/getMusicBySinger")
+    public AjaxResult getMusicBySinger(String singerId){
+        return singerService.getMusicBySinger(singerId);
+    }
 }

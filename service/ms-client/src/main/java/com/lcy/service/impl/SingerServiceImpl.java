@@ -19,6 +19,11 @@ public class SingerServiceImpl implements SingerService {
     @Autowired
     private SingerMapper singerMapper;
 
+    /**
+     * 获取歌手集合
+     * @param gender
+     * @return
+     */
     @Override
     public AjaxResult getSingerList(String gender) {
         List<SingerEntity> singerList = singerMapper.getSingerList(gender);
@@ -26,5 +31,15 @@ public class SingerServiceImpl implements SingerService {
             return AjaxResult.success(singerList);
         }
         return AjaxResult.error();
+    }
+
+    /**
+     * 根据歌手查歌曲
+     * @param singerId
+     * @return
+     */
+    @Override
+    public AjaxResult getMusicBySinger(String singerId) {
+        return null;
     }
 }

@@ -15,6 +15,9 @@ public interface PlaylistMapper {
     //获取歌单集合
     List<PlaylistEntity> getPlaylist(@Param("style") String style);
 
+    //获取推荐歌单集合
+    List<PlaylistEntity> getRecommendedSongList();
+
     //根据编号获取歌曲列表
     List<SongEntity> getMusicByIds(List<String> list);
 

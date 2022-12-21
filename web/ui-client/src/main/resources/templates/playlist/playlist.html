@@ -60,16 +60,16 @@
     var CreatePlaylistElementForAjaxSuccess = function(res){
         if(res.msg == '操作成功'){
             let songlist = res.data;
-            let rownum = Math.ceil(songlist.length/4);
+            let rownum = Math.ceil(songlist.length/5);
             let songlistdiv = document.querySelector("#" + domid);
             let num = 0;
-            let everyRowHasNum = songlist.length < 4? songlist.length : 4;
+            let everyRowHasNum = 5;
             for(let i = 0; i < rownum; i++){
                 let rowdiv = document.createElement("div");
                 rowdiv.className = "layui-row layui-col-space15";
                 if(i === (rownum - 1)){
                     rowdiv.id = "songListLastRow";
-                    everyRowHasNum = songlist.length < 4? songlist.length : songlist.length % 4;
+                    everyRowHasNum = songlist.length < 5? songlist.length : songlist.length % 5 === 0? 5 : songlist.length % 5;
                 }
                 for(let j = 0; j < everyRowHasNum; j++){
                     let everydiv = document.createElement("div");
