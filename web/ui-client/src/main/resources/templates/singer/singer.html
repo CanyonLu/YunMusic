@@ -8,7 +8,7 @@
     <style>
         .layui-tab-title li{
             font-weight: 700;
-            padding: 0 5px;
+            padding: 0 10px;
             font-size: 15px;
         }
         #singerListDiv{
@@ -82,7 +82,7 @@
                     pica.setAttribute("onclick", "singerDetail(" + singerlist[num].id + ")");
                     let picimg = document.createElement("img");
                     picimg.className = "cover";
-                    picimg.src = "image/songList/" + (num+1) + ".jpg";
+                    picimg.src = "image/singer/" + singerlist[num].photoFileName;
                     pica.appendChild(picimg);
                     let titlediv = document.createElement("div");
                     titlediv.className = "subheadDiv";
