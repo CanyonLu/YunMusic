@@ -1,6 +1,7 @@
 package com.lcy.service.impl;
 
 import com.lcy.entity.SingerEntity;
+import com.lcy.entity.SongEntity;
 import com.lcy.mapper.SingerMapper;
 import com.lcy.service.SingerService;
 import com.lcy.util.domain.AjaxResult;
@@ -40,6 +41,10 @@ public class SingerServiceImpl implements SingerService {
      */
     @Override
     public AjaxResult getMusicBySinger(String singerId) {
-        return null;
+        SingerEntity singer = singerMapper.getSingerDetail(singerId);
+        String singerName = singer.getName();
+        List<SongEntity> songList = singerMapper.getMusicBySinger(singerName);
+        singer.setSonglist(songList);
+        return AjaxResult.success(singer);
     }
 }

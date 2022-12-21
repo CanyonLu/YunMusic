@@ -91,13 +91,17 @@ function setPlay(state) {
     if(!myAduio.src){
         let playlist = localStorage.getItem("playlist");
         let list = JSON.parse(playlist);
-        myAduio.src = realm_dev + client + "playlist/getSongData?id=" + list[0].id;
-        let data = {
-            id: list[0].id,
-            name: list[0].name,
-            singer: list[0].singer
-        };
-        localStorage.setItem("playingMusicData", JSON.stringify(data));
+        if(list){
+            myAduio.src = realm_dev + client + "playlist/getSongData?id=" + list[0].id;
+            let data = {
+                id: list[0].id,
+                name: list[0].name,
+                singer: list[0].singer
+            };
+            localStorage.setItem("playingMusicData", JSON.stringify(data));
+        }else {
+            return false;
+        }
     }
     //
     var play_pause = document.getElementsByClassName('play-pause')[0];
@@ -112,7 +116,7 @@ function setPlay(state) {
         let data = JSON.parse(item);
         $("#titleText").html("当前播放： " + data.singer + " - " + data.name);
         playState = true;
-        getPlayingSerialNumber(data.id);
+        getPlaylistNextSong(data.id);
         setTimeText();
         setProgress();
         // checkEnd();
@@ -153,11 +157,66 @@ function setMuted() {
     }
 }
 
-// 获取播放列表的下一首歌曲
-function getPlayingSerialNumber(id) {
+//获取并播放上一首
+function playPreviousSong() {
+    let item = localStorage.getItem("playingMusicData");
+    let data = JSON.parse(item);
     let playlist = localStorage.getItem("playlist");
     let list = JSON.parse(playlist);
-    if(list.length > 1){
+    let previousSong;
+    if(list && list.length > 0){
+        let playingSerialNumber = 0;
+        list.forEach(item => {
+            if(item.id == data.id){
+                playingSerialNumber = item.serialNumber;
+            }
+        });
+        let previousPlaySerialNumber = playingSerialNumber === 1? list.length : playingSerialNumber - 1;
+        list.forEach(item =>{
+            if(item.serialNumber == previousPlaySerialNumber){
+                previousSong = item;
+            }
+        });
+    }
+    if(previousSong){
+        let data = {
+            id: previousSong.id,
+            name: previousSong.name,
+            singer: previousSong.singer
+        };
+        localStorage.setItem("playingMusicData", JSON.stringify(data));
+        myAduio.src = realm_dev + client + "playlist/getSongData?id=" + previousSong.id;
+        setPlay();
+    }
+}
+
+//播放下一首
+function playNextSong() {
+    if(!nextPlaySong){
+        getPlaylistNextSong();
+    }
+    if(nextPlaySong){
+        let data = {
+            id: nextPlaySong.id,
+            name: nextPlaySong.name,
+            singer: nextPlaySong.singer
+        };
+        localStorage.setItem("playingMusicData", JSON.stringify(data));
+        myAduio.src = realm_dev + client + "playlist/getSongData?id=" + nextPlaySong.id;
+        setPlay();
+    }
+}
+
+// 获取播放列表的下一首歌曲
+function getPlaylistNextSong(id) {
+    if(!id){
+        let item = localStorage.getItem("playingMusicData");
+        let data = JSON.parse(item);
+        id = data.id;
+    }
+    let playlist = localStorage.getItem("playlist");
+    let list = JSON.parse(playlist);
+    if(list && list.length > 1){
         let playingSerialNumber = 0;
         list.forEach(item =>{
             if(item.id == id){

@@ -15,5 +15,7 @@ import java.util.List;
 public interface SingerMapper {
     List<SingerEntity> getSingerList(@Param("gender") String gender);
 
-    List<SongEntity> getMusicBySinger(String singerId);
+    SingerEntity getSingerDetail(String singerId);
+
+    List<SongEntity> getMusicBySinger(String singerName);
 }

@@ -12,7 +12,9 @@
     <div class="layui-col-md5">
         <div id="left">
             <img id="cover"/>
-            <p id="title"></p>
+            <p id="singerName"></p>
+            <p id="singerArea"></p>
+            <p id="masterpiece"></p>
         </div>
     </div>
     <div class="layui-col-md7">
@@ -21,16 +23,6 @@
             <br>
             <p id="describeDetail"></p>
             <br>
-            <div id="rateDiv">
-                <div>
-                    <div class="rateClass">歌单评分</div>
-                    <div id="rated"></div>
-                </div>
-                <div>
-                    <div class="rateClass" id="userRate">请评分</div>
-                    <div id="unrated"></div>
-                </div>
-            </div>
             <table id="songsTable" lay-filter="songsTable"></table>
         </div>
     </div>
@@ -42,43 +34,6 @@
 </script>
 <script>
     var singerId;
-    var newRate;
-    var checkCallBack = function (){
-        if(loginState){
-            $("#userRate").text("已评分");
-            layui.rate.render({
-                elem: '#unrated'
-                ,value: newRate
-                ,text: true
-                ,readonly:true
-                ,setText: function(value){
-                    this.span.html('<span style="font-size: 50px">'+ value + '</span>');
-                }
-            });
-        }else {
-            layer.confirm('请先登录！', {
-                btn: ['确定', '取消'],
-                closeBtn: 0,
-                title: "",
-                skin: "my_skin"
-            }, function () {
-                parent.location.href = 'login';
-            },function () {
-                layui.rate.render({
-                    elem: '#unrated'
-                    ,value: 5
-                    ,text: true
-                    ,setText: function(value){
-                        this.span.html('<span style="font-size: 50px">'+ value + '</span>');
-                    }
-                    ,choose: function (data) {
-                        newRate = data;
-                        checkUserState(checkCallBack);
-                    }
-                });
-            })
-        }
-    };
 
     $(function () {
         singerId = $("#singerId").val();
@@ -86,22 +41,8 @@
 
     layui.use(['table', 'rate'], function () {
         const $ = layui.jquery,
-            rate = layui.rate,
             layer = layui.layer,
             table = layui.table;
-
-        rate.render({
-            elem: '#unrated'
-            ,value: 5
-            ,text: true
-            ,setText: function(value){
-                this.span.html('<span style="font-size: 50px">'+ value + '</span>');
-            }
-            ,choose: function (data) {
-                newRate = data;
-                checkUserState(checkCallBack);
-            }
-        });
 
         const songsTable = table.render({
             elem: '#songsTable'
@@ -144,18 +85,11 @@
                 type : "get",
                 success : function(res){
                     if(res.msg == '操作成功'){
-                        document.getElementById("cover").src = "image/songList/" + res.data.coverFileName;
+                        document.getElementById("cover").src = "image/singer/" + res.data.photoFileName;
                         $("#describeDetail").text(res.data.intro);
-                        $("#title").text(res.data.name);
-                        rate.render({
-                            elem: '#rated'
-                            ,value: res.data.rate
-                            ,text: true
-                            ,readonly:true
-                            ,setText: function(value){
-                                this.span.html('<span style="font-size: 50px">'+ value + '</span>');
-                            }
-                        });
+                        $("#singerName").text(res.data.name);
+                        $("#singerArea").text("地区：" + res.data.area);
+                        $("#masterpiece").text("代表作：" + res.data.masterpiece);
                         let data = res.data.songlist;
                         table.reload('songsTable', {
                             data: data
