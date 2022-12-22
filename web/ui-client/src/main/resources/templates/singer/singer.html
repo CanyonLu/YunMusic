@@ -22,7 +22,7 @@
 <div id="singerListDiv" class="layui-card layui-panel">
     <div class="layui-tab layui-tab-brief" lay-filter="singerGenderFilter">
         <ul class="layui-tab-title">
-            <li class="layui-this">全部歌手</li>
+            <li class="layui-this">全部</li>
             <li>男歌手</li>
             <li>女歌手</li>
             <li>歌手组合</li>
@@ -121,13 +121,8 @@
                 url: url,
                 dataType : "json",
                 type : "get",
-                success : CreateSingerListElementForAjaxSuccess,
-                error: function(res) {
-
-                }
+                success : CreateSingerListElementForAjaxSuccess
             })
-
-
 
         })
     })

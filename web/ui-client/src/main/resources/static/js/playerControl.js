@@ -1,4 +1,4 @@
-var myAduio = document.getElementsByTagName('audio')[0];
+var myAudio = document.getElementsByTagName('audio')[0];
 var progressTime = document.getElementsByClassName('time')[0];
 var nowLine = 0;
 var rollT;
@@ -21,7 +21,7 @@ function setMouseEvent() {
     let volume_a = document.getElementsByClassName('volume')[0];
     volume_back.onmousedown = function (e) {
         volume_now.style.width = e.offsetX + 'px';
-        myAduio.volume = e.offsetX / 100;
+        myAudio.volume = e.offsetX / 100;
         volume_text.innerText = volume_now.clientWidth;
         volume_back.onmousemove = function (ev) {
             let volume = ev.offsetX;
@@ -29,11 +29,11 @@ function setMouseEvent() {
                 volume = 100;
             }
             volume_now.style.width = volume + 'px';
-            myAduio.volume = volume / 100;
+            myAudio.volume = volume / 100;
             volume_text.innerText = volume_now.clientWidth;
         };
         document.onmouseup = function () {
-            if (myAduio.volume == 0) {
+            if (myAudio.volume == 0) {
                 volume_a.firstChild.classList.value = "layui-icon layui-icon-mute";
                 // volume_a.style.backgroundImage = 'url(../img/mute.png)';
             } else {
@@ -51,9 +51,9 @@ function setMouseEvent() {
     let progress_bar = document.getElementsByClassName('progress-bar')[0];
     progress_bar.onmousedown = function (e) {
         progress_now.style.width = e.offsetX + 'px';
-        myAduio.pause();
-        myAduio.currentTime =
-            (e.offsetX * myAduio.duration) / progress_bar.clientWidth;
+        myAudio.pause();
+        myAudio.currentTime =
+            (e.offsetX * myAudio.duration) / progress_bar.clientWidth;
         setTimeText();
         progress_bar.onmousemove = function (ev) {
             let progress = ev.offsetX;
@@ -61,19 +61,19 @@ function setMouseEvent() {
                 progress = progress_bar.clientWidth;
             }
             progress_now.style.width = progress + 'px';
-            myAduio.currentTime =
-                (progress * myAduio.duration) / progress_bar.clientWidth;
+            myAudio.currentTime =
+                (progress * myAudio.duration) / progress_bar.clientWidth;
             setTimeText();
         };
         document.onmouseup = function () {
-            myAduio.play();
+            myAudio.play();
             setPlay(true);
             // for (var i = 0; i < timeArray1.length; i++) {
-            //     if (myAduio.currentTime < timeArray1[i]) {
+            //     if (myAudio.currentTime < timeArray1[i]) {
             //         nowLine = i - 1;
             //         // setLyrics(i - 2);
             //         timeInterval[nowLine] =
-            //             timeArray1[nowLine + 1] - myAduio.currentTime;
+            //             timeArray1[nowLine + 1] - myAudio.currentTime;
             //         setPlay(true);
             //         break;
             //     }
@@ -88,29 +88,30 @@ function setMouseEvent() {
 // 设置播放状态
 function setPlay(state) {
     //歌曲src为空说明进入主页后直接点击播放键，此时先判断localstorage的歌单里有无歌曲，有就播放，没有不播放
-    if(!myAduio.src){
-        let playlist = localStorage.getItem("playlist");
-        let list = JSON.parse(playlist);
-        if(list){
-            myAduio.src = realm_dev + client + "playlist/getSongData?id=" + list[0].id;
-            let data = {
-                id: list[0].id,
-                name: list[0].name,
-                singer: list[0].singer
-            };
-            localStorage.setItem("playingMusicData", JSON.stringify(data));
-        }else {
-            return false;
-        }
+    if(!myAudio.src){
+        // let playlist = localStorage.getItem("playlist");
+        // let list = JSON.parse(playlist);
+        // if(list){
+        //     myAudio.src = realm_dev + client + "playlist/getSongData?id=" + list[0].id;
+        //     let data = {
+        //         id: list[0].id,
+        //         name: list[0].name,
+        //         singer: list[0].singer
+        //     };
+        //     localStorage.setItem("playingMusicData", JSON.stringify(data));
+        // }else {
+        //     return false;
+        // }
+        return false;
     }
     //
     var play_pause = document.getElementsByClassName('play-pause')[0];
     if (state == null) {
-        state = myAduio.paused;
+        state = myAudio.paused;
     }
     clearTimeout(rollT);
     if (state == true) {
-        myAduio.play();
+        myAudio.play();
         play_pause.firstChild.classList.value = "layui-icon layui-icon-pause";
         let item = localStorage.getItem("playingMusicData");
         let data = JSON.parse(item);
@@ -123,18 +124,18 @@ function setPlay(state) {
         // 开始播放后要重新将时间间距改回来，不然下次播放计时器会出错
         timeInterval[nowLine] = timeArray1[nowLine + 1] - timeArray1[nowLine];
     } else {
-        myAduio.pause();
+        myAudio.pause();
         play_pause.firstChild.classList.value = "layui-icon layui-icon-play";
         $("#titleText").html("");
         // play_pause.style.backgroundImage = 'url(../img/play.png)';
         playState = false;
-        timeInterval[nowLine] = timeArray1[nowLine + 1] - myAduio.currentTime;
+        timeInterval[nowLine] = timeArray1[nowLine + 1] - myAudio.currentTime;
     }
 }
 
 // 设置音量
 function setVolume(volume) {
-    myAduio.volume = volume;
+    myAudio.volume = volume;
 }
 
 // 设置静音
@@ -142,14 +143,14 @@ function setMuted() {
     let volume_now = document.getElementsByClassName('volume-now')[0];
     let volume_text = document.getElementsByClassName('volume-text')[0];
     let volume_a = document.getElementsByClassName('volume')[0];
-    if (myAduio.muted == true) {
-        myAduio.muted = false;
+    if (myAudio.muted == true) {
+        myAudio.muted = false;
         volume_a.firstChild.classList.value = "layui-icon layui-icon-speaker";
         // volume_a.style.backgroundImage = 'url(../img/volume.png)';
-        volume_now.style.width = myAduio.volume * 100 + 'px';
-        volume_text.innerText = myAduio.volume * 100;
+        volume_now.style.width = myAudio.volume * 100 + 'px';
+        volume_text.innerText = myAudio.volume * 100;
     } else {
-        myAduio.muted = true;
+        myAudio.muted = true;
         volume_a.firstChild.classList.value = "layui-icon layui-icon-mute";
         // volume_a.style.backgroundImage = 'url(../img/mute.png)';
         volume_now.style.width = '0';
@@ -185,7 +186,7 @@ function playPreviousSong() {
             singer: previousSong.singer
         };
         localStorage.setItem("playingMusicData", JSON.stringify(data));
-        myAduio.src = realm_dev + client + "playlist/getSongData?id=" + previousSong.id;
+        myAudio.src = realm_dev + client + "playlist/getSongData?id=" + previousSong.id;
         setPlay();
     }
 }
@@ -202,7 +203,7 @@ function playNextSong() {
             singer: nextPlaySong.singer
         };
         localStorage.setItem("playingMusicData", JSON.stringify(data));
-        myAduio.src = realm_dev + client + "playlist/getSongData?id=" + nextPlaySong.id;
+        myAudio.src = realm_dev + client + "playlist/getSongData?id=" + nextPlaySong.id;
         setPlay();
     }
 }
@@ -233,7 +234,7 @@ function getPlaylistNextSong(id) {
 }
 
 //判断是否结束，并自动播放下一首
-myAduio.addEventListener('ended', function () {
+myAudio.addEventListener('ended', function () {
     if(nextPlaySong){
         let data = {
             id: nextPlaySong.id,
@@ -241,7 +242,7 @@ myAduio.addEventListener('ended', function () {
             singer: nextPlaySong.singer
         };
         localStorage.setItem("playingMusicData", JSON.stringify(data));
-        myAduio.src = realm_dev + client + "playlist/getSongData?id=" + nextPlaySong.id;
+        myAudio.src = realm_dev + client + "playlist/getSongData?id=" + nextPlaySong.id;
         setPlay();
     }else {
         document.getElementsByClassName('play-pause')[0].firstChild.classList.value = "layui-icon layui-icon-play";
@@ -251,8 +252,8 @@ myAduio.addEventListener('ended', function () {
 
 // 设置进度文本
 function setTimeText() {
-    var nowTime = myAduio.currentTime;
-    var allTime = myAduio.duration;
+    var nowTime = myAudio.currentTime;
+    var allTime = myAudio.duration;
     // 计算时间，若为个位数，补0
     if (Math.floor(nowTime % 60) < 10) {
         nowTime = Math.floor(nowTime / 60) + ':0' + Math.floor(nowTime % 60);
@@ -266,7 +267,7 @@ function setTimeText() {
     }
     progressTime.innerText = nowTime + '/' + allTime;
     // 每0.1秒执行一次
-    if (myAduio.paused == false) {
+    if (myAudio.paused == false) {
         setTimeout(setTimeText, 100);
     }
 }
@@ -276,10 +277,10 @@ function setProgress() {
     let progress_now = document.getElementsByClassName('progress-now')[0];
     let progress_bar = document.getElementsByClassName('progress-bar')[0];
     let progress = Math.floor(
-        (myAduio.currentTime / myAduio.duration) * progress_bar.clientWidth
+        (myAudio.currentTime / myAudio.duration) * progress_bar.clientWidth
     );
     progress_now.style.width = progress + 'px';
-    if (myAduio.paused == false) {
+    if (myAudio.paused == false) {
         setTimeout(setProgress, 100);
     }
 }

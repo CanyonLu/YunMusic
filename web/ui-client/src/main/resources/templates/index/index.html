@@ -82,7 +82,7 @@
                     <span class="volume-text">100</span>
                 </div>
                 <div class="playlist">
-                    <a href="javascript:;" onclick="showList()"><i class="layui-icon layui-icon-list"></i></a>
+                    <a href="javascript:;" onclick="showList()"><i class="layui-icon layui-icon-spread-left"></i></a>
                 </div>
             </div>
         </div>
@@ -108,7 +108,32 @@
             $("#notLogin").css('display','inline');
         }
         $("#indexIframe").html('<iframe width="100%" height="100%" frameborder="no" border="0" marginwidth="0" narginheight="0" src="home"></iframe>');
+        let playlist = localStorage.getItem("playlist");
+        let list = JSON.parse(playlist);
+        if(list){
+            myAudio.src = realm_dev + client + "playlist/getSongData?id=" + list[0].id;
+            let data = {
+                id: list[0].id,
+                name: list[0].name,
+                singer: list[0].singer
+            };
+            localStorage.setItem("playingMusicData", JSON.stringify(data));
+            $("#titleText").html("当前播放： " + data.singer + " - " + data.name);
+        }
     });
+
+    //播放全部歌单时设置路径和标题并播放
+    function setAudioSrcTitleAndPlay(list) {
+        myAudio.src = realm_dev + client + "playlist/getSongData?id=" + list[0].id;
+        let data = {
+            id: list[0].id,
+            name: list[0].name,
+            singer: list[0].singer
+        };
+        localStorage.setItem("playingMusicData", JSON.stringify(data));
+        $("#titleText").html("当前播放： " + data.singer + " - " + data.name);
+        setPlay();
+    }
 
     var loggedinfun = function (){
         if(loginState){
@@ -167,12 +192,12 @@
         //歌单页面加播放样式
         if(playingNubmer == undefined && playingDom == undefined){
             dom.firstChild.classList.value = 'layui-icon layui-icon-pause';
-            myAduio.src = realm_dev + client + "playlist/getSongData?id=" + id;
+            myAudio.src = realm_dev + client + "playlist/getSongData?id=" + id;
             setPlay();
             playingNubmer = id;
             playingDom = dom;
         }else if(playingNubmer == id){
-            if(!myAduio.paused){
+            if(!myAudio.paused){
                 dom.firstChild.classList.value = 'layui-icon layui-icon-play';
                 setPlay(false)
             }else {
@@ -182,7 +207,7 @@
         }else if(playingNubmer != id){
             playingDom.firstChild.classList.value = 'layui-icon layui-icon-play';
             dom.firstChild.classList.value = 'layui-icon layui-icon-pause';
-            myAduio.src = realm_dev + client + "playlist/getSongData?id=" + id;
+            myAudio.src = realm_dev + client + "playlist/getSongData?id=" + id;
             setPlay();
             playingNubmer = id;
             playingDom = dom;

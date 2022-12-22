@@ -59,3 +59,26 @@
     font-weight: 600;
     font-size: 20px;
 }
+.playlist-btn-green{
+    border: 1px solid #5FB878;
+    background-color: #5FB878;
+    font-size: 14px;
+    min-width: 80px;
+    padding: 0 18px;
+    height: 36px;
+    display: inline-block;
+    line-height: 36px;
+    text-align: center;
+    margin-right: 8px;
+}
+
+.playlist-btn{
+    border: 1px solid #C9C9C9;
+    font-size: 14px;
+    height: 36px;
+    min-width: 80px;
+    padding: 0 18px;
+    display: inline-block;
+    line-height: 36px;
+    text-align: center;
+}

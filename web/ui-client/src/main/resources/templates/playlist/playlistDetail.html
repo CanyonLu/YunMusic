@@ -31,6 +31,11 @@
                     <div id="unrated"></div>
                 </div>
             </div>
+            <br>
+            <div>
+                <a class="playlist-btn-green" href="javascript:;"><i class="layui-icon layui-icon-triangle-r"></i><span>播放全部</span></a>
+                <a class="playlist-btn" href="javascript:;"><i class="layui-icon layui-icon-heart"></i><span>收藏歌单</span></a>
+            </div>
             <table id="songsTable" lay-filter="songsTable"></table>
         </div>
     </div>
@@ -43,6 +48,8 @@
 <script>
     var playlistId;
     var newRate;
+    let playAllBtn = document.getElementsByClassName('playlist-btn-green')[0];
+    let collectBtn = document.getElementsByClassName('playlist-btn')[0];
     var checkCallBack = function (){
         if(loginState){
             $("#userRate").text("已评分");
@@ -86,6 +93,32 @@
         //     document.getElementById("cover").src = "image/songList/" + playlistId + ".jpg";
         // }
     });
+
+    //播放全部点击事件
+    playAllBtn.onclick = function(){
+        let songlist = layui.table.cache['songsTable'];
+        if(songlist){
+            parent.setAudioSrcTitleAndPlay(songlist);
+            let data = [];
+            let serialNumber = 1;
+            songlist.forEach(item =>{
+                let song = {
+                    id: item.id,
+                    name: item.name,
+                    singer: item.singer,
+                    serialNumber: serialNumber++
+                };
+                data.push(song);
+            });
+            localStorage.setItem("playlist", JSON.stringify(data));
+        }
+    };
+
+    //收藏歌单点击事件
+    collectBtn.onclick = function(){
+        collectBtn.children[0].style.color = '#FF0000';
+        collectBtn.children[0].classList.value = 'layui-icon layui-icon-heart-fill';
+    };
 
     layui.use(['table', 'rate'], function () {
         const $ = layui.jquery,
