@@ -79,6 +79,8 @@ public class IndexServiceImpl implements IndexService {
             Map<String,String> payload = new HashMap<>();
             payload.put("id", userEntity.getId());
             payload.put("nickname", userEntity.getNickname());
+            payload.put("songlist", userEntity.getSonglist());
+            payload.put("songs", userEntity.getSongs());
             map.put("token", JWTUtils.getToken(payload));
             map.put("nickname", userEntity.getNickname());
             return AjaxResult.success(map);

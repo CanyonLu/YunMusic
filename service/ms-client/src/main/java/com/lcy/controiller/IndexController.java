@@ -54,11 +54,16 @@ public class IndexController {
         DecodedJWT verify = JWTUtils.verify(token);
         String id = verify.getClaim("id").asString();
         String nickname = verify.getClaim("nickname").asString();
+        String songlist = verify.getClaim("songlist").asString();
+        String songs = verify.getClaim("songs").asString();
         log.info("用户id：{}", id);
         log.info("用户名: {}", nickname);
         Map map = new HashMap<>();
         map.put("msg","请求成功");
+        map.put("id", id);
         map.put("nickname", nickname);
+        map.put("songlist", songlist);
+        map.put("songs", songs);
         map.put("state", true);
         return map;
     }

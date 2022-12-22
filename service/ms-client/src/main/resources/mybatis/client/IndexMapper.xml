@@ -45,7 +45,7 @@
     </select>
 
     <select id="queryUserByAccountAndPassword" parameterType="com.lcy.entity.UserEntity" resultType="com.lcy.entity.UserEntity">
-        select id, account, password, nickname, sex from user where account = #{account} and password = #{password}
+        select id, account, password, nickname, sex, songlist, songs from user where account = #{account} and password = #{password}
     </select>
 
 </mapper>

@@ -14,4 +14,8 @@ public class UserEntity {
     private String nickname;
     //性别
     private String sex;
+    //收藏的歌单
+    private String songlist;
+    //收藏的歌曲
+    private String songs;
 }

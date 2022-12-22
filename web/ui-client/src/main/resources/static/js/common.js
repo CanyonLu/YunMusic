@@ -4,6 +4,7 @@ document.write('<script src="lib/layui/layui.js" type="text/javascript"></script
 
 var token;
 var loginState;
+var userInfo;
 
 /**
  * 判断用户是否已登录
@@ -19,6 +20,7 @@ function checkUserState(callbackFunction) {
         success : function(res){
             if(res.state){
                 loginState = true;
+                userInfo = res;
             }else {
                 loginState = false;
                 localStorage.removeItem("token");

@@ -89,9 +89,7 @@
 
     $(function () {
         playlistId = $("#playlistId").val();
-        // if(playlistId){
-        //     document.getElementById("cover").src = "image/songList/" + playlistId + ".jpg";
-        // }
+        checkUserState(checkLogin);
     });
 
     //播放全部点击事件
@@ -114,10 +112,33 @@
         }
     };
 
+    function checkLogin() {
+        if(loginState){
+            if(userInfo.songlist){
+                if(userInfo.songlist.indexOf(playlistId) != -1){
+                    collectBtn.children[0].style.color = '#FF4800';
+                    collectBtn.children[0].classList.value = 'layui-icon layui-icon-heart-fill';
+                }
+            }
+        }
+    }
+
     //收藏歌单点击事件
     collectBtn.onclick = function(){
-        collectBtn.children[0].style.color = '#FF0000';
-        collectBtn.children[0].classList.value = 'layui-icon layui-icon-heart-fill';
+        if(loginState){
+            let value = collectBtn.children[0].classList.value;
+            if(value === 'layui-icon layui-icon-heart-fill'){
+                alert("取消收藏");
+                collectBtn.children[0].style.color = '';
+                collectBtn.children[0].classList.value = 'layui-icon layui-icon-heart';
+            }else if(value === 'layui-icon layui-icon-heart'){
+                alert("添加收藏");
+                collectBtn.children[0].style.color = '#FF4800';
+                collectBtn.children[0].classList.value = 'layui-icon layui-icon-heart-fill';
+            }
+        }else {
+            parent.location.href = "login";
+        }
     };
 
     layui.use(['table', 'rate'], function () {
