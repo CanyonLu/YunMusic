@@ -123,6 +123,35 @@
         }
     }
 
+    function changeCollectState(state){
+        let songlist = userInfo.songlist;
+        if(state){
+            songlist = songlist.length === 0? playlistId : songlist + ',' + playlistId;
+            userInfo.songlist = songlist;
+        }else {
+            let split = songlist.split(',');
+            let newCollect = '';
+            split.forEach(item =>{
+                if(item != playlistId){
+                    newCollect += item;
+                }
+            });
+            userInfo.songlist = newCollect;
+        }
+        $.ajax({
+            url: realm_dev + client + "user/editUserInfo",
+            data: userInfo,
+            dataType : "json",
+            type : "post",
+            success : function(res){
+
+            },
+            error: function() {
+
+            }
+        })
+    }
+
     //收藏歌单点击事件
     collectBtn.onclick = function(){
         if(loginState){
@@ -131,10 +160,12 @@
                 alert("取消收藏");
                 collectBtn.children[0].style.color = '';
                 collectBtn.children[0].classList.value = 'layui-icon layui-icon-heart';
+                changeCollectState(false);
             }else if(value === 'layui-icon layui-icon-heart'){
                 alert("添加收藏");
                 collectBtn.children[0].style.color = '#FF4800';
                 collectBtn.children[0].classList.value = 'layui-icon layui-icon-heart-fill';
+                changeCollectState(true);
             }
         }else {
             parent.location.href = "login";

@@ -48,4 +48,25 @@
         select id, account, password, nickname, sex, songlist, songs from user where account = #{account} and password = #{password}
     </select>
 
+    <update id="editUserInfo" parameterType="com.lcy.entity.UserEntity">
+        update user
+        <set>
+            <if test="password != null">
+                password = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="nickname != null">
+                nickname = #{nickname,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null">
+                sex = #{sex,jdbcType=VARCHAR},
+            </if>
+            <if test="songlist != null">
+                songlist = #{songlist,jdbcType=VARCHAR},
+            </if>
+            <if test="songs != null">
+                songs = #{songs,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
 </mapper>

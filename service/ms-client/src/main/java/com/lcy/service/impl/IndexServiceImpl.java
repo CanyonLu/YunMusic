@@ -88,4 +88,14 @@ public class IndexServiceImpl implements IndexService {
             return AjaxResult.error("账号或密码错误，请重试！");
         }
     }
+
+    @Override
+    public AjaxResult editUserInfo(UserEntity userEntity) {
+        int i = indexMapper.editUserInfo(userEntity);
+        if(i == 1){
+            return AjaxResult.success();
+        }else {
+            return AjaxResult.error();
+        }
+    }
 }

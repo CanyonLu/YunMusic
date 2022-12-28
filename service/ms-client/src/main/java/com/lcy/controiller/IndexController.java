@@ -92,4 +92,14 @@ public class IndexController {
     public AjaxResult userLogin(UserEntity userEntity, HttpServletRequest request){
         return indexService.userLogin(userEntity, request);
     }
+
+    /**
+     * 修改用户
+     * @param user
+     * @return
+     */
+    @RequestMapping("/editUserInfo")
+    public AjaxResult editUserInfo(UserEntity user){
+        return indexService.editUserInfo(user);
+    }
 }

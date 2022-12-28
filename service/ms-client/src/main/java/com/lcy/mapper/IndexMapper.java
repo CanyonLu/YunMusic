@@ -11,4 +11,6 @@ public interface IndexMapper {
     int checkAccountExist(String account);
 
     UserEntity queryUserByAccountAndPassword(UserEntity userEntity);
+
+    int editUserInfo(UserEntity userEntity);
 }

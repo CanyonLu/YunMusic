@@ -16,4 +16,6 @@ public interface IndexService {
     //用户登录
     AjaxResult userLogin(UserEntity userEntity, HttpServletRequest request);
 
+    AjaxResult editUserInfo(UserEntity userEntity);
+
 }
