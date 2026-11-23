@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>歌手详情</title>
+    <link rel="stylesheet" href="lib/layui/css/layui.css"/>
+    <link rel="stylesheet" href="style/playlist.css"/>
+</head>
+<body>
+<input hidden id="singerId" name="singerId" th:value="${singerId}">
+<div id="main" class="layui-row layui-col-space15">
+    <div class="layui-col-md5">
+        <div id="left">
+            <img id="cover"/>
+            <p id="singerName"></p>
+            <p id="singerArea"></p>
+            <p id="masterpiece"></p>
+        </div>
+    </div>
+    <div class="layui-col-md7">
+        <div id="right">
+            <p id="describe">简介</p>
+            <br>
+            <p id="describeDetail"></p>
+            <br>
+            <div>
+                <a class="playlist-btn-green" href="javascript:;"><i class="layui-icon layui-icon-triangle-r"></i><span>播放全部</span></a>
+            </div>
+            <table id="songsTable" lay-filter="songsTable"></table>
+        </div>
+    </div>
+</div>
+
+<script src="js/common.js"></script>
+<script type="text/html" id="play">
+    <a href="javascript:;" onclick=parent.playmusic('{{d.id}}','{{d.name}}','{{d.singer}}',this)><i class="layui-icon layui-icon-play"></i></a>
+</script>
+<script>
+    var singerId;
+
+    $(function () {
+        singerId = $("#singerId").val();
+    });
+
+    layui.use('table', function () {
+        const $ = layui.jquery,
+            layer = layui.layer,
+            table = layui.table;
+
+        const songsTable = table.render({
+            elem: '#songsTable'
+            , title: "歌曲作品"
+            , toolbar: ''
+            // , height: 'full-300'
+            , skin: 'nob'
+            , cols: [
+                [
+                    {type: 'numbers', width: 50, unresize: true}
+                    , {field: 'id', width: 60, align: 'center', unresize: true, templet: '#play'}
+                    , {field: 'name', align: 'center', width: 200, unresize: true, title: '歌曲名'}
+                    , {field: 'singer', align: 'center', width: 300, unresize: true, title: '歌手'}
+                    , {field: 'album', align: 'center', unresize: true, title: '专辑'}
+                ]
+            ]
+            , text: {
+                none: ' ' //默认：无数据。
+            }
+            , data: []
+        });
+
+        layui.layer.ready(function () {
+            $.ajax({
+                url: API + "singer/getMusicBySinger?singerId=" + singerId,
+                dataType : "json",
+                type : "get",
+                success : function(res){
+                    if(res.msg == '操作成功'){
+                        document.getElementById("cover").src = "image/singer/" + res.data.photoFileName;
+                        $("#describeDetail").text(res.data.intro);
+                        $("#singerName").text(res.data.name);
+                        $("#singerArea").text("地区：" + res.data.area);
+                        $("#masterpiece").text("代表作：" + res.data.masterpiece);
+                        let data = res.data.songlist;
+                        table.reload('songsTable', {
+                            data: data
+                        });
+                    }
+                },
+                error: function() {
+
+                }
+            })
+        })
+    });
+
+
+</script>
+</body>
+</html>

@@ -1,7 +1,0 @@
-spring:
-  cloud:
-    nacos:
-      discovery:
-        server-addr: 127.0.0.1:8848
-        namespace: 8cb5eee5-c2fe-44a0-a5f9-bf793bee85a3
-        group: DEFAULT_GROUP

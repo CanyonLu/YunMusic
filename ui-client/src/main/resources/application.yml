@@ -1,0 +1,15 @@
+server:
+  port: 8088
+  servlet:
+    context-path: /ui
+
+spring:
+  application:
+    name: ui-client
+  devtools:
+    restart:
+      exclude: static/**, templates/**
+  thymeleaf:
+    # 开发期关闭模板缓存
+    cache: false
+    encoding: UTF-8

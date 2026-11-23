@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <settings>
+        <!-- 日志交给 slf4j，其余保持 MyBatis 默认（REUSE 执行器与未使用的二级缓存已移除） -->
+        <setting name="logImpl" value="SLF4J"/>
+    </settings>
+
+</configuration>

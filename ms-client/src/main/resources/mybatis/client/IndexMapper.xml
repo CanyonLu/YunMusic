@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lcy.mapper.IndexMapper">
+
+    <insert id="userRegister" parameterType="com.lcy.entity.UserEntity">
+        insert into user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="account != null">
+                account,
+            </if>
+            <if test="password != null">
+                password,
+            </if>
+            <if test="nickname != null">
+                nickname,
+            </if>
+            <if test="sex != null">
+                sex,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="account != null">
+                #{account,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="nickname != null">
+                #{nickname,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null">
+                #{sex,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="checkAccountExist" parameterType="String" resultType="int">
+        select count(*) from user where account = #{account}
+    </select>
+
+    <select id="queryUserByAccountAndPassword" parameterType="com.lcy.entity.UserEntity" resultType="com.lcy.entity.UserEntity">
+        select id, account, password, nickname, sex, songlist, songs from user where account = #{account} and password = #{password}
+    </select>
+
+    <select id="queryUserById" resultType="com.lcy.entity.UserEntity">
+        select id, account, nickname, sex, songlist, songs from user where id = #{id}
+    </select>
+
+    <update id="editUserInfo" parameterType="com.lcy.entity.UserEntity">
+        update user
+        <set>
+            <if test="password != null">
+                password = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="nickname != null">
+                nickname = #{nickname,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null">
+                sex = #{sex,jdbcType=VARCHAR},
+            </if>
+            <if test="songlist != null">
+                songlist = #{songlist,jdbcType=VARCHAR},
+            </if>
+            <if test="songs != null">
+                songs = #{songs,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+</mapper>

@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Yun-Music 云音乐</title>
+    <link rel="stylesheet" href="lib/layui/css/layui.css"/>
+    <link rel="stylesheet" href="style/index.css"/>
+    <link rel="shortcut icon" href="image/favicon.ico" type="image/x-icon"/>
+</head>
+<body>
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <ul class="layui-nav layui-tab-card" lay-filter="menu">
+            <li class="layui-nav-item" lay-unselect="" id="logoLi"><a href="javascript:;" ><i class="layui-icon layui-icon-headset">&emsp;Yun-Music</i></a></li>
+            <li class="layui-nav-item layui-this" id="indexLi"><a href="javascript:;">首页</a></li>
+            <li class="layui-nav-item"><a href="javascript:;">歌单</a></li>
+            <li class="layui-nav-item"><a href="javascript:;">歌手</a></li>
+            <li class="layui-nav-item"><a href="javascript:;">我的音乐</a></li>
+            <li class="layui-nav-item" id="searchLi">
+                <input class="user-input" type="text" name="search" placeholder="搜索音乐、歌手、专辑">
+                <button class="user-btn" type="button">
+                    <i class="layui-icon layui-icon-search" style="font-size: 26px"></i>
+                </button>
+            </li>
+            <span id="notLogin" style="display: none">
+                <li class="layui-nav-item" lay-unselect=""><a href="javascript:;" style="font-size: 18px; padding: 0 10px; color: #000000">登录</a></li>
+                <li class="layui-nav-item" lay-unselect=""><a href="javascript:;" style="font-size: 18px; padding: 0 10px; color: #000000">注册</a></li>
+            </span>
+            <span id="logined"  style="display: none">
+                <li class="layui-nav-item layui-hide layui-show-md-inline-block">
+                    <a href="javascript:;"><img src="//t.cn/RCzsdCq" class="layui-nav-img"></a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;" class="userinfo">个人中心</a></dd>
+                        <dd><a href="javascript:;" class="userinfo">修改密码</a></dd>
+                        <hr>
+                        <dd style="text-align: center;"><a href="javascript:;" class="userinfo">退出</a></dd>
+                    </dl>
+                </li>
+            </span>
+        </ul>
+    </div>
+
+    <div class="layui-body">
+        <div class="layui-tab-content">
+            <div id="indexIframe" style="height: 100%" class="layui-tab-item layui-show"></div>
+        </div>
+    </div>
+
+    <div class="layui-footer">
+        <audio preload="auto"></audio>
+        <div class="control-back">
+            <!-- 进度条 -->
+            <div class="progress-bar">
+                <div class="progress-all"></div>
+                <div class="progress-now"></div>
+            </div>
+            <span class="time">0:00/0:00</span>
+            <!-- 控制按钮 -->
+            <div class="control">
+                <div class="control-title">
+                    <img src="./image/album/default.jpg"/>
+                    <div>
+                        <p>
+                            <marquee id="titleText" behavior="scroll" direction="left" scrollamount="3"></marquee>
+                        </p>
+                    </div>
+                </div>
+                <!-- 上一首、下一首、暂停播放 -->
+                <div class="control-btn">
+                    <a href="javascript:;" class="up" onclick="playPreviousSong()"><i class="layui-icon layui-icon-left"></i></a>
+                    <a href="javascript:;" class="play-pause" onclick="setPlay()"><i class="layui-icon layui-icon-play"></i></a>
+                    <a href="javascript:;" class="down" onclick="playNextSong()"><i class="layui-icon layui-icon-right"></i></a>
+                </div>
+                <!-- 播放模式、声音 -->
+                <div class="control-right">
+                    <a href="javascript:;" class="mode"></a>
+                    <a href="javascript:;" class="volume" onclick="setMuted()"><i class="layui-icon layui-icon-speaker"></i></a>
+                    <div class="volume-back">
+                        <div class="volume-all"></div>
+                        <div class="volume-now"></div>
+                    </div>
+                    <span class="volume-text">100</span>
+                </div>
+                <div class="playlist">
+                    <a href="javascript:;" onclick="showList()"><i class="layui-icon layui-icon-spread-left"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</div>
+
+
+
+
+<script src="js/common.js"></script>
+<script src="js/playerControl.js"></script>
+<script>
+
+    var nowPage = '首页';
+    var playingNubmer;
+    var playingDom;
+    $(function () {
+        if (localStorage.getItem("token")) {
+            $("#logined").css('display', 'inline');
+        } else {
+            $("#notLogin").css('display', 'inline');
+        }
+        $("#indexIframe").html('<iframe width="100%" height="100%" frameborder="no" border="0" marginwidth="0" narginheight="0" src="home"></iframe>');
+        let playlist = localStorage.getItem("playlist");
+        let list = JSON.parse(playlist);
+        if (list && list.length > 0) {
+            myAudio.src = API + "playlist/getSongData?id=" + list[0].id;
+            let data = {
+                id: list[0].id,
+                name: list[0].name,
+                singer: list[0].singer
+            };
+            localStorage.setItem("playingMusicData", JSON.stringify(data));
+            $("#titleText").html("当前播放： " + data.singer + " - " + data.name);
+        }
+    });
+
+    //播放全部歌单时设置路径和标题并播放
+    function setAudioSrcTitleAndPlay(list) {
+        myAudio.src = API + "playlist/getSongData?id=" + list[0].id;
+        let data = {
+            id: list[0].id,
+            name: list[0].name,
+            singer: list[0].singer
+        };
+        localStorage.setItem("playingMusicData", JSON.stringify(data));
+        $("#titleText").html("当前播放： " + data.singer + " - " + data.name);
+        setPlay();
+    }
+
+    var loggedinfun = function (){
+        if(loginState){
+            $("#notLogin").css('display','none');
+            $("#logined").css('display','inline');
+        }
+    };
+
+    function showList() {
+        // $("#playlistWindow").toggle();
+        let width = innerWidth - 450;
+        let height = innerHeight - 500 - 80;
+        layui.layer.open({
+            type: 2,
+            title: false,
+            area: ['450px', '500px'],
+            offset: [height, width],
+            closeBtn: 0,
+            anim: 0,
+            shade: 0.1,
+            shadeClose: true,
+            content: 'playlistWindow',
+            success: res => {
+                // 成功回调处理
+            }
+        });
+    }
+
+    function playmusic(id, name, singer, dom){
+        //将正在播放歌曲加到localStorage，并更新播放列表
+        let data = {
+            id: id,
+            name: name,
+            singer: singer
+        };
+        localStorage.setItem("playingMusicData", JSON.stringify(data));
+        let playlist = localStorage.getItem("playlist");
+        let newPlaylist = [];
+        if(playlist){
+            newPlaylist = JSON.parse(playlist);
+            let flag = true;
+            newPlaylist.forEach(item =>{
+                if(item.id == data.id){
+                    flag = false
+                }
+            });
+            if(flag){
+                data.serialNumber = newPlaylist.length + 1;
+                newPlaylist.push(data);
+            }
+        }else {
+            data.serialNumber = 1;
+            newPlaylist.push(data);
+        }
+        localStorage.setItem("playlist", JSON.stringify(newPlaylist));
+        //歌单页面加播放样式
+        if(playingNubmer == undefined && playingDom == undefined){
+            dom.firstChild.classList.value = 'layui-icon layui-icon-pause';
+            myAudio.src = API + "playlist/getSongData?id=" + id;
+            setPlay();
+            playingNubmer = id;
+            playingDom = dom;
+        }else if(playingNubmer == id){
+            if(!myAudio.paused){
+                dom.firstChild.classList.value = 'layui-icon layui-icon-play';
+                setPlay(false)
+            }else {
+                dom.firstChild.classList.value = 'layui-icon layui-icon-pause';
+                setPlay();
+            }
+        }else if(playingNubmer != id){
+            playingDom.firstChild.classList.value = 'layui-icon layui-icon-play';
+            dom.firstChild.classList.value = 'layui-icon layui-icon-pause';
+            myAudio.src = API + "playlist/getSongData?id=" + id;
+            setPlay();
+            playingNubmer = id;
+            playingDom = dom;
+        }
+    }
+
+    layui.use(['element'], function(){
+        var $ = layui.jquery,
+            element = layui.element;
+
+        checkUserState(loggedinfun);
+
+        element.on('nav(menu)', function(data){
+            let newPage = data.text();
+            //判断是否重复点击同一个模块
+            if(nowPage == newPage){
+                return false;
+            }
+            //判断点击模块
+            switch (newPage) {
+                case '首页':
+                    $("#indexIframe").html('<iframe width="100%" height="100%" frameborder="no" border="0" marginwidth="0" narginheight="0" src="home"></iframe>');
+                    break;
+                case '歌单':
+                    $("#indexIframe").html('<iframe width="100%" height="100%" frameborder="no" border="0" marginwidth="0" narginheight="0" src="playlist"></iframe>');
+                    break;
+                case '歌手':
+                    $("#indexIframe").html('<iframe width="100%" height="100%" frameborder="no" border="0" marginwidth="0" narginheight="0" src="singer"></iframe>');
+                    break;
+                case '登录':
+                    window.location = 'login';
+                    break;
+                case '退出':
+                    localStorage.removeItem("token");
+                    layui.layer.msg('退出成功');
+                    setTimeout(function(){
+                        location.reload();
+                    },1000);
+                    break;
+                case '注册':
+                    layui.layer.open({
+                        type : 2,
+                        title : "注册",
+                        maxmin : true,
+                        area : [ '450px', '500px' ],
+                        content : 'register'
+                    });
+                    break;
+                default:
+                    break;
+            }
+            nowPage = document.getElementsByClassName('layui-nav-item layui-this')[0].children[0].textContent;
+        });
+    });
+
+
+</script>
+</body>
+</html>

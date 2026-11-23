@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+    <link rel="stylesheet" href="lib/layui/css/layui.css"/>
+    <link rel="stylesheet" href="style/index.css"/>
+</head>
+<body>
+    <div class="layui-carousel" id="carousel">
+        <div carousel-item>
+            <div><img class="carouselImg" src="image/recommend/1.jpg"></div>
+            <div><img class="carouselImg" src="image/recommend/2.png"></div>
+            <div><img class="carouselImg" src="image/recommend/3.png"></div>
+            <div><img class="carouselImg" src="image/recommend/4.png"></div>
+            <div><img class="carouselImg" src="image/recommend/5.png"></div>
+        </div>
+    </div>
+    <br>
+    <div class="layui-card-header">
+        <h1>推荐歌单</h1>
+    </div>
+    <div id="songListDiv" class="layui-card layui-panel"></div>
+
+<script src="js/common.js"></script>
+<script>
+    $(function () {
+        $.ajax({
+            url: API + "playlist/getRecommendedSongList",
+            dataType: "json",
+            type: "get",
+            success: function (res) {
+                if (res.code !== 0) {
+                    return;
+                }
+                renderCardGrid('#songListDiv', res.data, {
+                    imgPrefix: 'image/songList/',
+                    imgField: 'coverFileName',
+                    onClick: function (item) {
+                        location.href = 'playlistDetail?playlistId=' + item.id;
+                    }
+                });
+            }
+        });
+    });
+
+    layui.use(['carousel'], function () {
+        layui.carousel.render({
+            elem: '#carousel',
+            width: '70%',
+            arrow: 'always',
+            height: '400px',
+            interval: '5000'
+        });
+    });
+</script>
+</body>
+</html>

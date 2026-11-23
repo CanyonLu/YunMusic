@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="lib/layui/css/layui.css"/>
+    <style>
+        body{
+            width: 450px;
+            height: 500px;
+        }
+    </style>
+</head>
+<body>
+<div id="playlistWindow">
+    <div style="width: 430px;padding-left: 10px;padding-top: 10px">
+        <span style="font-weight: 700; font-size: 18px;">播放列表(<span id="songNumber">0</span>)</span>
+        <a href="javascript:;" style="left: 350px; position: absolute" onclick="clearPlaylist()"><span style="font-size: 16px;color: #888888">清空</span></a>
+    </div>
+    <div>
+        <table id="songList" lay-filter="songList"></table>
+    </div>
+</div>
+
+
+<script src="js/common.js"></script>
+<script type="text/html" id="play">
+    <a href="javascript:;" onclick=parent.playmusic('{{d.id}}','{{d.name}}','{{d.singer}}',this)><i class="layui-icon layui-icon-play"></i></a>
+</script>
+<script>
+
+    function clearPlaylist(){
+        localStorage.removeItem("playlist");
+        $("#songNumber").text('0');
+        layui.table.reload('songList', {
+            data: []
+        });
+    }
+
+
+    layui.use('table', function () {
+        const $ = layui.jquery,
+            layer = layui.layer,
+            table = layui.table;
+
+        const songList = table.render({
+            elem: '#songList'
+            , title: "歌单详情"
+            , toolbar: ''
+            , height: 'full-50'
+            , skin: 'nob'
+            , cols: [
+                [
+                    {type: 'numbers', width: 50, unresize: true}
+                    , {field: 'id', width: 50, align: 'center', unresize: true, templet: '#play'}
+                    , {field: 'name', align: 'center', width: 200, unresize: true}
+                    , {field: 'singer', align: 'center', unresize: true}
+                    // TODO 歌手跳转
+                    // , {field: 'album', align: 'center', unresize: true}
+                ]
+            ]
+            , text: {
+                none: ' ' //默认：无数据。
+            }
+            , data: []
+            , done: function (res, curr, count) {
+                $('th').hide();
+                //TODO 正在播放的歌曲加样式
+            }
+        });
+
+        layui.layer.ready(function () {
+            let item = localStorage.getItem("playlist");
+            if(item){
+                let data = JSON.parse(item);
+                $("#songNumber").text(data.length);
+                table.reload('songList', {
+                    data: data
+                });
+            }
+        })
+
+    })
+</script>
+</body>

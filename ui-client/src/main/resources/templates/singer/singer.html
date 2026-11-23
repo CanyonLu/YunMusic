@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>歌手</title>
+    <link rel="stylesheet" href="lib/layui/css/layui.css"/>
+    <link rel="stylesheet" href="style/index.css"/>
+    <style>
+        .layui-tab-title li{
+            font-weight: 700;
+            padding: 0 10px;
+            font-size: 15px;
+        }
+        #singerListDiv{
+            width: 70%;
+            margin: 0 auto
+        }
+    </style>
+</head>
+<body>
+
+<div id="singerListDiv" class="layui-card layui-panel">
+    <div class="layui-tab layui-tab-brief" lay-filter="singerGenderFilter">
+        <ul class="layui-tab-title">
+            <li class="layui-this">全部</li>
+            <li>男歌手</li>
+            <li>女歌手</li>
+            <li>歌手组合</li>
+        </ul>
+        <div class="layui-tab-content" style="height: 100px;">
+            <div class="layui-tab-item layui-show"><div id="singer_0"></div></div>
+            <div class="layui-tab-item"><div id="singer_1"></div></div>
+            <div class="layui-tab-item"><div id="singer_2"></div></div>
+            <div class="layui-tab-item"><div id="singer_3"></div></div>
+        </div>
+    </div>
+</div>
+
+<script src="js/common.js"></script>
+<script>
+    $(function () {
+        loadSingers('singer_0', 0);
+    });
+
+    /**
+     * 加载歌手：gender 为 0 表示全部
+     */
+    function loadSingers(containerId, gender) {
+        var url = API + 'singer/getSingerList';
+        if (gender) {
+            url += '?gender=' + gender;
+        }
+        $.ajax({
+            url: url,
+            dataType: 'json',
+            type: 'get',
+            success: function (res) {
+                if (res.code !== 0) {
+                    return;
+                }
+                renderCardGrid('#' + containerId, res.data, {
+                    imgPrefix: 'image/singer/',
+                    imgField: 'photoFileName',
+                    onClick: function (item) {
+                        location.href = 'singerDetail?singerId=' + item.id;
+                    }
+                });
+            }
+        });
+    }
+
+    layui.use('element', function () {
+        layui.element.on('tab(singerGenderFilter)', function (data) {
+            loadSingers('singer_' + data.index, data.index);
+        });
+    });
+</script>
+
+</body>
+</html>
