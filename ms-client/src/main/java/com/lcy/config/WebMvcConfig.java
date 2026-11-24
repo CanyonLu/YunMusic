@@ -14,7 +14,8 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("http://localhost:8088")
+                // localhost 与 127.0.0.1 都要放行，否则用 IP 访问页面时接口全被拦
+                .allowedOrigins("http://localhost:8088", "http://127.0.0.1:8088")
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                 .allowedHeaders("*")
                 .allowCredentials(true)

@@ -1,8 +1,9 @@
+/* 顶部/底部留白，避免封面贴住 iframe 顶边（视觉上像被导航压住） */
 #main{
     width: 80%;
     margin: 0 auto;
-    padding-right: 8%;
-    /*padding-bottom: 2%;*/
+    padding: 40px 0 60px;
+    box-sizing: border-box;
 }
 
 .my_skin{
@@ -22,19 +23,23 @@
 }
 
 #left{
-    padding-left: 20%;
+    padding-left: 8%;
 }
 
 #cover{
-    width: 80%;
-    border-radius: 20px;
+    display: block;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 16px;
+    background: #f2f2f2;
 }
 
 #left p{
     font-weight: 700;
     font-size: 18px;
-    margin-top: 20px;
-    width: 80%;
+    margin-top: 12px;
+    width: 100%;
     text-align: center;
 }
 

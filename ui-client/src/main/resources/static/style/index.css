@@ -67,7 +67,6 @@ body{
 .layui-body{
     left: 0;
     margin-top: 30px;
-    /*padding-top: 50px;*/
     padding-bottom: 85px
 }
 .layui-layout-admin .layui-footer{
@@ -79,9 +78,11 @@ body{
     margin: 0 auto;
 }
 
+/* 卡片列表：5 列铺满（20% × 5），border-box 保证 padding 不撑破整行 */
 .layui-col-md3{
+    width: 20%;
     padding: 20px;
-    /*height: 430px;*/
+    box-sizing: border-box;
 }
 
 #songListDiv{
@@ -89,12 +90,14 @@ body{
     margin: 0 auto
 }
 
+/* 封面统一裁成正方形，避免横竖图混排时每行高度参差 */
 .cover{
+    display: block;
     width: 100%;
-}
-
-.layui-col-md3{
-    width: 20%;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
+    border-radius: 10px;
+    background: #f2f2f2;
 }
 
 .layui-panel{
@@ -128,23 +131,26 @@ h1{
     -webkit-user-select: none;
 }
 
-#songListLastRow{
-    padding-bottom: 60px;
+/* 列表底部留白，最后一行不贴着播放器 */
+#songListDiv{
+    padding-bottom: 30px;
 }
 
 /* 控制背景 */
 .control-back {
-    width: 100vw;
+    width: 100%;
     height: 80px;
     bottom: 0;
     position: absolute;
+    padding: 0 30px;
+    box-sizing: border-box;
     background-color: rgba(255, 255, 255, 0.8);
 }
 
 /* 进度条 */
 .progress-bar {
-    width: calc(100vw - 120px);
-    margin: 5px 0;
+    width: calc(100% - 110px);
+    margin: 8px 0;
     padding: 5px 0;
     cursor: pointer;
     float: left;
@@ -184,11 +190,14 @@ h1{
     box-shadow: none;
 }
 
-/* 控制按钮 */
+/* 控制按钮：一栏三区，左标题 / 中按钮 / 右音量+列表，不再依赖 50vw 魔法数字 */
 .control {
-    width: 100%;
-    height: 30px;
-    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    clear: both;
+    height: 34px;
+    margin-top: 4px;
+    line-height: 1.2;
 }
 
 .control a {
@@ -201,26 +210,25 @@ h1{
 }
 
 .control-btn {
-    width: 150px;
-    height: 30px;
-    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1 1 auto;
 }
 
 /* 右侧控制按钮 */
 .control-right {
-    height: 30px;
-    margin-left: calc(50vw + 150px);
-    margin-top: -32px;
     display: flex;
     align-items: center;
+    justify-content: flex-end;
+    flex: 0 0 auto;
 }
 
 .playlist{
-    height: 30px;
-    margin-left: calc(50vw + 500px);
-    margin-top: -28px;
     display: flex;
     align-items: center;
+    flex: 0 0 auto;
+    margin-left: 24px;
 }
 
 .playlist i{
@@ -229,26 +237,37 @@ h1{
 }
 
 .control-title{
-    margin-left: calc(50vw - 600px);
-    position: fixed;
-    margin-top: -15px;
     display: flex;
     align-items: center;
+    flex: 0 0 340px;
+    min-width: 0;
 }
 
 .control-title img{
     width: 50px;
+    height: 50px;
+    border-radius: 6px;
+    object-fit: cover;
+    flex: 0 0 50px;
 }
 
 .control-title div{
-    width: 300px;
-    padding-left: 30px;
+    width: 100%;
+    min-width: 0;
+    padding-left: 16px;
+    overflow: hidden;
 }
 
 .control-title p{
     font-size: 16px;
     color: #888888;
     -webkit-user-select: none;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.control-title marquee{
+    width: 100%;
 }
 
 .volume-back {
@@ -308,7 +327,8 @@ h1{
     font-size: 40px;
 }
 
-.layui-tab-content{
+/* 只作用于首页框架的 iframe 容器，避免影响 iframe 内歌单/歌手页的 tab 高度 */
+.layui-body > .layui-tab-content{
     height: 100%;
     padding: 0;
 }

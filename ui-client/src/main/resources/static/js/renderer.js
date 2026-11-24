@@ -16,8 +16,9 @@ function renderCardGrid(containerSelector, list, options) {
         return;
     }
 
-    var perRow = 4;
     var opts = options || {};
+    // 与 index.css 里 .layui-col-md3 { width: 20% } 保持一致：每行 5 个正好铺满
+    var perRow = opts.perRow || 5;
     var row = null;
 
     for (var i = 0; i < list.length; i++) {
